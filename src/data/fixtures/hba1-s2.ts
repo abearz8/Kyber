@@ -8,7 +8,7 @@ export const hba1S2: Course[] = [
     title: "Operations Management",
     term: "Winter 2027",
     instructor: "Prof. L. Martins",
-    color: "#f97316",
+    color: "#e9a319",
     targetGrade: 80,
     currentTopic: "Process Mapping & Flow Analysis",
     studyMethod: {

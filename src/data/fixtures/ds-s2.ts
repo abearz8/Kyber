@@ -8,7 +8,7 @@ export const dsS2: Course[] = [
     title: "Calculus II",
     term: "Winter 2027",
     instructor: "Prof. E. Vasquez",
-    color: "#f97316",
+    color: "#e9a319",
     targetGrade: 75,
     currentTopic: "Techniques of Integration",
     studyMethod: {

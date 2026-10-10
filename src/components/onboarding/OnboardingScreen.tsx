@@ -60,7 +60,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
             width: 64,
             height: 64,
             borderRadius: 18,
-            background: "#f97316",
+            background: "#e9a319",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -75,7 +75,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
         <div>
           <h1
             style={{
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "Manrope, sans-serif",
               fontWeight: 700,
               fontSize: 28,
               color: "var(--text)",
@@ -126,7 +126,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
         <DemoButton
           label="HBA1"
           sub="9 courses · both semesters"
-          color="#f97316"
+          color="#e9a319"
           loading={loading === "hba1"}
           onClick={() => loadDemo("hba1")}
         />
@@ -160,7 +160,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
           style={{
             background: "var(--surface-2)",
             color: "var(--text)",
-            fontFamily: "Poppins, sans-serif",
+            fontFamily: "Manrope, sans-serif",
             fontWeight: 600,
             fontSize: 15,
             border: "1px solid var(--border)",

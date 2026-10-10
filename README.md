@@ -85,12 +85,15 @@ The parse route has a 60s timeout configured in `vercel.json`.
 
 ## Branding
 
-Current branding uses the old app's design system as a baseline:
-- Primary: `#f97316` orange
-- Accent palette: `["#f97316", "#38bdf8", "#34d399", "#a78bfa", "#f5c451"]`
-- Fonts: Poppins (headings), Inter (body)
+Matches the official Kyber brand system (`sources/Branding.pdf`):
+- Primary (amber — action/emphasis): `#E9A319`
+- Accent (gold): `#FFC857`
+- Neutral (cream background): `#FFF9ED`
+- Dark (charcoal text): `#27251F`
+- Font: **Manrope** (display + body + UI), system fallback
+- Voice: clear, calm, encouraging, intelligent, concise, student-aware
 
-To verify against `sources/Branding.pdf`: `brew install poppler` then re-open the file with any PDF viewer.
+Per-course accent colors (amber, sky, green, purple, gold) are used only to visually distinguish courses in lists and the calendar.
 
 ## What Was Built
 

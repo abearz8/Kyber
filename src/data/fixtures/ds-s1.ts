@@ -8,7 +8,7 @@ export const dsS1: Course[] = [
     title: "Linear Algebra",
     term: "Fall 2026",
     instructor: "Prof. K. Nielsen",
-    color: "#f97316",
+    color: "#e9a319",
     targetGrade: 80,
     currentTopic: "Matrix Transformations",
     studyMethod: {

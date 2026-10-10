@@ -129,7 +129,7 @@ export default function NowTab({ courses }: Props) {
     return (
       <div className="flex flex-col h-full items-center justify-center p-8 text-center">
         <p style={{ fontSize: 48, marginBottom: 12 }}>🎉</p>
-        <p style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--text)", margin: "0 0 8px" }}>
+        <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--text)", margin: "0 0 8px" }}>
           Nothing due this week
         </p>
         <p style={{ fontSize: 14, color: "var(--text-3)", lineHeight: 1.5 }}>
@@ -143,7 +143,7 @@ export default function NowTab({ courses }: Props) {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border)", background: "var(--surface)", flexShrink: 0 }}>
-        <h1 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: "0 0 2px" }}>
+        <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: "0 0 2px" }}>
           Now
         </h1>
         <p style={{ fontSize: 12, color: "var(--text-3)", margin: 0 }}>

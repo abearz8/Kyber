@@ -1,33 +1,39 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
-  --kyber-orange: #f97316;
-  --kyber-sky: #38bdf8;
-  --kyber-green: #34d399;
-  --kyber-purple: #a78bfa;
-  --kyber-yellow: #f5c451;
+  /* Kyber brand palette (see sources/Branding.pdf) */
+  --kyber-amber: #e9a319; /* primary — signals action & emphasis */
+  --kyber-gold: #ffc857; /* accent */
+  --kyber-cream: #fff9ed; /* neutral */
+  --kyber-charcoal: #27251f; /* dark */
 
-  --bg: #f8f8f8;
+  /* Per-course accent palette (amber-led for brand alignment) */
+  --c1: #e9a319;
+  --c2: #38bdf8;
+  --c3: #34d399;
+  --c4: #a78bfa;
+  --c5: #ffc857;
+
+  --bg: #fff9ed;
   --surface: #ffffff;
-  --surface-2: #f3f3f3;
-  --border: #e8e8e8;
-  --text: #111111;
-  --text-2: #555555;
-  --text-3: #999999;
+  --surface-2: #fdf2dc;
+  --border: #efe6d4;
+  --text: #27251f;
+  --text-2: #6b6559;
+  --text-3: #a59f91;
 
   --tab-height: 72px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Poppins", system-ui, sans-serif;
-  --color-orange: var(--kyber-orange);
-  --color-sky: var(--kyber-sky);
-  --color-green: var(--kyber-green);
-  --color-purple: var(--kyber-purple);
-  --color-yellow: var(--kyber-yellow);
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-display: "Manrope", system-ui, sans-serif;
+  --color-amber: var(--kyber-amber);
+  --color-gold: var(--kyber-gold);
+  --color-cream: var(--kyber-cream);
+  --color-charcoal: var(--kyber-charcoal);
 }
 
 * {
@@ -39,8 +45,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #111;
-  font-family: "Inter", system-ui, sans-serif;
+  background: #27251f;
+  font-family: "Manrope", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

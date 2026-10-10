@@ -57,7 +57,7 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
   return (
     <div className="flex flex-col h-full p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--text)" }}>
+        <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 20, color: "var(--text)" }}>
           Upload Syllabi
         </h2>
         {onCancel && (
@@ -76,12 +76,12 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
         disabled={isLoading}
         className="flex-1 flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed transition-colors"
         style={{
-          borderColor: files.length ? "#f97316" : "var(--border)",
+          borderColor: files.length ? "#e9a319" : "var(--border)",
           background: files.length ? "#fff7ed" : "var(--surface-2)",
           cursor: isLoading ? "default" : "pointer",
         }}
       >
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={files.length ? "#f97316" : "var(--text-3)"} strokeWidth="1.5">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={files.length ? "#e9a319" : "var(--text-3)"} strokeWidth="1.5">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
           <line x1="12" y1="3" x2="12" y2="15" />
@@ -98,7 +98,7 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
           </>
         ) : (
           <div className="text-center">
-            <p style={{ fontWeight: 600, color: "#f97316", fontSize: 15 }}>
+            <p style={{ fontWeight: 600, color: "#e9a319", fontSize: 15 }}>
               {files.length} file{files.length > 1 ? "s" : ""} selected
             </p>
             <div className="mt-2 space-y-0.5">
@@ -139,9 +139,9 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
         disabled={!files.length || isLoading}
         className="mt-4 rounded-xl py-3 transition-opacity"
         style={{
-          background: "#f97316",
+          background: "#e9a319",
           color: "#fff",
-          fontFamily: "Poppins, sans-serif",
+          fontFamily: "Manrope, sans-serif",
           fontWeight: 600,
           fontSize: 16,
           border: "none",

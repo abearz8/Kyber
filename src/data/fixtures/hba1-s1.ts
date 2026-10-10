@@ -8,7 +8,7 @@ export const hba1S1: Course[] = [
     title: "Organizational Behaviour",
     term: "Fall 2026",
     instructor: "Prof. M. Holloway",
-    color: "#f97316",
+    color: "#e9a319",
     targetGrade: 85,
     currentTopic: "Group Dynamics & Team Performance",
     studyMethod: {

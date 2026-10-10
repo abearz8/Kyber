@@ -21,7 +21,7 @@ export default function InsightCards({ course }: Props) {
 
   return (
     <div>
-      <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
+      <h3 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
         Insights
       </h3>
       <div className="flex flex-col gap-2.5">

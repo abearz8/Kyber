@@ -55,7 +55,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
           </button>
           <div>
             <p style={{ fontSize: 11, color: course.color, fontWeight: 600, margin: 0 }}>{course.code}</p>
-            <h2 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
+            <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
               Grade Calculator
             </h2>
           </div>
@@ -75,7 +75,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
         <div className="flex items-end gap-3">
           <span
             style={{
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "Manrope, sans-serif",
               fontWeight: 800,
               fontSize: 40,
               color: meetsTarget ? course.color : "#ef4444",

@@ -66,11 +66,11 @@ export default function TabBar({ active, onChange }: TabBarProps) {
             }}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors"
             style={{
-              color: isActive ? "#f97316" : "var(--text-3)",
+              color: isActive ? "#e9a319" : "var(--text-3)",
               background: "none",
               border: "none",
               cursor: "pointer",
-              fontFamily: "var(--font-display, Poppins, sans-serif)",
+              fontFamily: "var(--font-display, Manrope, sans-serif)",
             }}
           >
             <span style={{ opacity: isActive ? 1 : 0.7 }}>{tab.icon}</span>

@@ -11,7 +11,7 @@ import { useStore } from "@/hooks/useStore";
 
 const EVENT_DOT_COLORS: Record<string, string> = {
   exam: "#ef4444",
-  quiz: "#f97316",
+  quiz: "#e9a319",
   assignment: "#38bdf8",
   lab: "#34d399",
   reading: "#a78bfa",
@@ -44,7 +44,7 @@ export default function PlanTab({ courses }: Props) {
       {/* Header */}
       <div style={{ padding: "16px 16px 0", background: "var(--surface)", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
         <div className="flex items-center justify-between mb-3">
-          <h1 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
+          <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
             Plan
           </h1>
           {/* View switcher */}
@@ -159,7 +159,7 @@ function MonthView({
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 15, color: "var(--text)" }}>
+        <span style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 15, color: "var(--text)" }}>
           {fmtMonthYear(year, month)}
         </span>
         <button onClick={onNext} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-2)", padding: 4 }}>
@@ -197,7 +197,7 @@ function MonthView({
                 justifyContent: "center",
                 gap: 2,
                 borderRadius: 8,
-                background: isSelected ? "#f97316" : isToday ? "#f9731620" : "transparent",
+                background: isSelected ? "#e9a319" : isToday ? "#e9a31920" : "transparent",
                 border: "none",
                 cursor: "pointer",
               }}
@@ -206,7 +206,7 @@ function MonthView({
                 style={{
                   fontSize: 13,
                   fontWeight: isToday ? 700 : 400,
-                  color: isSelected ? "#fff" : isToday ? "#f97316" : "var(--text)",
+                  color: isSelected ? "#fff" : isToday ? "#e9a319" : "var(--text)",
                 }}
               >
                 {parseInt(cell.split("-")[2])}
@@ -253,7 +253,7 @@ function WeekView({
 
   return (
     <div style={{ padding: "12px 16px" }}>
-      <p style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 12px" }}>
+      <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 12px" }}>
         {fmtShort(days[0])} – {fmtShort(days[6])}
       </p>
       <div className="flex flex-col gap-3">
@@ -266,21 +266,21 @@ function WeekView({
               onClick={() => onSelectDay(day)}
               className="w-full text-left rounded-2xl overflow-hidden transition-all"
               style={{
-                border: isToday ? "1.5px solid #f97316" : "1px solid var(--border)",
+                border: isToday ? "1.5px solid #e9a319" : "1px solid var(--border)",
                 background: "var(--surface)",
               }}
             >
               <div
                 style={{
                   padding: "8px 12px 6px",
-                  background: isToday ? "#f9731610" : "transparent",
+                  background: isToday ? "#e9a31910" : "transparent",
                   borderBottom: events.length ? "1px solid var(--border)" : "none",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontSize: 13, fontWeight: isToday ? 700 : 500, color: isToday ? "#f97316" : "var(--text)" }}>
+                <span style={{ fontSize: 13, fontWeight: isToday ? 700 : 500, color: isToday ? "#e9a319" : "var(--text)" }}>
                   {new Date(day + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
                 </span>
                 {events.length > 0 && (
@@ -293,7 +293,7 @@ function WeekView({
                     const course = courses.find((c) => c.id === e.courseId);
                     return (
                       <div key={e.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: 2, background: EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#f97316", flexShrink: 0 }} />
+                        <div style={{ width: 6, height: 6, borderRadius: 2, background: EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319", flexShrink: 0 }} />
                         <span style={{ fontSize: 12, color: "var(--text)", fontWeight: 500 }}>{e.title}</span>
                         <span style={{ fontSize: 11, color: "var(--text-3)", marginLeft: "auto" }}>{course?.code}</span>
                       </div>
@@ -334,11 +334,11 @@ function DayView({
           </svg>
         </button>
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--text)", margin: 0 }}>
+          <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--text)", margin: 0 }}>
             {fmtFull(date)}
           </p>
           {isToday && (
-            <span style={{ fontSize: 11, color: "#f97316", fontWeight: 600 }}>Today</span>
+            <span style={{ fontSize: 11, color: "#e9a319", fontWeight: 600 }}>Today</span>
           )}
         </div>
         <button onClick={() => onChangeDate(addDays(date, 1))} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-2)", padding: 4 }}>
@@ -357,7 +357,7 @@ function DayView({
         <div className="flex flex-col gap-3">
           {events.map((e) => {
             const course = courses.find((c) => c.id === e.courseId);
-            const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#f97316";
+            const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319";
             return (
               <button
                 key={e.id}
@@ -368,7 +368,7 @@ function DayView({
                 <div style={{ width: 4, borderRadius: 2, background: color, flexShrink: 0, alignSelf: "stretch" }} />
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-                    <span style={{ fontSize: 10, fontWeight: 600, color: course?.color ?? "#f97316", background: (course?.color ?? "#f97316") + "18", borderRadius: 4, padding: "1px 5px" }}>
+                    <span style={{ fontSize: 10, fontWeight: 600, color: course?.color ?? "#e9a319", background: (course?.color ?? "#e9a319") + "18", borderRadius: 4, padding: "1px 5px" }}>
                       {course?.code ?? e.courseId}
                     </span>
                     <span style={{ fontSize: 11, color, fontWeight: 600 }}>{typeLabel(e.type)}</span>
@@ -395,7 +395,7 @@ function UpcomingList({ courses, limit }: { courses: Course[]; limit: number }) 
     <div className="flex flex-col gap-2">
       {events.map((e) => {
         const course = courses.find((c) => c.id === e.courseId);
-        const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#f97316";
+        const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319";
         return (
           <div key={e.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid var(--border)" }}>
             <div style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />

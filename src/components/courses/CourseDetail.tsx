@@ -18,7 +18,7 @@ interface Props {
 
 const EVENT_COLORS: Record<string, string> = {
   exam: "#ef4444",
-  quiz: "#f97316",
+  quiz: "#e9a319",
   assignment: "#38bdf8",
   lab: "#34d399",
   reading: "#a78bfa",
@@ -60,7 +60,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
             </p>
             <h1
               style={{
-                fontFamily: "Poppins, sans-serif",
+                fontFamily: "Manrope, sans-serif",
                 fontWeight: 700,
                 fontSize: 18,
                 color: "var(--text)",
@@ -112,7 +112,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
             }}
             onClick={() => track.courseSectionViewed(course.code, "study_method")}
           >
-            <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 8px" }}>
+            <h3 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 8px" }}>
               📖 Recommended Approach
             </h3>
             <p style={{ fontWeight: 600, fontSize: 14, color: course.color, margin: "0 0 4px" }}>
@@ -130,7 +130,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
             style={{ background: "var(--surface)", borderRadius: 16, padding: 16, border: "1px solid var(--border)" }}
             onClick={() => track.courseSectionViewed(course.code, "tips")}
           >
-            <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
+            <h3 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
               💡 Tips
             </h3>
             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
@@ -147,7 +147,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
         {/* Upcoming events */}
         {upcomingEvents.length > 0 && (
           <div onClick={() => track.courseSectionViewed(course.code, "events")}>
-            <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
+            <h3 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
               Upcoming Dates
             </h3>
             <div className="flex flex-col gap-2">
@@ -199,7 +199,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
               className="w-full flex items-center justify-between"
               style={{ background: "none", border: "none", cursor: "pointer", padding: "0 0 10px" }}
             >
-              <h3 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: 0 }}>
+              <h3 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: 0 }}>
                 Policies
               </h3>
               <svg

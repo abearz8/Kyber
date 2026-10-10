@@ -9,7 +9,7 @@ interface Props {
   onOpenCalc: () => void;
 }
 
-const SEG_COLORS = ["#f97316", "#f5c451", "#38bdf8", "#a78bfa", "#34d399"];
+const SEG_COLORS = ["#e9a319", "#f5c451", "#38bdf8", "#a78bfa", "#34d399"];
 
 export default function GradeBreakdown({ course, onOpenCalc }: Props) {
   const { standing } = currentStanding(course);
@@ -26,7 +26,7 @@ export default function GradeBreakdown({ course, onOpenCalc }: Props) {
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
-        <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
+        <span style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
           Grade Breakdown
         </span>
         {standing != null && (
@@ -81,7 +81,7 @@ export default function GradeBreakdown({ course, onOpenCalc }: Props) {
           background: `${course.color}15`,
           color: course.color,
           border: `1px solid ${course.color}30`,
-          fontFamily: "Poppins, sans-serif",
+          fontFamily: "Manrope, sans-serif",
           cursor: "pointer",
           fontSize: 13,
           fontWeight: 600,

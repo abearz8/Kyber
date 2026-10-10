@@ -37,7 +37,7 @@ export default function CourseList({
         }}
       >
         <div>
-          <h1 style={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
+          <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
             My Courses
           </h1>
           <p style={{ fontSize: 12, color: "var(--text-3)", margin: "2px 0 0" }}>
@@ -48,12 +48,12 @@ export default function CourseList({
           <button
             onClick={onAdd}
             style={{
-              background: "#f97316",
+              background: "#e9a319",
               color: "#fff",
               border: "none",
               borderRadius: 10,
               padding: "6px 14px",
-              fontFamily: "Poppins, sans-serif",
+              fontFamily: "Manrope, sans-serif",
               fontWeight: 600,
               fontSize: 13,
               cursor: "pointer",
@@ -101,12 +101,12 @@ export default function CourseList({
                 onClick={() => onSemesterChange(s)}
                 className="flex-1 transition-colors"
                 style={{
-                  background: isActive ? "#f97316" : "var(--surface-2)",
+                  background: isActive ? "#e9a319" : "var(--surface-2)",
                   color: isActive ? "#fff" : "var(--text-2)",
-                  border: isActive ? "1px solid #f97316" : "1px solid var(--border)",
+                  border: isActive ? "1px solid #e9a319" : "1px solid var(--border)",
                   borderRadius: 10,
                   padding: "8px 0",
-                  fontFamily: "Poppins, sans-serif",
+                  fontFamily: "Manrope, sans-serif",
                   fontWeight: 600,
                   fontSize: 13,
                   cursor: "pointer",
