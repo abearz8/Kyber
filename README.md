@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kyber — Customer Testing MVP
 
-## Getting Started
+Mobile-first web prototype for student customer testing. Parses university syllabi into a three-tab experience: **Courses** (grade breakdown, insights, deadlines), **Now** (priority daily checklist), and **Plan** (month/week/day calendar).
 
-First, run the development server:
+## Local Setup
 
 ```bash
+npm install
+cp .env.example .env.local
+# fill in env vars (see below)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Required | Description |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | For real syllabus upload | Server-side only — never prefix with `NEXT_PUBLIC_` |
+| `NEXT_PUBLIC_POSTHOG_KEY` | Optional (analytics) | From PostHog project settings |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Optional | Default: `https://us.i.posthog.com` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Demo Fixtures
 
-## Learn More
+The app ships with hand-crafted demo data for HBA1 and Data Science semesters. To replace with real parsed data:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+ANTHROPIC_API_KEY=sk-ant-... npx tsx scripts/generate-fixtures.ts
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This parses all 16 PDFs in `sources/Sylabus examples/` and writes TypeScript fixture files to `src/data/fixtures/`. Estimated cost: ~$0.50 in Anthropic API calls.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Syllabus Upload (Real Parsing)
 
-## Deploy on Vercel
+The `/api/parse` endpoint accepts `multipart/form-data` with PDF or `.txt` files. It uses:
+- `claude-haiku-4-5` for text-layer PDFs (fast, cheap)
+- `claude-sonnet-4-6` for scanned/image PDFs (vision)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The `ANTHROPIC_API_KEY` is server-side only. Users never see it.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## PostHog Analytics Setup
+
+1. Create a project at posthog.com
+2. Copy the Project API Key → `NEXT_PUBLIC_POSTHOG_KEY`
+3. Copy the API host → `NEXT_PUBLIC_POSTHOG_HOST`
+
+### Recommended Funnels to Create
+
+- **Onboarding**: `app_opened → onboarding_started → demo_semester_selected OR syllabus_upload_completed → tab_viewed`
+- **Engagement**: `semester_loaded → course_opened → grade_calculator_used`
+- **Now value**: `now_task_opened → now_task_completed` (completion rate)
+- **Drop-off**: `onboarding_started` → where users stop
+
+### Key Questions This Answers
+
+| Question | Signal |
+|---|---|
+| Courses vs Now/Plan value | `tab_viewed` distribution |
+| Now ongoing value | `now_task_completed` rate over sessions |
+| Plan: useful or overwhelming? | `plan_viewed` views per user + `plan_item_opened` |
+| Which course sections matter | `course_section_viewed` breakdown |
+| Where users drop off | Onboarding funnel |
+| Parser success rate | `syllabus_upload_completed` vs `syllabus_upload_failed` |
+
+### Privacy
+
+Session replay is enabled with `maskAllInputs: true`. File inputs use `ph-no-capture`. Syllabus text, filenames, grades, and notes are never captured.
+
+## Vercel Deployment
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Set environment variables in Vercel dashboard:
+# ANTHROPIC_API_KEY (server-side)
+# NEXT_PUBLIC_POSTHOG_KEY
+# NEXT_PUBLIC_POSTHOG_HOST
+```
+
+The parse route has a 60s timeout configured in `vercel.json`.
+
+## Branding
+
+Current branding uses the old app's design system as a baseline:
+- Primary: `#f97316` orange
+- Accent palette: `["#f97316", "#38bdf8", "#34d399", "#a78bfa", "#f5c451"]`
+- Fonts: Poppins (headings), Inter (body)
+
+To verify against `sources/Branding.pdf`: `brew install poppler` then re-open the file with any PDF viewer.
+
+## What Was Built
+
+1. **Onboarding** — Logo, tagline, 3 demo options (HBA1 S1, HBA1 S2, Data Science S1), upload flow
+2. **Courses tab** — Course list → course detail (grade breakdown, insights, study method, tips, events, policies) → grade calculator
+3. **Now tab** — Auto-generated daily priority list from upcoming deadlines; check-off with localStorage persistence
+4. **Plan tab** — Month/week/day calendar views with event dots color-coded by type
+5. **TypeScript parser** — Port of Python syllabus_parser; Haiku for text PDFs, Sonnet for scanned
+6. **Pre-parsed fixtures** — Hand-crafted data for 16 courses (HBA1 + Data Science, both semesters)
+7. **PostHog analytics** — Typed event wrappers, session replay with privacy masks
+8. **localStorage persistence** — Courses and task completions survive refresh
+
+## Intentional Deviations
+
+- Parser ported to TypeScript (no Python runtime on Vercel)
+- Demo fixtures are hand-crafted (run `generate-fixtures.ts` with your API key to replace)
+- Plan tab shows syllabus events only (no auto-generated study blocks — syllabi don't have class times)
+- No class schedule in Plan (syllabi don't reliably include this)

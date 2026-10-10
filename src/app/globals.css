@@ -1,26 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --kyber-orange: #f97316;
+  --kyber-sky: #38bdf8;
+  --kyber-green: #34d399;
+  --kyber-purple: #a78bfa;
+  --kyber-yellow: #f5c451;
+
+  --bg: #f8f8f8;
+  --surface: #ffffff;
+  --surface-2: #f3f3f3;
+  --border: #e8e8e8;
+  --text: #111111;
+  --text-2: #555555;
+  --text-3: #999999;
+
+  --tab-height: 72px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Poppins", system-ui, sans-serif;
+  --color-orange: var(--kyber-orange);
+  --color-sky: var(--kyber-sky);
+  --color-green: var(--kyber-green);
+  --color-purple: var(--kyber-purple);
+  --color-yellow: var(--kyber-yellow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #111;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar hidden utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

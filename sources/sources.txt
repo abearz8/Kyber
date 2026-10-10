@@ -1,1 +1,8 @@
-Sources
+The old GitHub that we worked on: https://github.com/abearz8/syllabus-app
+This is really good for seeing past structure of the code base and something similar (but not exact) to what the final product will look like. There is one file in here, the syllabus parser that is super useful and that I will attach in this source folder too, I want you to use this to make a agentic component of this website such as an API key, or whatever the new standard is
+
+The company website: https://learnkyber.com/
+This is where all the information on the product can be found, and it is our landing page for Kyber
+
+The old mock web app: https://kyberwebappv3.netlify.app/
+Good to see the process work in real time, can also cross compare code here to see how things work! 

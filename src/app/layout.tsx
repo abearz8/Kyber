@@ -1,29 +1,42 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { StoreProvider } from "@/hooks/useStore";
+import AnalyticsProvider from "./AnalyticsProvider";
 
 export const metadata: Metadata = {
-  title: "Mobile App Mockup",
-  description: "Mobile app mockup",
+  title: "Kyber — Your semester. One clear plan.",
+  description:
+    "Kyber turns your syllabi into a complete semester plan with grade tracking, deadlines, and daily priorities.",
+  icons: { icon: "/favicon.svg" },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body>
+        <StoreProvider>
+          <AnalyticsProvider
+            posthogKey={process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ""}
+            posthogHost={
+              process.env.NEXT_PUBLIC_POSTHOG_HOST ??
+              "https://us.i.posthog.com"
+            }
+          >
+            {children}
+          </AnalyticsProvider>
+        </StoreProvider>
+      </body>
     </html>
   );
 }
