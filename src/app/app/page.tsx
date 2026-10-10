@@ -39,8 +39,21 @@ export default function AppPage() {
     }
   }
 
-  const { activeTab, selectedCourseId, courses } = state;
-  const selectedCourse = courses.find((c) => c.id === selectedCourseId) ?? null;
+  const { activeTab, selectedCourseId, courses, activeSemester } = state;
+
+  // Which semesters are present in the loaded data?
+  const semestersPresent = Array.from(
+    new Set(courses.map((c) => c.semester).filter((s): s is 1 | 2 => s === 1 || s === 2))
+  ).sort();
+  const hasMultipleSemesters = semestersPresent.length > 1;
+
+  // Scope the whole app to the active semester when both are loaded.
+  // Courses with no semester (e.g. uploaded) stay visible in every view.
+  const visibleCourses = hasMultipleSemesters
+    ? courses.filter((c) => c.semester == null || c.semester === activeSemester)
+    : courses;
+
+  const selectedCourse = visibleCourses.find((c) => c.id === selectedCourseId) ?? null;
 
   // Upload overlay
   if (showUpload) {
@@ -64,15 +77,18 @@ export default function AppPage() {
           />
         ) : activeTab === "courses" ? (
           <CourseList
-            courses={courses}
+            courses={visibleCourses}
+            semesters={hasMultipleSemesters ? semestersPresent : []}
+            activeSemester={activeSemester}
+            onSemesterChange={(s) => dispatch({ type: "SET_SEMESTER", semester: s })}
             onOpen={(id) => dispatch({ type: "SET_SELECTED_COURSE", courseId: id })}
             onAdd={() => setShowUpload(true)}
             onReset={handleReset}
           />
         ) : activeTab === "now" ? (
-          <NowTab courses={courses} />
+          <NowTab courses={visibleCourses} />
         ) : (
-          <PlanTab courses={courses} />
+          <PlanTab courses={visibleCourses} />
         )}
       </div>
 

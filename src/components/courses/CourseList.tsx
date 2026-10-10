@@ -1,16 +1,27 @@
 "use client";
 
-import type { Course } from "@/lib/types";
+import type { Course, Semester } from "@/lib/types";
 import CourseCard from "./CourseCard";
 
 interface Props {
   courses: Course[];
+  semesters: Semester[];
+  activeSemester: Semester;
+  onSemesterChange: (s: Semester) => void;
   onOpen: (courseId: string) => void;
   onAdd: () => void;
   onReset: () => void;
 }
 
-export default function CourseList({ courses, onOpen, onAdd, onReset }: Props) {
+export default function CourseList({
+  courses,
+  semesters,
+  activeSemester,
+  onSemesterChange,
+  onOpen,
+  onAdd,
+  onReset,
+}: Props) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -69,6 +80,44 @@ export default function CourseList({ courses, onOpen, onAdd, onReset }: Props) {
           </button>
         </div>
       </div>
+
+      {/* Semester switcher — only shown when both semesters are loaded */}
+      {semesters.length > 1 && (
+        <div
+          style={{
+            display: "flex",
+            gap: 4,
+            padding: "10px 16px",
+            background: "var(--surface)",
+            borderBottom: "1px solid var(--border)",
+            flexShrink: 0,
+          }}
+        >
+          {semesters.map((s) => {
+            const isActive = s === activeSemester;
+            return (
+              <button
+                key={s}
+                onClick={() => onSemesterChange(s)}
+                className="flex-1 transition-colors"
+                style={{
+                  background: isActive ? "#f97316" : "var(--surface-2)",
+                  color: isActive ? "#fff" : "var(--text-2)",
+                  border: isActive ? "1px solid #f97316" : "1px solid var(--border)",
+                  borderRadius: 10,
+                  padding: "8px 0",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: 600,
+                  fontSize: 13,
+                  cursor: "pointer",
+                }}
+              >
+                Semester {s}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Scrollable course list */}
       <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 10 }}>

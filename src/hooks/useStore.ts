@@ -15,6 +15,7 @@ const STORAGE_KEY = "kyber-app-state-v1";
 const defaultState: AppState = {
   courses: [],
   activeTab: "courses",
+  activeSemester: 1,
   planView: "month",
   completedTaskIds: [],
   gradeSims: {},
@@ -24,8 +25,18 @@ const defaultState: AppState = {
 
 function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
-    case "LOAD_COURSES":
-      return { ...state, courses: action.courses, selectedCourseId: null };
+    case "LOAD_COURSES": {
+      const semesters = action.courses
+        .map((c) => c.semester)
+        .filter((s): s is 1 | 2 => s === 1 || s === 2);
+      const lowest = semesters.length ? (Math.min(...semesters) as 1 | 2) : 1;
+      return {
+        ...state,
+        courses: action.courses,
+        activeSemester: lowest,
+        selectedCourseId: null,
+      };
+    }
 
     case "ADD_COURSES": {
       const existingIds = new Set(state.courses.map((c) => c.id));
@@ -47,6 +58,13 @@ function reducer(state: AppState, action: AppAction): AppState {
 
     case "SET_TAB":
       return { ...state, activeTab: action.tab, selectedCourseId: null };
+
+    case "SET_SEMESTER":
+      return {
+        ...state,
+        activeSemester: action.semester,
+        selectedCourseId: null,
+      };
 
     case "SET_PLAN_VIEW":
       return { ...state, planView: action.view };

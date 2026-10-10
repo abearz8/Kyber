@@ -36,6 +36,8 @@ export interface Policy {
   value: string;
 }
 
+export type Semester = 1 | 2;
+
 export interface Course {
   id: string;
   code: string;
@@ -51,6 +53,7 @@ export interface Course {
   policies: Policy[];
   subjects: string[];
   tips: string[];
+  semester?: Semester; // which semester this course belongs to (demo data)
 }
 
 export type Tab = "courses" | "now" | "plan";
@@ -59,6 +62,7 @@ export type PlanView = "month" | "week" | "day";
 export interface AppState {
   courses: Course[];
   activeTab: Tab;
+  activeSemester: Semester;
   planView: PlanView;
   completedTaskIds: string[];
   gradeSims: Record<string, Record<string, (number | null)[]>>;
@@ -71,6 +75,7 @@ export type AppAction =
   | { type: "ADD_COURSES"; courses: Course[] }
   | { type: "DELETE_COURSE"; courseId: string }
   | { type: "SET_TAB"; tab: Tab }
+  | { type: "SET_SEMESTER"; semester: Semester }
   | { type: "SET_PLAN_VIEW"; view: PlanView }
   | { type: "SET_SELECTED_COURSE"; courseId: string | null }
   | { type: "SET_SELECTED_DATE"; date: string | null }

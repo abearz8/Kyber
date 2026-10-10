@@ -13,25 +13,26 @@ export default function OnboardingScreen({ onLoad }: Props) {
   const [showUpload, setShowUpload] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
 
-  async function loadDemo(program: "hba1" | "data_science", semester: "s1" | "s2") {
-    setLoading(`${program}-${semester}`);
+  async function loadDemo(program: "hba1" | "data_science") {
+    setLoading(program);
     track.onboardingStarted();
-    track.demoSemesterSelected(program, semester);
+    track.demoSemesterSelected(program, "both");
 
-    let courses: Course[];
-    if (program === "hba1" && semester === "s1") {
-      const { hba1S1 } = await import("@/data/fixtures/hba1-s1");
-      courses = hba1S1;
-    } else if (program === "hba1" && semester === "s2") {
-      const { hba1S2 } = await import("@/data/fixtures/hba1-s2");
-      courses = hba1S2;
-    } else if (program === "data_science" && semester === "s1") {
-      const { dsS1 } = await import("@/data/fixtures/ds-s1");
-      courses = dsS1;
+    let s1: Course[];
+    let s2: Course[];
+    if (program === "hba1") {
+      s1 = (await import("@/data/fixtures/hba1-s1")).hba1S1;
+      s2 = (await import("@/data/fixtures/hba1-s2")).hba1S2;
     } else {
-      const { dsS2 } = await import("@/data/fixtures/ds-s2");
-      courses = dsS2;
+      s1 = (await import("@/data/fixtures/ds-s1")).dsS1;
+      s2 = (await import("@/data/fixtures/ds-s2")).dsS2;
     }
+
+    // Tag each course with its semester so the Courses page can switch between them
+    const courses: Course[] = [
+      ...s1.map((c) => ({ ...c, semester: 1 as const })),
+      ...s2.map((c) => ({ ...c, semester: 2 as const })),
+    ];
 
     track.semesterLoaded("demo", courses.length);
     onLoad(courses);
@@ -119,29 +120,22 @@ export default function OnboardingScreen({ onLoad }: Props) {
       {/* Demo options */}
       <div className="flex flex-col gap-3 mt-8">
         <p style={{ color: "var(--text-3)", fontSize: 12, textAlign: "center", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-          Try a demo semester
+          Try a demo year
         </p>
 
         <DemoButton
-          label="HBA1 — First Semester"
-          sub="5 courses · Marketing, OB, Accounting…"
+          label="HBA1"
+          sub="9 courses · both semesters"
           color="#f97316"
-          loading={loading === "hba1-s1"}
-          onClick={() => loadDemo("hba1", "s1")}
+          loading={loading === "hba1"}
+          onClick={() => loadDemo("hba1")}
         />
         <DemoButton
-          label="HBA1 — Second Semester"
-          sub="4 courses · Strategy, Finance, Operations…"
-          color="#f97316"
-          loading={loading === "hba1-s2"}
-          onClick={() => loadDemo("hba1", "s2")}
-        />
-        <DemoButton
-          label="Data Science — Year 1"
-          sub="4 courses · Calculus, CS, Linear Algebra…"
+          label="Data Science — 1st Year"
+          sub="7 courses · both semesters"
           color="#38bdf8"
-          loading={loading === "data_science-s1"}
-          onClick={() => loadDemo("data_science", "s1")}
+          loading={loading === "data_science"}
+          onClick={() => loadDemo("data_science")}
         />
 
         <div
