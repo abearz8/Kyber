@@ -6,7 +6,10 @@
  * For scanned PDFs (sparse text layer): send the PDF as base64 to Claude's vision.
  */
 
-const MAX_TEXT_CHARS = 60_000;
+// ~30k chars ≈ ~8k input tokens — comfortably covers a multi-page course
+// outline (grades, policies, and the full weekly schedule) while keeping the
+// per-parse input cost low. Raise only if real syllabi get truncated.
+const MAX_TEXT_CHARS = 30_000;
 const MAX_PDF_PAGES = 20;
 
 export type ExtractedContent =

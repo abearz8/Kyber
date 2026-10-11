@@ -7,6 +7,11 @@ import Anthropic from "@anthropic-ai/sdk";
 import { EXTRACT_SCHEMA, type RawExtraction } from "./schema";
 import type { ExtractedContent } from "./extract";
 
+// Cost-minimized model selection:
+// - Text-layer syllabi (the common case) use Haiku — the cheapest model that
+//   reliably extracts structured data. This covers nearly every real upload.
+// - Only scanned/image PDFs fall back to Sonnet's vision, where the extra
+//   accuracy on OCR-quality pages is worth the cost. This path is rare.
 const TEXT_MODEL = process.env.KYBER_PARSER_MODEL || "claude-haiku-4-5";
 const VISION_MODEL =
   process.env.KYBER_PARSER_VISION_MODEL || "claude-sonnet-4-6";
@@ -49,15 +54,7 @@ export async function extractWithClaude(
   const response = await client.messages.create({
     model,
     max_tokens: 4096,
-    system: [
-      {
-        type: "text",
-        text: SYSTEM_PROMPT,
-        // Prompt caching — reduces cost for batch parsing
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cache_control: { type: "ephemeral" } as any,
-      },
-    ],
+    system: SYSTEM_PROMPT,
     tools: [EXTRACT_TOOL],
     tool_choice: { type: "any" },
     messages: [{ role: "user", content: userContent }],

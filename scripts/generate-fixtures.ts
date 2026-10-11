@@ -2,8 +2,8 @@
 /**
  * Parse all 16 syllabi and write TypeScript fixture files.
  *
- * Usage:
- *   ANTHROPIC_API_KEY=sk-ant-... npx tsx scripts/generate-fixtures.ts
+ * Usage (reads ANTHROPIC_API_KEY from .env.local automatically):
+ *   npx tsx scripts/generate-fixtures.ts
  *
  * Writes:
  *   src/data/fixtures/hba1-s1.ts   (HBA1 First Semester, 5 courses)
@@ -14,11 +14,16 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { loadEnvConfig } from "@next/env";
 import { parseBytes } from "../src/lib/parser/index";
 import { PALETTE } from "../src/lib/parser/schema";
 import type { Course } from "../src/lib/types";
 
 const ROOT = path.resolve(__dirname, "..");
+
+// Load .env.local (and friends) the same way `next dev` does, so the script
+// picks up ANTHROPIC_API_KEY without needing to export it manually.
+loadEnvConfig(ROOT);
 const SOURCES = path.join(ROOT, "sources", "Sylabus examples");
 const OUT_DIR = path.join(ROOT, "src", "data", "fixtures");
 
@@ -101,42 +106,48 @@ async function main() {
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
 
-  for (const [fixtureName, pdfPaths] of Object.entries(FIXTURES)) {
-    console.log(`\n=== ${fixtureName} (${pdfPaths.length} courses) ===`);
-    const courses: Course[] = [];
+  const started = Date.now();
+  console.log("Parsing all syllabi concurrently…\n");
 
-    for (let i = 0; i < pdfPaths.length; i++) {
-      const absPath = path.join(SOURCES, pdfPaths[i]);
-      const filename = path.basename(absPath);
-      console.log(`  [${i + 1}/${pdfPaths.length}] Parsing ${filename}...`);
+  // Parse every PDF across every fixture in parallel. Each fixture's courses
+  // keep input order (Promise.all preserves it) so palette colors stay stable.
+  const tasks = Object.entries(FIXTURES).map(async ([fixtureName, pdfPaths]) => {
+    const parsed = await Promise.all(
+      pdfPaths.map(async (rel, i): Promise<Course | null> => {
+        const absPath = path.join(SOURCES, rel);
+        const filename = path.basename(absPath);
 
-      if (!fs.existsSync(absPath)) {
-        console.warn(`  WARN: File not found: ${absPath}`);
-        continue;
-      }
+        if (!fs.existsSync(absPath)) {
+          console.warn(`  WARN: File not found: ${absPath}`);
+          return null;
+        }
 
-      try {
-        const data = fs.readFileSync(absPath);
-        const color = PALETTE[i % PALETTE.length];
-        const course = await parseBytes(data, filename, color);
-        courses.push(course);
-        console.log(`  ✓ ${course.code} — ${course.title} (${course.events.length} events)`);
-      } catch (err) {
-        console.error(`  ✗ Failed: ${err instanceof Error ? err.message : err}`);
-      }
-    }
+        try {
+          const data = fs.readFileSync(absPath);
+          const color = PALETTE[i % PALETTE.length];
+          const course = await parseBytes(data, filename, color);
+          console.log(`  ✓ ${course.code} — ${course.title} (${course.events.length} events)`);
+          return course;
+        } catch (err) {
+          console.error(`  ✗ ${filename} failed: ${err instanceof Error ? err.message : err}`);
+          return null;
+        }
+      })
+    );
 
-    // Normalize dates for demo freshness
+    const courses = parsed.filter((c): c is Course => c !== null);
     const normalized = normalizeDates(courses);
 
-    // Write fixture file
     const varName = fixtureName.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
     const outPath = path.join(OUT_DIR, `${fixtureName}.ts`);
     fs.writeFileSync(outPath, fixtureFileContent(varName, normalized));
-    console.log(`  → Wrote ${outPath}`);
-  }
+    console.log(`  → Wrote ${fixtureName}.ts (${courses.length}/${pdfPaths.length} courses)`);
+  });
 
-  console.log("\nDone! All fixtures generated.");
+  await Promise.all(tasks);
+
+  const secs = ((Date.now() - started) / 1000).toFixed(1);
+  console.log(`\nDone! All fixtures generated in ${secs}s.`);
 }
 
 main().catch((err) => {

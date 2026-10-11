@@ -17,7 +17,7 @@ npm run dev
 | Variable | Required | Description |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | For real syllabus upload | Server-side only — never prefix with `NEXT_PUBLIC_` |
-| `NEXT_PUBLIC_POSTHOG_KEY` | Optional (analytics) | From PostHog project settings |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | Optional (analytics) | PostHog Project API Key (`phc_…`). Legacy name `NEXT_PUBLIC_POSTHOG_KEY` is also accepted. |
 | `NEXT_PUBLIC_POSTHOG_HOST` | Optional | Default: `https://us.i.posthog.com` |
 
 ## Demo Fixtures
@@ -25,7 +25,8 @@ npm run dev
 The app ships with hand-crafted demo data for HBA1 and Data Science semesters. To replace with real parsed data:
 
 ```bash
-ANTHROPIC_API_KEY=sk-ant-... npx tsx scripts/generate-fixtures.ts
+# Reads ANTHROPIC_API_KEY from .env.local automatically
+npx tsx scripts/generate-fixtures.ts
 ```
 
 This parses all 16 PDFs in `sources/Sylabus examples/` and writes TypeScript fixture files to `src/data/fixtures/`. Estimated cost: ~$0.50 in Anthropic API calls.
@@ -41,7 +42,7 @@ The `ANTHROPIC_API_KEY` is server-side only. Users never see it.
 ## PostHog Analytics Setup
 
 1. Create a project at posthog.com
-2. Copy the Project API Key → `NEXT_PUBLIC_POSTHOG_KEY`
+2. Copy the Project API Key → `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN`
 3. Copy the API host → `NEXT_PUBLIC_POSTHOG_HOST`
 
 ### Recommended Funnels to Create
@@ -77,7 +78,7 @@ vercel
 
 # Set environment variables in Vercel dashboard:
 # ANTHROPIC_API_KEY (server-side)
-# NEXT_PUBLIC_POSTHOG_KEY
+# NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
 # NEXT_PUBLIC_POSTHOG_HOST
 ```
 

@@ -9,10 +9,12 @@ interface Props {
   onCancel?: () => void;
 }
 
-type Stage = "idle" | "uploading" | "parsing" | "done" | "error";
+type Stage = "idle" | "parsing" | "done" | "error";
+type FileStatus = "parsing" | "done" | "error";
 
 export default function SyllabusUploader({ onDone, onCancel }: Props) {
   const [files, setFiles] = useState<File[]>([]);
+  const [statuses, setStatuses] = useState<FileStatus[]>([]);
   const [stage, setStage] = useState<Stage>("idle");
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +24,7 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
       (f) => f.type === "application/pdf" || f.name.endsWith(".txt")
     );
     setFiles(picked);
+    setStatuses([]);
     setError(null);
   }
 
@@ -29,30 +32,51 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
     if (!files.length) return;
     track.syllabusUploadStarted(files.length);
 
-    setStage("uploading");
-    const formData = new FormData();
-    for (const f of files) formData.append("files", f);
+    setStage("parsing");
+    setError(null);
+    setStatuses(files.map(() => "parsing"));
 
-    try {
-      setStage("parsing");
-      const res = await fetch("/api/parse", { method: "POST", body: formData });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || `HTTP ${res.status}`);
-      }
-      const { courses } = await res.json() as { courses: Course[] };
+    // Parse every file concurrently — one request per syllabus — so each
+    // course's spinner resolves the moment that syllabus finishes, instead of
+    // waiting on the slowest one in a single batch.
+    const results: Array<Course | null> = new Array(files.length).fill(null);
+    let firstError: string | null = null;
+
+    await Promise.all(
+      files.map(async (file, i) => {
+        try {
+          const formData = new FormData();
+          formData.append("files", file);
+          formData.append("colorIndex", String(i));
+          const res = await fetch("/api/parse", { method: "POST", body: formData });
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            throw new Error(body.error || `HTTP ${res.status}`);
+          }
+          const { courses } = (await res.json()) as { courses: Course[] };
+          results[i] = courses[0] ?? null;
+          setStatuses((prev) => prev.map((s, j) => (j === i ? "done" : s)));
+        } catch (err) {
+          firstError = firstError ?? (err instanceof Error ? err.message : "Parse failed");
+          setStatuses((prev) => prev.map((s, j) => (j === i ? "error" : s)));
+        }
+      })
+    );
+
+    const courses = results.filter((c): c is Course => c !== null);
+    if (courses.length) {
       track.syllabusUploadCompleted(courses.length);
       setStage("done");
       onDone(courses);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Upload failed";
+    } else {
+      const msg = firstError || "Parsing failed";
       track.syllabusUploadFailed(msg);
       setError(msg);
       setStage("error");
     }
   }
 
-  const isLoading = stage === "uploading" || stage === "parsing";
+  const isLoading = stage === "parsing";
 
   return (
     <div className="flex flex-col h-full p-6">
@@ -101,11 +125,12 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
             <p style={{ fontWeight: 600, color: "#e9a319", fontSize: 15 }}>
               {files.length} file{files.length > 1 ? "s" : ""} selected
             </p>
-            <div className="mt-2 space-y-0.5">
-              {files.map((f) => (
-                <p key={f.name} style={{ color: "var(--text-2)", fontSize: 12 }}>
-                  {f.name}
-                </p>
+            <div className="mt-2 space-y-1">
+              {files.map((f, i) => (
+                <div key={f.name} className="flex items-center justify-center gap-1.5">
+                  <StatusIcon status={statuses[i]} />
+                  <span style={{ color: "var(--text-2)", fontSize: 12 }}>{f.name}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -130,7 +155,7 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
 
       {stage === "parsing" && (
         <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 12, textAlign: "center" }}>
-          Parsing with Claude — this takes 15–30 seconds per syllabus…
+          Parsing all syllabi in parallel with Claude…
         </p>
       )}
 
@@ -156,5 +181,45 @@ export default function SyllabusUploader({ onDone, onCancel }: Props) {
         This beta uses anonymous analytics to help improve the product. Syllabus content is processed securely and not stored.
       </p>
     </div>
+  );
+}
+
+/** Per-course parse status: spinner while parsing, check when done, x on error. */
+function StatusIcon({ status }: { status?: FileStatus }) {
+  if (status === "parsing") {
+    return (
+      <span
+        className="animate-spin"
+        aria-label="Parsing"
+        style={{
+          width: 13,
+          height: 13,
+          borderRadius: "9999px",
+          border: "2px solid rgba(233,163,25,0.25)",
+          borderTopColor: "#e9a319",
+          display: "inline-block",
+          flexShrink: 0,
+        }}
+      />
+    );
+  }
+  if (status === "done") {
+    return (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3faf76" strokeWidth="3" style={{ flexShrink: 0 }} aria-label="Parsed">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    );
+  }
+  if (status === "error") {
+    return (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3" style={{ flexShrink: 0 }} aria-label="Failed">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    );
+  }
+  // idle (selected but not yet parsing) — small neutral dot
+  return (
+    <span style={{ width: 5, height: 5, borderRadius: "9999px", background: "var(--text-3)", display: "inline-block", flexShrink: 0 }} />
   );
 }
