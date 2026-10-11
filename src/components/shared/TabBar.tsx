@@ -8,52 +8,76 @@ interface TabBarProps {
   onChange: (tab: Tab) => void;
 }
 
-const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  {
-    id: "courses",
-    label: "Courses",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+function BookIcon({ active }: { active: boolean }) {
+  if (active) {
+    return (
+      <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v14.5a1 1 0 0 1-1 1H6.5a1 1 0 0 0 0 2H19a1 1 0 0 1 0 2H6.5A2.5 2.5 0 0 1 4 20.5v-16z" />
       </svg>
-    ),
-  },
-  {
-    id: "now",
-    label: "Now",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 16 14" />
+    );
+  }
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
+
+function SparkleIcon({ active }: { active: boolean }) {
+  // Four-point sparkle(s), matching the native "Now" icon
+  const fill = active ? "currentColor" : "none";
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth={active ? 0 : 1.9} strokeLinejoin="round">
+      <path d="M13 2.5c.3 2.6 1.4 3.7 4 4-2.6.3-3.7 1.4-4 4-.3-2.6-1.4-3.7-4-4 2.6-.3 3.7-1.4 4-4z" />
+      <path d="M7 11c.25 2.1 1.15 3 3.2 3.2C8.15 14.45 7.25 15.35 7 17.5c-.25-2.15-1.15-3.05-3.2-3.3C5.85 14 6.75 13.1 7 11z" />
+    </svg>
+  );
+}
+
+function CalendarIcon({ active }: { active: boolean }) {
+  if (active) {
+    return (
+      <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 1.5a1 1 0 0 1 1 1V3h8v-.5a1 1 0 1 1 2 0V3h1a2 2 0 0 1 2 2v2H3V5a2 2 0 0 1 2-2h1v-.5a1 1 0 0 1 1-1zM3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9zm4 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM7 16a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
       </svg>
-    ),
-  },
-  {
-    id: "plan",
-    label: "Plan",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-        <line x1="16" y1="2" x2="16" y2="6" />
-        <line x1="8" y1="2" x2="8" y2="6" />
-        <line x1="3" y1="10" x2="21" y2="10" />
-      </svg>
-    ),
-  },
+    );
+  }
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="3" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  );
+}
+
+const TABS: { id: Tab; label: string; render: (active: boolean) => React.ReactNode }[] = [
+  { id: "courses", label: "Courses", render: (a) => <BookIcon active={a} /> },
+  { id: "now", label: "Now", render: (a) => <SparkleIcon active={a} /> },
+  { id: "plan", label: "Plan", render: (a) => <CalendarIcon active={a} /> },
 ];
 
 export default function TabBar({ active, onChange }: TabBarProps) {
   return (
     <nav
       style={{
-        height: "var(--tab-height)",
-        paddingBottom: "var(--safe-bottom)",
-        borderTop: "1px solid var(--border)",
-        background: "var(--surface)",
-        flexShrink: 0,
+        position: "absolute",
+        left: "50%",
+        transform: "translateX(-50%)",
+        bottom: "calc(var(--safe-bottom) + 14px)",
+        display: "flex",
+        alignItems: "center",
+        gap: 4,
+        padding: 6,
+        background: "rgba(255,255,255,0.92)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        borderRadius: 999,
+        boxShadow: "0 8px 28px rgba(70,50,20,0.16), 0 1px 3px rgba(0,0,0,0.06)",
+        zIndex: 30,
       }}
-      className="flex items-stretch"
     >
       {TABS.map((tab) => {
         const isActive = tab.id === active;
@@ -64,17 +88,21 @@ export default function TabBar({ active, onChange }: TabBarProps) {
               onChange(tab.id);
               track.tabViewed(tab.id);
             }}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors"
+            className="flex flex-col items-center justify-center"
             style={{
-              color: isActive ? "#e9a319" : "var(--text-3)",
-              background: "none",
+              gap: 3,
+              minWidth: 76,
+              padding: "8px 14px 7px",
+              borderRadius: 999,
+              background: isActive ? "var(--cream-deep)" : "transparent",
+              color: isActive ? "var(--orange-cta)" : "#55514a",
               border: "none",
               cursor: "pointer",
-              fontFamily: "var(--font-display, Quicksand, sans-serif)",
+              transition: "background .18s, color .18s",
             }}
           >
-            <span style={{ opacity: isActive ? 1 : 0.7 }}>{tab.icon}</span>
-            <span style={{ fontSize: 10, fontWeight: isActive ? 600 : 400 }}>
+            {tab.render(isActive)}
+            <span style={{ fontSize: 11, fontWeight: isActive ? 700 : 500, letterSpacing: "0.01em" }}>
               {tab.label}
             </span>
           </button>

@@ -32,7 +32,7 @@ export default function CourseCard({ course, onClick }: Props) {
         <div>
           <div
             style={{
-              fontFamily: "Quicksand, sans-serif",
+              fontFamily: "var(--ios-font)",
               fontWeight: 700,
               fontSize: 13,
               color: course.color,

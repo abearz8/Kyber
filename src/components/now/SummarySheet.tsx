@@ -16,7 +16,7 @@ export default function SummarySheet({ item, course, onDone, onClose }: Props) {
   const method = course?.studyMethod;
 
   return (
-    <div className="flex flex-col h-full" style={{ background: "var(--cream)" }}>
+    <div className="flex flex-col h-full" style={{ background: "var(--cream)", minHeight: 0 }}>
       {/* Header */}
       <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border)", background: "var(--surface)", flexShrink: 0 }}>
         <div className="flex items-center gap-3">
@@ -25,14 +25,15 @@ export default function SummarySheet({ item, course, onDone, onClose }: Props) {
           </button>
           <div>
             <div className="eyebrow">{item.courseCode}</div>
-            <h2 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: 0 }}>
+            <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: 0 }}>
               {item.title}
             </h2>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: 16, display: "flex", flexDirection: "column", gap: 16 }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: 16 }}>
+       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Intro card */}
         <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12, padding: "12px 14px" }}>
           <p style={{ fontSize: 13, color: "var(--ink2)", margin: 0, lineHeight: 1.5 }}>
@@ -68,6 +69,7 @@ export default function SummarySheet({ item, course, onDone, onClose }: Props) {
             </p>
           </section>
         )}
+       </div>
       </div>
 
       {/* Actions */}
@@ -75,7 +77,7 @@ export default function SummarySheet({ item, course, onDone, onClose }: Props) {
         <button
           onClick={() => { track.nowTaskCompleted(item.kind, 0); onDone(); }}
           className="w-full rounded-xl py-3"
-          style={{ background: "var(--amber)", color: "var(--ink)", fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}
+          style={{ background: "var(--amber)", color: "var(--ink)", fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}
         >
           Done — check it off
         </button>

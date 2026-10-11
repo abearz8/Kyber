@@ -12,8 +12,8 @@ export default function MobileShell({ children, className = "" }: MobileShellPro
         className={`relative w-full bg-[var(--bg)] overflow-hidden flex flex-col ${className}`}
         style={{
           maxWidth: 390,
-          minHeight: "100dvh",
-          maxHeight: "100dvh",
+          minHeight: "calc(100dvh - 32px)",
+          maxHeight: "calc(100dvh - 32px)",
           // On desktop: look like a phone
           borderRadius: "clamp(0px, calc(100vw - 400px), 40px)",
           boxShadow: "0 0 0 1px rgba(255,255,255,0.08), 0 32px 64px rgba(0,0,0,0.6)",
