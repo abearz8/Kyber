@@ -2,8 +2,8 @@
 /**
  * Parse all 16 syllabi and write TypeScript fixture files.
  *
- * Usage:
- *   ANTHROPIC_API_KEY=sk-ant-... npx tsx scripts/generate-fixtures.ts
+ * Usage (reads ANTHROPIC_API_KEY from .env.local automatically):
+ *   npx tsx scripts/generate-fixtures.ts
  *
  * Writes:
  *   src/data/fixtures/hba1-s1.ts   (HBA1 First Semester, 5 courses)
@@ -14,11 +14,16 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { loadEnvConfig } from "@next/env";
 import { parseBytes } from "../src/lib/parser/index";
 import { PALETTE } from "../src/lib/parser/schema";
 import type { Course } from "../src/lib/types";
 
 const ROOT = path.resolve(__dirname, "..");
+
+// Load .env.local (and friends) the same way `next dev` does, so the script
+// picks up ANTHROPIC_API_KEY without needing to export it manually.
+loadEnvConfig(ROOT);
 const SOURCES = path.join(ROOT, "sources", "Sylabus examples");
 const OUT_DIR = path.join(ROOT, "src", "data", "fixtures");
 

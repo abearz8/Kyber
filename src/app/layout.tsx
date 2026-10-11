@@ -27,7 +27,11 @@ export default function RootLayout({
       <body>
         <StoreProvider>
           <AnalyticsProvider
-            posthogKey={process.env.NEXT_PUBLIC_POSTHOG_KEY ?? ""}
+            posthogKey={
+              process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN ??
+              process.env.NEXT_PUBLIC_POSTHOG_KEY ??
+              ""
+            }
             posthogHost={
               process.env.NEXT_PUBLIC_POSTHOG_HOST ??
               "https://us.i.posthog.com"
