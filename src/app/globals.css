@@ -1,25 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  /* Kyber brand palette (see sources/Branding.pdf) */
-  --kyber-amber: #e9a319; /* primary — signals action & emphasis */
-  --kyber-gold: #ffc857; /* accent */
-  --kyber-cream: #fff9ed; /* neutral */
-  --kyber-charcoal: #27251f; /* dark */
+  /* Kyber design tokens — from Process Flow appendix A (Sep 30 2026) */
+  --cream: #fff9ed; /* app background */
+  --cream-deep: #fbf1e3; /* disclosure rows, table fills */
+  --paper: #ffffff; /* cards and sheets */
+  --ink: #27251f; /* primary text, selected chips, dark buttons */
+  --ink2: #3e3a33; /* body copy on tinted panels */
+  --line: #efe6cf; /* card borders */
+  --track: #f0e4cc; /* dividers inside cards */
+  --amber: #e9a319; /* primary action, chips, FAB */
+  --amber-deep: #cb8a0f; /* segmented track, readiness track */
+  --amber-ink: #8a5a06; /* eyebrows, numbers, lines */
+  --yellow-soft: #fff4cf; /* glow, reassurance tints */
+  --green: #4f9a6a; /* "done" text only */
 
-  /* Per-course accent palette (amber-led for brand alignment) */
-  --c1: #e9a319;
-  --c2: #38bdf8;
-  --c3: #34d399;
-  --c4: #a78bfa;
-  --c5: #ffc857;
+  /* Per-course accent palette (dot + calendar tint only) */
+  --c1: #e8784a;
+  --c2: #5aa6e6;
+  --c3: #3faf76;
+  --c4: #987be8;
+  --c5: #d3a608;
 
-  --bg: #fff9ed;
-  --surface: #ffffff;
-  --surface-2: #fdf2dc;
-  --border: #efe6d4;
-  --text: #27251f;
+  --bg: var(--cream);
+  --surface: var(--paper);
+  --surface-2: var(--cream-deep);
+  --border: var(--line);
+  --text: var(--ink);
   --text-2: #6b6559;
   --text-3: #a59f91;
 
@@ -28,12 +36,11 @@
 }
 
 @theme inline {
-  --font-sans: "Manrope", system-ui, sans-serif;
-  --font-display: "Manrope", system-ui, sans-serif;
-  --color-amber: var(--kyber-amber);
-  --color-gold: var(--kyber-gold);
-  --color-cream: var(--kyber-cream);
-  --color-charcoal: var(--kyber-charcoal);
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Quicksand", system-ui, sans-serif;
+  --color-amber: var(--amber);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
 }
 
 * {
@@ -46,11 +53,20 @@ body {
   margin: 0;
   padding: 0;
   background: #27251f;
-  font-family: "Manrope", system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollbar hidden utility */
+/* Eyebrow: uppercase label in amber-ink, tracked (spec: 11pt heavy, 0.3em) */
+.eyebrow {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-ink);
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

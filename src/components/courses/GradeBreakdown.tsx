@@ -26,7 +26,7 @@ export default function GradeBreakdown({ course, onOpenCalc }: Props) {
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
-        <span style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
+        <span style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
           Grade Breakdown
         </span>
         {standing != null && (
@@ -78,10 +78,10 @@ export default function GradeBreakdown({ course, onOpenCalc }: Props) {
         }}
         className="w-full mt-4 rounded-xl py-2.5 text-sm font-semibold transition-opacity"
         style={{
-          background: `${course.color}15`,
-          color: course.color,
-          border: `1px solid ${course.color}30`,
-          fontFamily: "Manrope, sans-serif",
+          background: "var(--yellow-soft)",
+          color: "var(--amber-ink)",
+          border: "1px solid #f2d48a",
+          fontFamily: "Quicksand, sans-serif",
           cursor: "pointer",
           fontSize: 13,
           fontWeight: 600,

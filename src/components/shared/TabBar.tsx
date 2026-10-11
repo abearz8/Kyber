@@ -70,7 +70,7 @@ export default function TabBar({ active, onChange }: TabBarProps) {
               background: "none",
               border: "none",
               cursor: "pointer",
-              fontFamily: "var(--font-display, Manrope, sans-serif)",
+              fontFamily: "var(--font-display, Quicksand, sans-serif)",
             }}
           >
             <span style={{ opacity: isActive ? 1 : 0.7 }}>{tab.icon}</span>

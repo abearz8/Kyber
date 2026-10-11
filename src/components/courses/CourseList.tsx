@@ -37,7 +37,7 @@ export default function CourseList({
         }}
       >
         <div>
-          <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
+          <h1 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
             My Courses
           </h1>
           <p style={{ fontSize: 12, color: "var(--text-3)", margin: "2px 0 0" }}>
@@ -53,7 +53,7 @@ export default function CourseList({
               border: "none",
               borderRadius: 10,
               padding: "6px 14px",
-              fontFamily: "Manrope, sans-serif",
+              fontFamily: "Quicksand, sans-serif",
               fontWeight: 600,
               fontSize: 13,
               cursor: "pointer",
@@ -106,7 +106,7 @@ export default function CourseList({
                   border: isActive ? "1px solid #e9a319" : "1px solid var(--border)",
                   borderRadius: 10,
                   padding: "8px 0",
-                  fontFamily: "Manrope, sans-serif",
+                  fontFamily: "Quicksand, sans-serif",
                   fontWeight: 600,
                   fontSize: 13,
                   cursor: "pointer",

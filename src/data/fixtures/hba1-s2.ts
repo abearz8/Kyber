@@ -8,7 +8,7 @@ export const hba1S2: Course[] = [
     title: "Operations Management",
     term: "Winter 2027",
     instructor: "Prof. L. Martins",
-    color: "#e9a319",
+    color: "#e8784a",
     targetGrade: 80,
     currentTopic: "Process Mapping & Flow Analysis",
     studyMethod: {
@@ -41,7 +41,7 @@ export const hba1S2: Course[] = [
     title: "Business Strategy",
     term: "Winter 2027",
     instructor: "Prof. R. Nakamura",
-    color: "#38bdf8",
+    color: "#5aa6e6",
     targetGrade: 85,
     currentTopic: "Competitive Advantage",
     studyMethod: {
@@ -72,7 +72,7 @@ export const hba1S2: Course[] = [
     title: "Leadership in Teams",
     term: "Winter 2027",
     instructor: "Prof. C. Fontaine",
-    color: "#34d399",
+    color: "#3faf76",
     targetGrade: 80,
     currentTopic: "Psychological Safety in Teams",
     studyMethod: {
@@ -107,7 +107,7 @@ export const hba1S2: Course[] = [
     title: "Managerial Finance",
     term: "Winter 2027",
     instructor: "Prof. W. Adesanya",
-    color: "#a78bfa",
+    color: "#987be8",
     targetGrade: 80,
     currentTopic: "Capital Budgeting",
     studyMethod: {

@@ -16,7 +16,7 @@ const defaultState: AppState = {
   courses: [],
   activeTab: "courses",
   activeSemester: 1,
-  planView: "month",
+  planView: "day",
   completedTaskIds: [],
   gradeSims: {},
   selectedCourseId: null,

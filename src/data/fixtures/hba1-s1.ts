@@ -8,7 +8,7 @@ export const hba1S1: Course[] = [
     title: "Organizational Behaviour",
     term: "Fall 2026",
     instructor: "Prof. M. Holloway",
-    color: "#e9a319",
+    color: "#e8784a",
     targetGrade: 85,
     currentTopic: "Group Dynamics & Team Performance",
     studyMethod: {
@@ -43,7 +43,7 @@ export const hba1S1: Course[] = [
     title: "Marketing Management",
     term: "Fall 2026",
     instructor: "Prof. S. Reyes",
-    color: "#38bdf8",
+    color: "#5aa6e6",
     targetGrade: 80,
     currentTopic: "Consumer Behaviour",
     studyMethod: {
@@ -76,7 +76,7 @@ export const hba1S1: Course[] = [
     title: "Accounting & Financial Fundamentals",
     term: "Fall 2026",
     instructor: "Prof. D. Krishnaswamy",
-    color: "#34d399",
+    color: "#3faf76",
     targetGrade: 80,
     currentTopic: "Income Statement Analysis",
     studyMethod: {
@@ -110,7 +110,7 @@ export const hba1S1: Course[] = [
     title: "Business Analytics",
     term: "Fall 2026",
     instructor: "Prof. T. Okonkwo",
-    color: "#a78bfa",
+    color: "#987be8",
     targetGrade: 85,
     currentTopic: "Regression Analysis",
     studyMethod: {
@@ -146,7 +146,7 @@ export const hba1S1: Course[] = [
     title: "Leadership, Policy & Organizations",
     term: "Fall 2026",
     instructor: "Prof. A. Chambers",
-    color: "#f5c451",
+    color: "#d3a608",
     targetGrade: 80,
     currentTopic: "Stakeholder Theory",
     studyMethod: {

@@ -9,14 +9,6 @@ import { typeLabel } from "@/lib/events";
 import { track } from "@/lib/analytics";
 import { useStore } from "@/hooks/useStore";
 
-const EVENT_DOT_COLORS: Record<string, string> = {
-  exam: "#ef4444",
-  quiz: "#e9a319",
-  assignment: "#38bdf8",
-  lab: "#34d399",
-  reading: "#a78bfa",
-};
-
 interface Props {
   courses: Course[];
 }
@@ -44,7 +36,7 @@ export default function PlanTab({ courses }: Props) {
       {/* Header */}
       <div style={{ padding: "16px 16px 0", background: "var(--surface)", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
         <div className="flex items-center justify-between mb-3">
-          <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
+          <h1 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: 0 }}>
             Plan
           </h1>
           {/* View switcher */}
@@ -57,7 +49,7 @@ export default function PlanTab({ courses }: Props) {
               gap: 2,
             }}
           >
-            {(["month", "week", "day"] as PlanView[]).map((v) => (
+            {(["day", "week", "month"] as PlanView[]).map((v) => (
               <button
                 key={v}
                 onClick={() => setView(v)}
@@ -145,7 +137,7 @@ function MonthView({
   for (const c of courses) {
     for (const e of c.events) {
       const arr = eventMap.get(e.date) ?? [];
-      arr.push(EVENT_DOT_COLORS[e.type] ?? c.color);
+      arr.push(c.color);
       eventMap.set(e.date, arr);
     }
   }
@@ -159,7 +151,7 @@ function MonthView({
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
-        <span style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 15, color: "var(--text)" }}>
+        <span style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 600, fontSize: 15, color: "var(--text)" }}>
           {fmtMonthYear(year, month)}
         </span>
         <button onClick={onNext} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-2)", padding: 4 }}>
@@ -253,7 +245,7 @@ function WeekView({
 
   return (
     <div style={{ padding: "12px 16px" }}>
-      <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 12px" }}>
+      <p style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 12px" }}>
         {fmtShort(days[0])} – {fmtShort(days[6])}
       </p>
       <div className="flex flex-col gap-3">
@@ -293,7 +285,7 @@ function WeekView({
                     const course = courses.find((c) => c.id === e.courseId);
                     return (
                       <div key={e.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: 2, background: EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319", flexShrink: 0 }} />
+                        <div style={{ width: 6, height: 6, borderRadius: 2, background: course?.color ?? "#e9a319", flexShrink: 0 }} />
                         <span style={{ fontSize: 12, color: "var(--text)", fontWeight: 500 }}>{e.title}</span>
                         <span style={{ fontSize: 11, color: "var(--text-3)", marginLeft: "auto" }}>{course?.code}</span>
                       </div>
@@ -334,7 +326,7 @@ function DayView({
           </svg>
         </button>
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--text)", margin: 0 }}>
+          <p style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 16, color: "var(--text)", margin: 0 }}>
             {fmtFull(date)}
           </p>
           {isToday && (
@@ -357,15 +349,15 @@ function DayView({
         <div className="flex flex-col gap-3">
           {events.map((e) => {
             const course = courses.find((c) => c.id === e.courseId);
-            const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319";
+            const color = course?.color ?? "#e9a319";
             return (
               <button
                 key={e.id}
                 className="w-full text-left flex gap-3 rounded-2xl p-4 transition-all"
-                style={{ background: "var(--surface)", border: `1px solid ${color}30` }}
+                style={{ background: `${color}12`, border: "1px solid var(--line)" }}
                 onClick={() => track.planItemOpened(e.type)}
               >
-                <div style={{ width: 4, borderRadius: 2, background: color, flexShrink: 0, alignSelf: "stretch" }} />
+                <div style={{ width: 3, borderRadius: 2, background: color, flexShrink: 0, alignSelf: "stretch" }} />
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
                     <span style={{ fontSize: 10, fontWeight: 600, color: course?.color ?? "#e9a319", background: (course?.color ?? "#e9a319") + "18", borderRadius: 4, padding: "1px 5px" }}>
@@ -395,7 +387,7 @@ function UpcomingList({ courses, limit }: { courses: Course[]; limit: number }) 
     <div className="flex flex-col gap-2">
       {events.map((e) => {
         const course = courses.find((c) => c.id === e.courseId);
-        const color = EVENT_DOT_COLORS[e.type] ?? course?.color ?? "#e9a319";
+        const color = course?.color ?? "#e9a319";
         return (
           <div key={e.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid var(--border)" }}>
             <div style={{ width: 8, height: 8, borderRadius: 2, background: color, flexShrink: 0 }} />

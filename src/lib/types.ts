@@ -1,9 +1,12 @@
+// Per-course dot/calendar-tint palette (Process Flow appendix A).
+// Amber (#e9a319) is reserved for the single action per screen, so it is
+// intentionally NOT a course colour.
 export const PALETTE = [
-  "#e9a319",
-  "#38bdf8",
-  "#34d399",
-  "#a78bfa",
-  "#f5c451",
+  "#e8784a", // terracotta
+  "#5aa6e6", // blue
+  "#3faf76", // green
+  "#987be8", // purple
+  "#d3a608", // gold
 ] as const;
 
 export type PaletteColor = (typeof PALETTE)[number];

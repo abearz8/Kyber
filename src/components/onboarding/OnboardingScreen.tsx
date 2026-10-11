@@ -75,7 +75,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
         <div>
           <h1
             style={{
-              fontFamily: "Manrope, sans-serif",
+              fontFamily: "Quicksand, sans-serif",
               fontWeight: 700,
               fontSize: 28,
               color: "var(--text)",
@@ -160,7 +160,7 @@ export default function OnboardingScreen({ onLoad }: Props) {
           style={{
             background: "var(--surface-2)",
             color: "var(--text)",
-            fontFamily: "Manrope, sans-serif",
+            fontFamily: "Quicksand, sans-serif",
             fontWeight: 600,
             fontSize: 15,
             border: "1px solid var(--border)",
@@ -198,7 +198,7 @@ function DemoButton({
       className="flex items-center gap-3 rounded-xl p-4 transition-opacity text-left"
       style={{
         background: "var(--surface)",
-        border: `1.5px solid ${color}22`,
+        border: "1px solid var(--line)",
         cursor: loading ? "default" : "pointer",
         opacity: loading ? 0.7 : 1,
       }}

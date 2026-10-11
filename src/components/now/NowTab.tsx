@@ -94,7 +94,7 @@ function TaskItem({ task, done, onToggle }: TaskItemProps) {
         >
           {task.title}
         </p>
-        <p style={{ fontSize: 11, color: isUrgent ? "#ef4444" : "var(--text-3)", margin: "2px 0 0", fontWeight: isUrgent ? 600 : 400 }}>
+        <p style={{ fontSize: 11, color: isUrgent ? "var(--amber-ink)" : "var(--text-3)", margin: "2px 0 0", fontWeight: isUrgent ? 600 : 400 }}>
           {relativeLabel(task.date)} · {fmtFull(task.date)}
         </p>
       </div>
@@ -129,7 +129,7 @@ export default function NowTab({ courses }: Props) {
     return (
       <div className="flex flex-col h-full items-center justify-center p-8 text-center">
         <p style={{ fontSize: 48, marginBottom: 12 }}>🎉</p>
-        <p style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--text)", margin: "0 0 8px" }}>
+        <p style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--text)", margin: "0 0 8px" }}>
           Nothing due this week
         </p>
         <p style={{ fontSize: 14, color: "var(--text-3)", lineHeight: 1.5 }}>
@@ -143,7 +143,7 @@ export default function NowTab({ courses }: Props) {
     <div className="flex flex-col h-full">
       {/* Header */}
       <div style={{ padding: "16px 16px 12px", borderBottom: "1px solid var(--border)", background: "var(--surface)", flexShrink: 0 }}>
-        <h1 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: "0 0 2px" }}>
+        <h1 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 22, color: "var(--text)", margin: "0 0 2px" }}>
           Now
         </h1>
         <p style={{ fontSize: 12, color: "var(--text-3)", margin: 0 }}>
@@ -159,8 +159,8 @@ export default function NowTab({ courses }: Props) {
             <SectionLabel label="Up Next" />
             <div
               style={{
-                background: topTask.courseColor + "10",
-                border: `1.5px solid ${topTask.courseColor}30`,
+                background: "var(--yellow-soft)",
+                border: "1.5px solid #f2d48a",
                 borderRadius: 16,
                 padding: "14px 16px",
                 display: "flex",

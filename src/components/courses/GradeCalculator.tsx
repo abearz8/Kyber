@@ -55,46 +55,52 @@ export default function GradeCalculator({ course, onBack }: Props) {
           </button>
           <div>
             <p style={{ fontSize: 11, color: course.color, fontWeight: 600, margin: 0 }}>{course.code}</p>
-            <h2 style={{ fontFamily: "Manrope, sans-serif", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
+            <h2 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
               Grade Calculator
             </h2>
           </div>
         </div>
       </div>
 
-      {/* Projected result */}
+      {/* Projected result — amber-gradient card (spec p.11), no red */}
       <div
         style={{
           padding: "20px 16px",
-          background: meetsTarget ? `${course.color}12` : "#fef2f2",
+          background: "linear-gradient(135deg, #fff4cf 0%, #ffe6a6 100%)",
           borderBottom: "1px solid var(--border)",
           flexShrink: 0,
         }}
       >
-        <p style={{ color: "var(--text-2)", fontSize: 13, margin: "0 0 4px" }}>Projected final grade</p>
+        <p style={{ color: "var(--amber-ink)", fontSize: 13, margin: "0 0 4px" }}>Projected final grade</p>
         <div className="flex items-end gap-3">
           <span
             style={{
-              fontFamily: "Manrope, sans-serif",
-              fontWeight: 800,
-              fontSize: 40,
-              color: meetsTarget ? course.color : "#ef4444",
+              fontFamily: "Quicksand, sans-serif",
+              fontWeight: 700,
+              fontSize: 50,
+              color: "var(--ink)",
               lineHeight: 1,
             }}
           >
             {projected.toFixed(1)}%
           </span>
-          <span style={{ fontWeight: 700, fontSize: 22, color: meetsTarget ? course.color : "#ef4444", marginBottom: 2 }}>
+          <span style={{ fontWeight: 700, fontSize: 22, color: "var(--amber-ink)", marginBottom: 4 }}>
             {projectedLetter}
           </span>
         </div>
         {needed && (
-          <p style={{ fontSize: 12, color: "var(--text-3)", marginTop: 6 }}>
-            Need{" "}
-            <span style={{ fontWeight: 600, color: needed.need > 100 ? "#ef4444" : "var(--text)" }}>
-              {needed.need.toFixed(0)}%
-            </span>{" "}
-            on remaining {needed.remainingWeight}% to hit your {course.targetGrade}% target.
+          <p style={{ fontSize: 12, color: "var(--ink2)", marginTop: 6 }}>
+            {needed.need > 100 ? (
+              <>Hitting {course.targetGrade}% from here is a stretch — aim to protect every remaining mark.</>
+            ) : (
+              <>
+                Need{" "}
+                <span style={{ fontWeight: 700, color: "var(--amber-ink)" }}>
+                  {needed.need.toFixed(0)}%
+                </span>{" "}
+                on remaining {needed.remainingWeight}% to hit your {course.targetGrade}% target.
+              </>
+            )}
           </p>
         )}
       </div>

@@ -8,7 +8,7 @@ export const dsS2: Course[] = [
     title: "Calculus II",
     term: "Winter 2027",
     instructor: "Prof. E. Vasquez",
-    color: "#e9a319",
+    color: "#e8784a",
     targetGrade: 75,
     currentTopic: "Techniques of Integration",
     studyMethod: {
@@ -43,7 +43,7 @@ export const dsS2: Course[] = [
     title: "Computer Science Fundamentals II",
     term: "Winter 2027",
     instructor: "Prof. A. Singh",
-    color: "#38bdf8",
+    color: "#5aa6e6",
     targetGrade: 80,
     currentTopic: "Linked Lists & Stacks",
     studyMethod: {
@@ -78,7 +78,7 @@ export const dsS2: Course[] = [
     title: "Introduction to Data Science",
     term: "Winter 2027",
     instructor: "Prof. Y. Takahashi",
-    color: "#34d399",
+    color: "#3faf76",
     targetGrade: 80,
     currentTopic: "Exploratory Data Analysis",
     studyMethod: {

@@ -8,7 +8,7 @@ export const dsS1: Course[] = [
     title: "Linear Algebra",
     term: "Fall 2026",
     instructor: "Prof. K. Nielsen",
-    color: "#e9a319",
+    color: "#e8784a",
     targetGrade: 80,
     currentTopic: "Matrix Transformations",
     studyMethod: {
@@ -44,7 +44,7 @@ export const dsS1: Course[] = [
     title: "Computer Science Fundamentals",
     term: "Fall 2026",
     instructor: "Prof. J. Park",
-    color: "#38bdf8",
+    color: "#5aa6e6",
     targetGrade: 85,
     currentTopic: "Functions & Recursion",
     studyMethod: {
@@ -87,7 +87,7 @@ export const dsS1: Course[] = [
     title: "Introduction to Film Studies",
     term: "Fall 2026",
     instructor: "Prof. M. Osei",
-    color: "#34d399",
+    color: "#3faf76",
     targetGrade: 80,
     currentTopic: "Narrative Structure in Film",
     studyMethod: {
@@ -123,7 +123,7 @@ export const dsS1: Course[] = [
     title: "Calculus I",
     term: "Fall 2026",
     instructor: "Prof. H. Bergstrom",
-    color: "#a78bfa",
+    color: "#987be8",
     targetGrade: 75,
     currentTopic: "Derivatives & Differentiation Rules",
     studyMethod: {
