@@ -115,6 +115,7 @@ export type AppAction =
   | { type: "SET_MOOD"; mood: Mood }
   | { type: "SET_WEEK_NOTES"; notes: string }
   | { type: "SET_ONBOARDED"; value: boolean }
+  | { type: "HYDRATE"; state: AppState }
   | {
       type: "SET_GRADE_SIM";
       courseId: string;

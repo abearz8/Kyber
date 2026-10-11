@@ -13,18 +13,20 @@ import type { Course } from "@/lib/types";
 import { useState } from "react";
 
 export default function AppPage() {
-  const { state, dispatch, addCourses } = useStore();
+  const { state, dispatch, addCourses, hydrated } = useStore();
   const router = useRouter();
   const [showUpload, setShowUpload] = useState(false);
 
-  // Redirect to onboarding if no courses
+  // Redirect to onboarding if no courses (only once persisted state has loaded)
   useEffect(() => {
-    if (state.courses.length === 0) {
+    if (hydrated && state.courses.length === 0) {
       router.replace("/");
     }
-  }, [state.courses.length, router]);
+  }, [hydrated, state.courses.length, router]);
 
-  if (state.courses.length === 0) return null;
+  // Render nothing until hydration completes so the server and first client
+  // render match; then gate on whether any courses are present.
+  if (!hydrated || state.courses.length === 0) return null;
 
   function handleAddCourses(courses: Course[]) {
     addCourses(courses);
@@ -52,13 +54,6 @@ export default function AppPage() {
     ? courses.filter((c) => c.semester == null || c.semester === activeSemester)
     : courses;
 
-  const completedIds = new Set(state.completedTaskIds);
-  const toggleTask = (id: string) =>
-    dispatch({
-      type: completedIds.has(id) ? "UNCOMPLETE_TASK" : "COMPLETE_TASK",
-      taskId: id,
-    });
-
   // Upload overlay
   if (showUpload) {
     return (
@@ -70,7 +65,7 @@ export default function AppPage() {
 
   return (
     <MobileShell>
-      <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
+      <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", background: "var(--bg-gradient)", position: "relative" }}>
 
         {activeTab === "courses" ? (
           <CourseList
@@ -78,12 +73,10 @@ export default function AppPage() {
             semesters={hasMultipleSemesters ? semestersPresent : []}
             activeSemester={activeSemester}
             openCourseId={selectedCourseId}
-            completedIds={completedIds}
             onSemesterChange={(s) => dispatch({ type: "SET_SEMESTER", semester: s })}
             onToggleCourse={(id) =>
               dispatch({ type: "SET_SELECTED_COURSE", courseId: selectedCourseId === id ? null : id })
             }
-            onToggleStudyTask={toggleTask}
             onDelete={(id) => dispatch({ type: "DELETE_COURSE", courseId: id })}
             onAdd={() => setShowUpload(true)}
             onReset={handleReset}

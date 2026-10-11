@@ -5,6 +5,7 @@ import {
   useContext,
   useReducer,
   useEffect,
+  useState,
   useCallback,
   type Dispatch,
 } from "react";
@@ -124,6 +125,9 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "SET_ONBOARDED":
       return { ...state, hasOnboarded: action.value };
 
+    case "HYDRATE":
+      return action.state;
+
     case "RESET":
       return defaultState;
 
@@ -165,6 +169,8 @@ interface StoreContext {
   dispatch: Dispatch<AppAction>;
   loadCourses: (courses: Course[]) => void;
   addCourses: (courses: Course[]) => void;
+  /** False until the persisted state has been loaded on the client. */
+  hydrated: boolean;
 }
 
 import { createElement, type ReactNode } from "react";
@@ -172,11 +178,22 @@ import { createElement, type ReactNode } from "react";
 const Ctx = createContext<StoreContext | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, loadFromStorage);
+  // Start from defaultState so the server render and the first client render
+  // match (localStorage isn't available during SSR). Load persisted state in
+  // an effect after mount to avoid a hydration mismatch.
+  const [state, dispatch] = useReducer(reducer, defaultState);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    saveToStorage(state);
-  }, [state]);
+    dispatch({ type: "HYDRATE", state: loadFromStorage() });
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    // Don't persist until we've hydrated, or we'd clobber stored data with the
+    // empty defaultState on first mount.
+    if (hydrated) saveToStorage(state);
+  }, [state, hydrated]);
 
   const loadCourses = useCallback(
     (courses: Course[]) => dispatch({ type: "LOAD_COURSES", courses }),
@@ -190,7 +207,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   return createElement(
     Ctx.Provider,
-    { value: { state, dispatch, loadCourses, addCourses } },
+    { value: { state, dispatch, loadCourses, addCourses, hydrated } },
     children
   );
 }

@@ -4,11 +4,11 @@ import { buildInsights, type InsightCard } from "@/lib/grades";
 import type { Course } from "@/lib/types";
 import { track } from "@/lib/analytics";
 
-const KIND_ICON: Record<InsightCard["kind"], string> = {
-  strategy: "🎯",
-  weighting: "⚖️",
-  method: "📚",
-  focus: "🔑",
+const KIND_LABEL: Record<InsightCard["kind"], string> = {
+  strategy: "Grade strategy",
+  weighting: "Grade weighting",
+  method: "Study method",
+  focus: "Where to focus",
 };
 
 interface Props {
@@ -20,32 +20,33 @@ export default function InsightCards({ course }: Props) {
   if (!insights.length) return null;
 
   return (
-    <div>
-      <h3 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)", margin: "0 0 10px" }}>
-        Insights
-      </h3>
-      <div className="flex flex-col gap-2.5">
+    <section>
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Insights</div>
+      <div className="flex flex-col gap-3">
         {insights.map((card) => (
-          <button
+          <div
             key={card.id}
-            className="w-full text-left rounded-2xl p-4 transition-all"
-            style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+            className="w-full text-left"
+            style={{
+              background: "var(--surface)",
+              borderRadius: 18,
+              padding: "16px 18px",
+              boxShadow: "var(--shadow-card)",
+            }}
             onClick={() => track.insightOpened(course.code, card.kind)}
           >
-            <div className="flex gap-3">
-              <span style={{ fontSize: 18, flexShrink: 0 }}>{KIND_ICON[card.kind]}</span>
-              <div>
-                <p style={{ fontWeight: 600, fontSize: 13, color: "var(--text)", margin: "0 0 4px" }}>
-                  {card.title}
-                </p>
-                <p style={{ fontSize: 12, color: "var(--text-2)", margin: 0, lineHeight: 1.5 }}>
-                  {card.body}
-                </p>
-              </div>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 6 }}>
+              {KIND_LABEL[card.kind]}
             </div>
-          </button>
+            <p style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 6px", lineHeight: 1.25 }}>
+              {card.title}
+            </p>
+            <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0, lineHeight: 1.5 }}>
+              {card.body}
+            </p>
+          </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

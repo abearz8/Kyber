@@ -34,7 +34,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
   const meetsTarget = projected >= course.targetGrade;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" style={{ minHeight: 0 }}>
       {/* Header */}
       <div
         style={{
@@ -55,7 +55,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
           </button>
           <div>
             <p style={{ fontSize: 11, color: course.color, fontWeight: 600, margin: 0 }}>{course.code}</p>
-            <h2 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
+            <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 17, margin: 0, color: "var(--text)" }}>
               Grade Calculator
             </h2>
           </div>
@@ -75,7 +75,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
         <div className="flex items-end gap-3">
           <span
             style={{
-              fontFamily: "Quicksand, sans-serif",
+              fontFamily: "var(--ios-font)",
               fontWeight: 700,
               fontSize: 50,
               color: "var(--ink)",
@@ -106,7 +106,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
       </div>
 
       {/* Sliders */}
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "16px" }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "16px 16px 120px" }}>
         <p style={{ color: "var(--text-3)", fontSize: 12, marginBottom: 12 }}>
           Drag sliders to set your expected grade on each component.
         </p>

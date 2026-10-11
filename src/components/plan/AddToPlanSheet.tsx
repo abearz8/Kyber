@@ -53,7 +53,7 @@ export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) 
 
         {!kind ? (
           <>
-            <h2 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 4px" }}>Add to your plan</h2>
+            <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: "0 0 4px" }}>Add to your plan</h2>
             <p style={{ fontSize: 12, color: "var(--text-2)", margin: "0 0 14px" }}>Kyber plans your study around it — no study lands on top.</p>
             <div className="flex flex-col gap-1.5">
               {KINDS.map((k) => (
@@ -74,7 +74,7 @@ export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) 
         ) : (
           <>
             <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
-              <h2 style={{ fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: 0 }}>
+              <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 18, color: "var(--ink)", margin: 0 }}>
                 {selected?.icon} {selected?.label}
               </h2>
               <button onClick={() => setKind(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--amber-ink)", fontSize: 12, fontWeight: 600 }}>Change type</button>
@@ -101,7 +101,7 @@ export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) 
               onClick={submit}
               disabled={!title.trim()}
               className="w-full rounded-xl py-3"
-              style={{ background: "var(--amber)", color: "var(--ink)", fontFamily: "Quicksand, sans-serif", fontWeight: 700, fontSize: 16, border: "none", marginTop: 16, cursor: title.trim() ? "pointer" : "not-allowed", opacity: title.trim() ? 1 : 0.5 }}
+              style={{ background: "var(--amber)", color: "var(--ink)", fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 16, border: "none", marginTop: 16, cursor: title.trim() ? "pointer" : "not-allowed", opacity: title.trim() ? 1 : 0.5 }}
             >
               Add to plan
             </button>

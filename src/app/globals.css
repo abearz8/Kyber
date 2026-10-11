@@ -1,20 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  /* Kyber design tokens — from Process Flow appendix A (Sep 30 2026) */
-  --cream: #fff9ed; /* app background */
-  --cream-deep: #fbf1e3; /* disclosure rows, table fills */
+  /* Kyber design tokens — tuned to match the native (Swift) app screenshots */
+  --cream: #fbf1e4; /* app background (warm, slightly peachy) */
+  --cream-deep: #f3e9db; /* disclosure rows, table fills, tinted panels */
   --paper: #ffffff; /* cards and sheets */
-  --ink: #27251f; /* primary text, selected chips, dark buttons */
+  --ink: #1d1b16; /* primary text (heavy black headlines) */
   --ink2: #3e3a33; /* body copy on tinted panels */
-  --line: #efe6cf; /* card borders */
-  --track: #f0e4cc; /* dividers inside cards */
-  --amber: #e9a319; /* primary action, chips, FAB */
+  --line: #ece2d1; /* hairline borders (barely-there) */
+  --track: #ece2d1; /* dividers inside cards */
+  --amber: #e9a319; /* gold-amber accent, chips */
   --amber-deep: #cb8a0f; /* segmented track, readiness track */
   --amber-ink: #8a5a06; /* eyebrows, numbers, lines */
+  --orange-cta: #e8921e; /* primary app CTA buttons (deeper orange) */
   --yellow-soft: #fff4cf; /* glow, reassurance tints */
-  --green: #4f9a6a; /* "done" text only */
+  --green: #4f9a6a; /* "done" text / processing checks */
 
   /* Per-course accent palette (dot + calendar tint only) */
   --c1: #e8784a;
@@ -24,6 +24,8 @@
   --c5: #d3a608;
 
   --bg: var(--cream);
+  /* subtle top-down peach gradient, like the native screens */
+  --bg-gradient: linear-gradient(180deg, #fdf5ea 0%, #fbf1e4 38%, #f8ecdc 100%);
   --surface: var(--paper);
   --surface-2: var(--cream-deep);
   --border: var(--line);
@@ -31,13 +33,22 @@
   --text-2: #6b6559;
   --text-3: #a59f91;
 
+  /* Card look — floating white on cream */
+  --radius-card: 22px;
+  --shadow-card: 0 1px 2px rgba(60, 45, 20, 0.04), 0 10px 28px rgba(80, 60, 25, 0.06);
+  --shadow-float: 0 6px 20px rgba(70, 50, 20, 0.14);
+
   --tab-height: 72px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* iOS system font stack — matches SF Pro on Apple devices */
+  --ios-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Inter", "Segoe UI", system-ui, sans-serif;
 }
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-display: "Quicksand", system-ui, sans-serif;
+  --font-sans: var(--ios-font);
+  --font-display: var(--ios-font);
   --color-amber: var(--amber);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
@@ -52,18 +63,24 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #27251f;
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  background: #17150f;
+  font-family: var(--ios-font);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Eyebrow: uppercase label in amber-ink, tracked (spec: 11pt heavy, 0.3em) */
+/* Eyebrow: small uppercase section label. Native screens use neutral gray. */
 .eyebrow {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--ios-font);
   font-weight: 700;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Amber-tinted eyebrow variant (e.g. UP NEXT inside a course-tinted box) */
+.eyebrow-accent {
   color: var(--amber-ink);
 }
 
@@ -73,4 +90,10 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Vertical scroll stacks: direct children keep their natural height and never
+   shrink to fit the viewport (otherwise flex-column cards would collapse). */
+.no-scrollbar > * {
+  flex-shrink: 0;
 }
