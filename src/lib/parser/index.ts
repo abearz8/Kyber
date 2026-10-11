@@ -32,15 +32,14 @@ export async function parseBytes(
   return normalize(raw, color ?? PALETTE[0]);
 }
 
-/** Parse multiple files, assigning palette colors round-robin. */
+/**
+ * Parse multiple files concurrently, assigning palette colors round-robin.
+ * Promise.all preserves input order, so colors stay deterministic.
+ */
 export async function parseMany(
   files: Array<{ data: Buffer; filename: string }>
 ): Promise<Course[]> {
-  const results: Course[] = [];
-  for (let i = 0; i < files.length; i++) {
-    const color = PALETTE[i % PALETTE.length];
-    const course = await parseBytes(files[i].data, files[i].filename, color);
-    results.push(course);
-  }
-  return results;
+  return Promise.all(
+    files.map((f, i) => parseBytes(f.data, f.filename, PALETTE[i % PALETTE.length]))
+  );
 }

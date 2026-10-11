@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parseMany } from "@/lib/parser";
+import { parseBytes, parseMany } from "@/lib/parser";
+import { PALETTE } from "@/lib/types";
 
 export const maxDuration = 60;
 
@@ -45,6 +46,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
       if (!files.length) {
         return NextResponse.json({ error: "No valid files" }, { status: 400 });
+      }
+
+      // The client parses files concurrently — one request per file — so it can
+      // show per-course progress. Each request carries its colorIndex to keep
+      // palette colors distinct and stable across those parallel requests.
+      const colorIndexRaw = formData.get("colorIndex");
+      if (colorIndexRaw != null && files.length === 1) {
+        const idx = Number(colorIndexRaw);
+        const color = PALETTE[(Number.isFinite(idx) ? idx : 0) % PALETTE.length];
+        const course = await parseBytes(files[0].data, files[0].filename, color);
+        return NextResponse.json({ courses: [course] });
       }
 
       const courses = await parseMany(files);
