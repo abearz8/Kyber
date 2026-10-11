@@ -27,6 +27,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
   const [adding, setAdding] = useState(false);
   const [showPalette, setShowPalette] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<PlanItem | null>(null);
 
   const completedIds = new Set(state.completedTaskIds);
   const personalEvents = state.personalEvents;
@@ -132,18 +133,21 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
         )}
         {view === "week" && (
           <WeekView courses={courses} personalEvents={personalEvents} anchor={selectedDate}
-            onSelectDay={(d) => { setSelectedDate(d); setView("day"); }} />
+            onSelectDay={(d) => { setSelectedDate(d); setView("day"); }}
+            onSelectItem={setSelectedItem} />
         )}
         {view === "month" && (
           <MonthView courses={courses} personalEvents={personalEvents} year={year} month={month} selected={selectedDate}
-            onSelect={(d) => { setSelectedDate(d); setView("day"); }}
+            onSelect={(d) => setSelectedDate(d)}
+            onGoToDay={(d) => { setSelectedDate(d); setView("day"); }}
             onPrev={() => setMonthOffset((o) => o - 1)} onNext={() => setMonthOffset((o) => o + 1)}
-            onExport={() => downloadICS(courses, personalEvents)} />
+            onExport={() => downloadICS(courses, personalEvents)}
+            onSelectItem={setSelectedItem} />
         )}
       </div>
 
       {/* FAB — sits above tab bar with safe clearance */}
-      {!adding && !showPalette && !showSettings && (
+      {!adding && !showPalette && !showSettings && !selectedItem && (
         <button
           onClick={() => setAdding(true)}
           aria-label="Add to plan"
@@ -178,6 +182,10 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
           onAdd={onAdd}
           onReset={onReset}
         />
+      )}
+
+      {selectedItem && (
+        <PlanItemSheet item={selectedItem} onClose={() => setSelectedItem(null)} />
       )}
     </div>
   );
@@ -273,7 +281,10 @@ function AgendaView({
 
 // ─── Week ───────────────────────────────────────────────────────────────────
 
-function WeekView({ courses, personalEvents, anchor, onSelectDay }: { courses: Course[]; personalEvents: PersonalEvent[]; anchor: string; onSelectDay: (d: string) => void; }) {
+function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }: {
+  courses: Course[]; personalEvents: PersonalEvent[]; anchor: string;
+  onSelectDay: (d: string) => void; onSelectItem: (item: PlanItem) => void;
+}) {
   const today = isoToday();
   const days = weekDays(anchor);
   return (
@@ -283,31 +294,51 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay }: { courses: C
           const items = planItemsForDate(courses, personalEvents, day);
           const isToday = day === today;
           return (
-            <button key={day} onClick={() => onSelectDay(day)} className="w-full text-left"
+            <div key={day}
               style={{
                 borderRadius: "var(--radius-card)", overflow: "hidden", background: "var(--surface)",
                 boxShadow: "var(--shadow-card)",
                 border: isToday ? "1.5px solid var(--orange-cta)" : "1px solid var(--line)",
-                padding: "14px 16px",
               }}>
-              <div className="flex justify-between items-center" style={{ marginBottom: items.length ? 8 : 0 }}>
+              {/* Day header — tap to go to day view */}
+              <div
+                onClick={() => onSelectDay(day)}
+                role="button" tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && onSelectDay(day)}
+                className="flex justify-between items-center"
+                style={{
+                  padding: "13px 16px", cursor: "pointer",
+                  borderBottom: items.length > 0 ? "1px solid var(--line)" : "none",
+                }}
+              >
                 <span style={{ fontSize: 16, fontWeight: 700, color: isToday ? "var(--orange-cta)" : "var(--ink)", fontFamily: "var(--ios-font)" }}>
                   {new Date(day + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
                 </span>
-                {items.length > 0 && <span style={{ fontSize: 13, color: "var(--text-3)" }}>{items.length} item{items.length > 1 ? "s" : ""}</span>}
-              </div>
-              {items.length > 0 && (
-                <div className="flex flex-col gap-2">
-                  {items.map((it) => (
-                    <div key={it.id} className="flex items-center gap-2">
-                      <div style={{ width: 7, height: 7, borderRadius: it.kind === "study" ? 1 : "50%", background: it.color, flexShrink: 0 }} />
-                      <span style={{ fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{it.title}</span>
-                      <span style={{ fontSize: 13, color: "var(--text-3)", marginLeft: "auto", flexShrink: 0 }}>{it.timeLabel.replace("Due ", "")}</span>
-                    </div>
-                  ))}
+                <div className="flex items-center gap-2">
+                  {items.length > 0 && <span style={{ fontSize: 13, color: "var(--text-3)" }}>{items.length} item{items.length > 1 ? "s" : ""}</span>}
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
                 </div>
-              )}
-            </button>
+              </div>
+              {/* Items — each individually tappable */}
+              {items.map((it, i) => (
+                <div
+                  key={it.id}
+                  onClick={() => onSelectItem(it)}
+                  role="button" tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
+                  className="flex items-center gap-3"
+                  style={{
+                    padding: "10px 16px", cursor: "pointer",
+                    borderTop: i === 0 ? "none" : "1px solid var(--line)",
+                  }}
+                >
+                  <div style={{ width: 7, height: 7, borderRadius: it.kind === "study" ? 1 : "50%", background: it.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{it.title}</span>
+                  {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
+                </div>
+              ))}
+            </div>
           );
         })}
       </div>
@@ -317,32 +348,36 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay }: { courses: C
 
 // ─── Month ──────────────────────────────────────────────────────────────────
 
-function MonthView({ courses, personalEvents, year, month, selected, onSelect, onPrev, onNext, onExport }: {
+function MonthView({ courses, personalEvents, year, month, selected, onSelect, onGoToDay, onPrev, onNext, onExport, onSelectItem }: {
   courses: Course[]; personalEvents: PersonalEvent[]; year: number; month: number; selected: string;
-  onSelect: (d: string) => void; onPrev: () => void; onNext: () => void; onExport: () => void;
+  onSelect: (d: string) => void; onGoToDay: (d: string) => void;
+  onPrev: () => void; onNext: () => void; onExport: () => void;
+  onSelectItem: (item: PlanItem) => void;
 }) {
   const today = isoToday();
   const cells = monthGrid(year, month);
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const dotMap = new Map<string, string[]>();
-  // Course events
   for (const c of courses) for (const e of c.events) {
     const a = dotMap.get(e.date) ?? []; a.push(c.color); dotMap.set(e.date, a);
   }
-  // Study tasks (color-coded by course)
   for (const t of allStudyTasks(courses)) {
     const existing = dotMap.get(t.date) ?? [];
     if (!existing.includes(t.courseColor)) existing.push(t.courseColor);
     dotMap.set(t.date, existing);
   }
-  // Personal events
   for (const p of personalEvents) {
     const a = dotMap.get(p.date) ?? []; a.push("#8a8a8a"); dotMap.set(p.date, a);
   }
 
+  const selectedItems = planItemsForDate(courses, personalEvents, selected);
+  const selDate = new Date(selected + "T12:00:00");
+  const selLabel = selDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+
   return (
     <div style={{ padding: "6px 16px 130px" }}>
+      {/* Calendar grid */}
       <div style={{ background: "var(--surface)", borderRadius: "var(--radius-card)", boxShadow: "var(--shadow-card)", padding: "16px 14px" }}>
         <div className="flex items-center justify-between mb-3">
           <button onClick={onPrev} style={navBtn}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg></button>
@@ -376,7 +411,43 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
         </div>
       </div>
 
-      <button onClick={onExport} className="w-full flex items-center justify-center gap-2" style={{ marginTop: 16, background: "var(--surface)", boxShadow: "var(--shadow-card)", border: "none", borderRadius: 14, padding: "14px 0", cursor: "pointer", color: "var(--ink)", fontSize: 15, fontWeight: 600 }}>
+      {/* Selected day items */}
+      <div style={{ marginTop: 12 }}>
+        <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text-2)" }}>{selLabel}</span>
+          <button
+            onClick={() => onGoToDay(selected)}
+            style={{ background: "none", border: "none", fontSize: 13, color: "var(--orange-cta)", fontWeight: 700, cursor: "pointer", padding: 0 }}
+          >
+            View day →
+          </button>
+        </div>
+        <div style={{ background: "var(--surface)", borderRadius: 14, boxShadow: "var(--shadow-card)", overflow: "hidden" }}>
+          {selectedItems.length === 0 ? (
+            <div style={{ padding: "16px 14px", textAlign: "center" }}>
+              <p style={{ fontSize: 14, color: "var(--text-3)", margin: 0 }}>Nothing scheduled</p>
+            </div>
+          ) : (
+            selectedItems.map((it, i) => (
+              <div
+                key={it.id}
+                onClick={() => onSelectItem(it)}
+                role="button" tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
+                className="flex items-center gap-3"
+                style={{ padding: "11px 14px", borderTop: i === 0 ? "none" : "1px solid var(--line)", cursor: "pointer" }}
+              >
+                <div style={{ width: 8, height: 8, borderRadius: it.kind === "study" ? 2 : "50%", background: it.color, flexShrink: 0 }} />
+                <span style={{ fontSize: 14, fontWeight: 500, color: "var(--ink)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{it.title}</span>
+                {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      <button onClick={onExport} className="w-full flex items-center justify-center gap-2" style={{ marginTop: 12, background: "var(--surface)", boxShadow: "var(--shadow-card)", border: "none", borderRadius: 14, padding: "14px 0", cursor: "pointer", color: "var(--ink)", fontSize: 15, fontWeight: 600 }}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange-cta)" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
         Add to Google Calendar
       </button>
@@ -386,3 +457,103 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
 }
 
 const navBtn: React.CSSProperties = { background: "none", border: "none", cursor: "pointer", color: "var(--text-2)", padding: 4 };
+
+// ─── Plan Item Detail Sheet ──────────────────────────────────────────────────
+
+const STUDY_TIPS: Record<string, string> = {
+  "Review lecture notes": "Go through your lecture slides and handouts. Highlight key concepts and rewrite them in your own words — this forces active recall.",
+  "Work through practice problems": "Attempt each problem independently before checking the solution. Note exactly where you get stuck; those gaps are your priority.",
+  "Do a past exam under time": "Set a timer for the real exam duration and treat it as the actual test. After, mark it strictly and review every mistake.",
+  "Build a one-page summary sheet": "Condense the most important formulas, definitions, and concepts onto one page. The act of summarising is itself active recall.",
+  "Outline and gather sources": "Map your main argument and structure before writing. Collect all supporting evidence so you can focus on writing later.",
+  "Draft the main sections": "Write without self-editing — get every idea down first. Speed and momentum beat perfection in the draft phase.",
+  "Revise and finalise": "Read your work aloud to catch awkward phrasing. Verify all citations and that your argument flows clearly from start to finish.",
+};
+
+function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void }) {
+  const isStudy = item.kind === "study";
+  const isCourse = item.kind === "course";
+  const tip = STUDY_TIPS[item.title];
+  const timeParts = item.timeLabel.split(" · ");
+  const duration = timeParts.length > 1 ? timeParts[1] : null;
+
+  return (
+    <>
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.42)", zIndex: 50 }} />
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 51,
+        background: "var(--bg)", borderRadius: "20px 20px 0 0",
+        padding: "0 0 48px",
+        boxShadow: "0 -8px 40px rgba(0,0,0,0.18)",
+      }}>
+        <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 0" }}>
+          <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--line)" }} />
+        </div>
+
+        <div style={{ padding: "14px 20px 0" }}>
+          <div className="flex items-start justify-between gap-3" style={{ marginBottom: 14 }}>
+            <div className="flex items-start gap-3">
+              <div style={{
+                width: 10, height: 10, borderRadius: isStudy ? 2 : "50%",
+                background: item.color, flexShrink: 0, marginTop: 6,
+              }} />
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: item.color, marginBottom: 3 }}>
+                  {isStudy ? "Study block" : isCourse ? (item.eventType === "exam" ? "Exam" : "Deadline") : "Personal"}
+                </div>
+                <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 20, color: "var(--ink)", margin: 0, lineHeight: 1.2 }}>
+                  {item.title}
+                </h2>
+              </div>
+            </div>
+            <button onClick={onClose} style={{ background: "var(--cream-deep)", border: "none", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12" /></svg>
+            </button>
+          </div>
+
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+            {item.courseCode && (
+              <span style={{ background: `${item.color}18`, color: item.color, fontSize: 12, fontWeight: 700, borderRadius: 999, padding: "4px 10px" }}>
+                {item.courseCode}
+              </span>
+            )}
+            {duration ? (
+              <span style={{ background: "var(--cream-deep)", color: "var(--text-2)", fontSize: 12, fontWeight: 600, borderRadius: 999, padding: "4px 10px" }}>
+                {duration}
+              </span>
+            ) : (
+              <span style={{ background: "var(--cream-deep)", color: "var(--text-2)", fontSize: 12, fontWeight: 600, borderRadius: 999, padding: "4px 10px" }}>
+                {item.timeLabel.replace("Due ", "")}
+              </span>
+            )}
+          </div>
+
+          {tip && (
+            <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "14px 16px" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 6 }}>
+                How to approach it
+              </div>
+              <p style={{ fontSize: 14, color: "var(--ink)", margin: 0, lineHeight: 1.55 }}>{tip}</p>
+            </div>
+          )}
+
+          {isCourse && !tip && (
+            <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "14px 16px" }}>
+              <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0, lineHeight: 1.5 }}>
+                {item.eventType === "exam"
+                  ? "Exam day — review your summary sheet the night before and confirm the room and start time."
+                  : "Submission deadline — confirm upload requirements and leave buffer time for any technical issues."}
+              </p>
+            </div>
+          )}
+
+          {item.kind === "personal" && item.subtitle && (
+            <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "14px 16px" }}>
+              <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0 }}>{item.subtitle}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}

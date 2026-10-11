@@ -13,9 +13,9 @@ function Row({ label, children, divider = true }: { label: string; children: Rea
   return (
     <div
       className="flex items-center justify-between"
-      style={{ padding: "14px 0", borderBottom: divider ? "1px solid var(--line)" : "none" }}
+      style={{ padding: "11px 16px", borderBottom: divider ? "1px solid var(--line)" : "none", gap: 12 }}
     >
-      <span style={{ fontSize: 16, color: "var(--ink)" }}>{label}</span>
+      <span style={{ fontSize: 15, color: "var(--ink)" }}>{label}</span>
       {children}
     </div>
   );
@@ -117,7 +117,7 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
           <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "12px 0 4px" }}>
             Preferences
           </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0 4px", boxShadow: "var(--shadow-card)" }}>
+          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
             <Row label="Open app on">
               <SegmentPicker<Tab>
                 value={settings.defaultTab}
@@ -159,10 +159,10 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
           </div>
 
           {/* Courses section */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "20px 0 4px" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "16px 0 4px" }}>
             Courses
           </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0 4px", boxShadow: "var(--shadow-card)" }}>
+          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
             <Row label="Add syllabi">
               <button
                 onClick={() => { onClose(); onAdd(); }}
@@ -187,10 +187,10 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
           </div>
 
           {/* About */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "20px 0 4px" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "16px 0 4px" }}>
             About
           </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0 4px", boxShadow: "var(--shadow-card)" }}>
+          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
             <Row label="App" divider={false}>
               <span style={{ fontSize: 14, color: "var(--text-2)" }}>Kyber · Beta</span>
             </Row>

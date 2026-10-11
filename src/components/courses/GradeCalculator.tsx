@@ -68,13 +68,13 @@ export default function GradeCalculator({ course, onBack }: Props) {
       </div>
 
       {/* Projected result card */}
-      <div style={{ padding: "0 16px 16px", flexShrink: 0 }}>
+      <div style={{ padding: "0 16px 12px", flexShrink: 0 }}>
         <div
           style={{
-            borderRadius: 20,
+            borderRadius: 18,
             background: `linear-gradient(135deg, ${c}22 0%, ${c}0a 100%)`,
             border: `1.5px solid ${c}30`,
-            padding: "20px 20px 18px",
+            padding: "16px 16px 14px",
           }}
         >
           <div className="flex items-start justify-between">
@@ -83,10 +83,10 @@ export default function GradeCalculator({ course, onBack }: Props) {
                 Projected grade
               </p>
               <div className="flex items-end gap-2">
-                <span style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 52, color: gColor, lineHeight: 1 }}>
+                <span style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 42, color: gColor, lineHeight: 1 }}>
                   {projected.toFixed(1)}
                 </span>
-                <span style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 24, color: "var(--text-2)", marginBottom: 6 }}>%</span>
+                <span style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 20, color: "var(--text-2)", marginBottom: 4 }}>%</span>
               </div>
             </div>
             <div style={{ textAlign: "center", background: `${gColor}18`, borderRadius: 16, padding: "10px 14px" }}>
@@ -98,7 +98,7 @@ export default function GradeCalculator({ course, onBack }: Props) {
           </div>
 
           {/* Progress bar toward target */}
-          <div style={{ marginTop: 14 }}>
+          <div style={{ marginTop: 10 }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 6 }}>
               <span style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500 }}>
                 Target: {course.targetGrade}% ({targetLetter})
@@ -135,27 +135,22 @@ export default function GradeCalculator({ course, onBack }: Props) {
 
       {/* Sliders */}
       <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "4px 16px 120px" }}>
-        <p style={{ fontSize: 13, color: "var(--text-3)", marginBottom: 16, fontWeight: 500 }}>
-          Drag to set your expected score on each component.
-        </p>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3">
           {course.gradeComponents.map((comp) => {
             const val = assumptions[comp.id] ?? 0;
             const segColor = gradeColor(val);
             return (
-              <div key={comp.id} style={{ background: "var(--surface)", borderRadius: 16, padding: "16px 16px 14px", boxShadow: "var(--shadow-card)" }}>
-                <div className="flex justify-between items-start" style={{ marginBottom: 12 }}>
+              <div key={comp.id} style={{ background: "var(--surface)", borderRadius: 14, padding: "12px 14px", boxShadow: "var(--shadow-card)" }}>
+                <div className="flex justify-between items-center" style={{ marginBottom: 8 }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)", margin: 0 }}>{comp.name}</p>
-                    <p style={{ fontSize: 12, color: "var(--text-3)", margin: "2px 0 0" }}>{comp.weight}% of final grade</p>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", margin: 0 }}>{comp.name}</p>
+                    <p style={{ fontSize: 12, color: "var(--text-3)", margin: "1px 0 0" }}>{comp.weight}% of grade</p>
                   </div>
-                  <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 12 }}>
-                    <span style={{ fontFamily: "var(--ios-font)", fontSize: 22, fontWeight: 800, color: segColor }}>{val}</span>
-                    <span style={{ fontSize: 14, color: "var(--text-2)", fontWeight: 600 }}>%</span>
+                  <div style={{ flexShrink: 0, marginLeft: 12 }}>
+                    <span style={{ fontFamily: "var(--ios-font)", fontSize: 20, fontWeight: 800, color: segColor }}>{val}</span>
+                    <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 600 }}>%</span>
                   </div>
                 </div>
-
-                {/* Slider */}
                 <input
                   type="range"
                   min={0}
@@ -166,21 +161,6 @@ export default function GradeCalculator({ course, onBack }: Props) {
                   className="w-full"
                   style={{ accentColor: segColor, height: 4 }}
                 />
-                <div className="flex justify-between" style={{ marginTop: 4 }}>
-                  <span style={{ fontSize: 10, color: "var(--text-3)" }}>0%</span>
-                  <span style={{ fontSize: 10, color: "var(--text-3)" }}>50%</span>
-                  <span style={{ fontSize: 10, color: "var(--text-3)" }}>100%</span>
-                </div>
-
-                {/* Contribution chip */}
-                <div style={{ marginTop: 10 }}>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 4, background: `${segColor}18`, borderRadius: 999, padding: "3px 10px" }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: segColor }} />
-                    <span style={{ fontSize: 12, color: segColor, fontWeight: 700 }}>
-                      Contributes {((val / 100) * comp.weight).toFixed(1)} pts
-                    </span>
-                  </div>
-                </div>
               </div>
             );
           })}
