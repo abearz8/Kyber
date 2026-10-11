@@ -96,13 +96,22 @@ export interface AppState {
   personalEvents: PersonalEvent[];
   weekMood: Mood | null;
   weekNotes: string;
-  hasOnboarded: boolean; // true once the reveal has been shown
+  hasOnboarded: boolean;
+  settings: AppSettings;
+}
+
+export interface AppSettings {
+  defaultTab: Tab;
+  defaultPlanView: PlanView;
+  weekStartsOn: 0 | 1;
+  showCompletedTasks: boolean;
 }
 
 export type AppAction =
   | { type: "LOAD_COURSES"; courses: Course[] }
   | { type: "ADD_COURSES"; courses: Course[] }
   | { type: "DELETE_COURSE"; courseId: string }
+  | { type: "UPDATE_COURSE_COLOR"; courseId: string; color: string }
   | { type: "SET_TAB"; tab: Tab }
   | { type: "SET_SEMESTER"; semester: Semester }
   | { type: "SET_PLAN_VIEW"; view: PlanView }
@@ -115,6 +124,7 @@ export type AppAction =
   | { type: "SET_MOOD"; mood: Mood }
   | { type: "SET_WEEK_NOTES"; notes: string }
   | { type: "SET_ONBOARDED"; value: boolean }
+  | { type: "UPDATE_SETTINGS"; settings: Partial<AppSettings> }
   | { type: "HYDRATE"; state: AppState }
   | {
       type: "SET_GRADE_SIM";

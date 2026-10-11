@@ -40,7 +40,7 @@ export default function AppPage() {
     }
   }
 
-  const { activeTab, selectedCourseId, courses, activeSemester } = state;
+  const { activeTab, courses, activeSemester } = state;
 
   // Which semesters are present in the loaded data?
   const semestersPresent = Array.from(
@@ -72,11 +72,7 @@ export default function AppPage() {
             courses={visibleCourses}
             semesters={hasMultipleSemesters ? semestersPresent : []}
             activeSemester={activeSemester}
-            openCourseId={selectedCourseId}
             onSemesterChange={(s) => dispatch({ type: "SET_SEMESTER", semester: s })}
-            onToggleCourse={(id) =>
-              dispatch({ type: "SET_SELECTED_COURSE", courseId: selectedCourseId === id ? null : id })
-            }
             onDelete={(id) => dispatch({ type: "DELETE_COURSE", courseId: id })}
             onAdd={() => setShowUpload(true)}
             onReset={handleReset}
@@ -84,7 +80,7 @@ export default function AppPage() {
         ) : activeTab === "now" ? (
           <NowTab courses={visibleCourses} />
         ) : (
-          <PlanTab courses={visibleCourses} />
+          <PlanTab courses={visibleCourses} onAdd={() => setShowUpload(true)} onReset={handleReset} />
         )}
       </div>
 

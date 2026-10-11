@@ -9,9 +9,16 @@ import {
   useCallback,
   type Dispatch,
 } from "react";
-import type { AppState, AppAction, Course } from "@/lib/types";
+import type { AppState, AppAction, Course, AppSettings } from "@/lib/types";
 
 const STORAGE_KEY = "kyber-app-state-v1";
+
+const defaultSettings: AppSettings = {
+  defaultTab: "courses",
+  defaultPlanView: "day",
+  weekStartsOn: 1,
+  showCompletedTasks: true,
+};
 
 const defaultState: AppState = {
   courses: [],
@@ -26,6 +33,7 @@ const defaultState: AppState = {
   weekMood: null,
   weekNotes: "",
   hasOnboarded: false,
+  settings: defaultSettings,
 };
 
 function reducer(state: AppState, action: AppAction): AppState {
@@ -58,6 +66,22 @@ function reducer(state: AppState, action: AppAction): AppState {
           state.selectedCourseId === action.courseId
             ? null
             : state.selectedCourseId,
+      };
+    }
+
+    case "UPDATE_COURSE_COLOR": {
+      return {
+        ...state,
+        courses: state.courses.map((c) =>
+          c.id === action.courseId ? { ...c, color: action.color } : c
+        ),
+      };
+    }
+
+    case "UPDATE_SETTINGS": {
+      return {
+        ...state,
+        settings: { ...(state.settings ?? defaultSettings), ...action.settings },
       };
     }
 
@@ -126,7 +150,7 @@ function reducer(state: AppState, action: AppAction): AppState {
       return { ...state, hasOnboarded: action.value };
 
     case "HYDRATE":
-      return action.state;
+      return { ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
 
     case "RESET":
       return defaultState;

@@ -92,7 +92,7 @@ export function planItemsForDate(
       kind: "study",
       title: t.label,
       courseCode: t.courseCode,
-      color: "#e9a319",
+      color: t.courseColor,
       date,
       startMin: slot.startMin,
       durationMin: slot.durationMin,

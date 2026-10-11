@@ -5,84 +5,32 @@ import type { Course, Semester } from "@/lib/types";
 import CourseAccordionCard from "./CourseAccordionCard";
 import CourseDetail from "./CourseDetail";
 import KyberLogo from "@/components/shared/KyberLogo";
+import ColorPaletteModal from "@/components/shared/ColorPaletteModal";
+import SettingsModal from "@/components/shared/SettingsModal";
 
 interface Props {
   courses: Course[];
   semesters: Semester[];
   activeSemester: Semester;
-  openCourseId: string | null;
   onSemesterChange: (s: Semester) => void;
-  onToggleCourse: (id: string) => void;
   onDelete: (id: string) => void;
   onAdd: () => void;
   onReset: () => void;
-}
-
-function Avatar({ onAdd, onReset }: { onAdd: () => void; onReset: () => void }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div style={{ position: "relative" }}>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Account"
-        style={{
-          width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
-          border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}
-      >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
-        </svg>
-      </button>
-      {open && (
-        <>
-          <div onClick={() => setOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 40 }} />
-          <div
-            style={{
-              position: "absolute", right: 0, top: 46, zIndex: 41, minWidth: 170,
-              background: "var(--surface)", borderRadius: 14, border: "1px solid var(--line)",
-              boxShadow: "var(--shadow-float)", overflow: "hidden",
-            }}
-          >
-            <MenuItem label="Add syllabi" onClick={() => { setOpen(false); onAdd(); }} />
-            <div style={{ height: 1, background: "var(--line)" }} />
-            <MenuItem label="Start over" danger onClick={() => { setOpen(false); onReset(); }} />
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-function MenuItem({ label, onClick, danger }: { label: string; onClick: () => void; danger?: boolean }) {
-  return (
-    <button
-      onClick={onClick}
-      className="w-full text-left"
-      style={{
-        background: "none", border: "none", cursor: "pointer", padding: "12px 16px",
-        fontSize: 15, fontWeight: 500, color: danger ? "#d1544b" : "var(--ink)",
-      }}
-    >
-      {label}
-    </button>
-  );
 }
 
 export default function CourseList({
   courses,
   semesters,
   activeSemester,
-  openCourseId,
   onSemesterChange,
-  onToggleCourse,
   onDelete,
   onAdd,
   onReset,
 }: Props) {
+  const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
   const [detailCourseId, setDetailCourseId] = useState<string | null>(null);
+  const [showPalette, setShowPalette] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const detailCourse = courses.find((c) => c.id === detailCourseId);
 
   if (detailCourse) {
@@ -98,17 +46,43 @@ export default function CourseList({
   return (
     <div className="flex flex-col h-full" style={{ minHeight: 0 }}>
       {/* Header */}
-      <div
-        style={{
-          padding: "14px 16px 6px",
-          flexShrink: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <div style={{ padding: "14px 16px 6px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <KyberLogo size={40} />
-        <Avatar onAdd={onAdd} onReset={onReset} />
+        <div className="flex items-center gap-2">
+          {/* Colour palette */}
+          <button
+            onClick={() => setShowPalette(true)}
+            aria-label="Course colours"
+            style={{
+              width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+              border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="13.5" cy="6.5" r="2.5" />
+              <circle cx="17.5" cy="13.5" r="2.5" />
+              <circle cx="8.5" cy="7.5" r="2.5" />
+              <circle cx="6.5" cy="14.5" r="2.5" />
+              <path d="M12 2a10 10 0 0 0 0 20c1.4 0 2.3-.8 2.3-2 0-.6-.2-1.1-.2-1.6 0-.7.6-1.4 1.4-1.4H17a5 5 0 0 0 5-5c0-5-4.5-9-10-9z" />
+            </svg>
+          </button>
+          {/* Settings */}
+          <button
+            onClick={() => setShowSettings(true)}
+            aria-label="Settings"
+            style={{
+              width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+              border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Semester switcher */}
@@ -144,21 +118,36 @@ export default function CourseList({
           {courses.length === 0 ? (
             <div style={{ textAlign: "center", padding: "60px 20px", color: "var(--text-3)" }}>
               <p style={{ fontWeight: 700, color: "var(--text-2)", fontSize: 16 }}>No courses yet</p>
-              <p style={{ fontSize: 14 }}>Add syllabi from the menu to get started</p>
+              <p style={{ fontSize: 14 }}>Add syllabi from settings to get started</p>
             </div>
           ) : (
             courses.map((c) => (
               <CourseAccordionCard
                 key={c.id}
                 course={c}
-                open={openCourseId === c.id}
-                onToggle={() => onToggleCourse(c.id)}
+                open={expandedCourseId === c.id}
+                onToggle={() => setExpandedCourseId(expandedCourseId === c.id ? null : c.id)}
                 onOpenDetail={() => setDetailCourseId(c.id)}
               />
             ))
           )}
         </div>
       </div>
+
+      {showPalette && (
+        <ColorPaletteModal
+          courses={courses}
+          onClose={() => setShowPalette(false)}
+        />
+      )}
+
+      {showSettings && (
+        <SettingsModal
+          onClose={() => setShowSettings(false)}
+          onAdd={onAdd}
+          onReset={onReset}
+        />
+      )}
     </div>
   );
 }

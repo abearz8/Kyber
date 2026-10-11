@@ -4,22 +4,29 @@ import { useState } from "react";
 import type { Course, PlanView, PersonalEvent } from "@/lib/types";
 import { isoToday, addDays, weekDays, monthGrid, fmtMonthYear } from "@/lib/dates";
 import { planItemsForDate, downloadICS, type PlanItem } from "@/lib/plan";
+import { allStudyTasks } from "@/lib/studyplan";
 import { track } from "@/lib/analytics";
 import { useStore } from "@/hooks/useStore";
 import AddToPlanSheet from "./AddToPlanSheet";
 import KyberLogo from "@/components/shared/KyberLogo";
+import ColorPaletteModal from "@/components/shared/ColorPaletteModal";
+import SettingsModal from "@/components/shared/SettingsModal";
 
 interface Props {
   courses: Course[];
+  onAdd: () => void;
+  onReset: () => void;
 }
 
-export default function PlanTab({ courses }: Props) {
+export default function PlanTab({ courses, onAdd, onReset }: Props) {
   const { state, dispatch } = useStore();
   const view = state.planView;
   const today = isoToday();
   const [selectedDate, setSelectedDate] = useState<string>(today);
   const [monthOffset, setMonthOffset] = useState(0);
   const [adding, setAdding] = useState(false);
+  const [showPalette, setShowPalette] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const completedIds = new Set(state.completedTaskIds);
   const personalEvents = state.personalEvents;
@@ -43,28 +50,55 @@ export default function PlanTab({ courses }: Props) {
       <div style={{ padding: "14px 16px 10px", flexShrink: 0 }}>
         <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
           <KyberLogo size={40} />
-          <div className="flex items-center gap-2" style={{
-            background: "var(--surface)", border: "1px solid var(--line)", boxShadow: "var(--shadow-card)",
-            borderRadius: 999, padding: "6px 8px",
-          }}>
+          <div className="flex items-center gap-2">
+            {/* Export calendar */}
             <button
               onClick={() => downloadICS(courses, personalEvents)}
               aria-label="Export calendar"
-              style={{ background: "none", border: "none", cursor: "pointer", color: "#55514a", display: "flex", padding: 2 }}
+              style={{
+                width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+                border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
             >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="13.5" cy="6.5" r="1.3" /><circle cx="17.5" cy="10.5" r="1.3" /><circle cx="8.5" cy="7.5" r="1.3" /><circle cx="6.5" cy="12.5" r="1.3" />
-                <path d="M12 2a10 10 0 0 0 0 20c1.4 0 2-1 2-2 0-.6-.4-1-.4-1.6 0-.6.5-1.2 1.2-1.2H16a6 6 0 0 0 6-6c0-5-4.5-9-10-9z" />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                <polyline points="8 14 12 18 16 14" /><line x1="12" y1="12" x2="12" y2="18" />
               </svg>
             </button>
-            <div style={{
-              width: 34, height: 34, borderRadius: "50%", background: "var(--cream-deep)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
+            {/* Colour palette */}
+            <button
+              onClick={() => setShowPalette(true)}
+              aria-label="Course colours"
+              style={{
+                width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+                border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="8" r="4" /><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+                <circle cx="13.5" cy="6.5" r="2.5" />
+                <circle cx="17.5" cy="13.5" r="2.5" />
+                <circle cx="8.5" cy="7.5" r="2.5" />
+                <circle cx="6.5" cy="14.5" r="2.5" />
+                <path d="M12 2a10 10 0 0 0 0 20c1.4 0 2.3-.8 2.3-2 0-.6-.2-1.1-.2-1.6 0-.7.6-1.4 1.4-1.4H17a5 5 0 0 0 5-5c0-5-4.5-9-10-9z" />
               </svg>
-            </div>
+            </button>
+            {/* Settings */}
+            <button
+              onClick={() => setShowSettings(true)}
+              aria-label="Settings"
+              style={{
+                width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+                border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </button>
           </div>
         </div>
 
@@ -108,24 +142,41 @@ export default function PlanTab({ courses }: Props) {
         )}
       </div>
 
-      {/* FAB */}
-      <button
-        onClick={() => setAdding(true)}
-        aria-label="Add to plan"
-        style={{
-          position: "absolute", right: 18, bottom: 96, width: 56, height: 56, borderRadius: 28,
-          background: "var(--orange-cta)", border: "none", cursor: "pointer", color: "#fff",
-          boxShadow: "0 8px 22px rgba(232,146,30,0.42)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 25,
-        }}
-      >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
-      </button>
+      {/* FAB — sits above tab bar with safe clearance */}
+      {!adding && !showPalette && !showSettings && (
+        <button
+          onClick={() => setAdding(true)}
+          aria-label="Add to plan"
+          style={{
+            position: "absolute", right: 20, bottom: 110, width: 56, height: 56, borderRadius: 28,
+            background: "var(--orange-cta)", border: "none", cursor: "pointer", color: "#fff",
+            boxShadow: "0 8px 22px rgba(232,146,30,0.42)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 25,
+          }}
+        >
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
+        </button>
+      )}
 
       {adding && (
         <AddToPlanSheet
           defaultDate={selectedDate}
           onAdd={(ev) => { dispatch({ type: "ADD_PERSONAL_EVENT", event: ev }); track.planItemOpened(ev.kind); setAdding(false); setSelectedDate(ev.date); }}
           onCancel={() => setAdding(false)}
+        />
+      )}
+
+      {showPalette && (
+        <ColorPaletteModal
+          courses={courses}
+          onClose={() => setShowPalette(false)}
+        />
+      )}
+
+      {showSettings && (
+        <SettingsModal
+          onClose={() => setShowSettings(false)}
+          onAdd={onAdd}
+          onReset={onReset}
         />
       )}
     </div>
@@ -275,9 +326,17 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const dotMap = new Map<string, string[]>();
+  // Course events
   for (const c of courses) for (const e of c.events) {
     const a = dotMap.get(e.date) ?? []; a.push(c.color); dotMap.set(e.date, a);
   }
+  // Study tasks (color-coded by course)
+  for (const t of allStudyTasks(courses)) {
+    const existing = dotMap.get(t.date) ?? [];
+    if (!existing.includes(t.courseColor)) existing.push(t.courseColor);
+    dotMap.set(t.date, existing);
+  }
+  // Personal events
   for (const p of personalEvents) {
     const a = dotMap.get(p.date) ?? []; a.push("#8a8a8a"); dotMap.set(p.date, a);
   }
