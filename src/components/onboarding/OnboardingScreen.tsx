@@ -55,22 +55,14 @@ export default function OnboardingScreen({ onLoad }: Props) {
     <div className="flex flex-col h-full px-6 pt-16 pb-10">
       {/* Logo + headline */}
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
-        <div
-          style={{
-            width: 64,
-            height: 64,
-            borderRadius: 18,
-            background: "#e9a319",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-          </svg>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/kyber-logo.png"
+          alt="Kyber"
+          width={64}
+          height={64}
+          style={{ width: 64, height: 64, borderRadius: 16, objectFit: "contain" }}
+        />
 
         <div>
           <h1

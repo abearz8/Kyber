@@ -44,23 +44,14 @@ export default function SemesterReveal({ courses, onEnter }: Props) {
       }}
     >
       {/* App icon */}
-      <div
-        style={{
-          width: 64,
-          height: 64,
-          borderRadius: 18,
-          background: "var(--ink)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 20,
-        }}
-      >
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e9a319" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-        </svg>
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/kyber-logo.png"
+        alt="Kyber"
+        width={64}
+        height={64}
+        style={{ width: 64, height: 64, borderRadius: 16, objectFit: "contain", marginBottom: 20 }}
+      />
 
       {!revealed ? (
         <>
