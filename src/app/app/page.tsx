@@ -6,7 +6,6 @@ import { useStore } from "@/hooks/useStore";
 import MobileShell from "@/components/shared/MobileShell";
 import TabBar from "@/components/shared/TabBar";
 import CourseList from "@/components/courses/CourseList";
-import CourseDetail from "@/components/courses/CourseDetail";
 import NowTab from "@/components/now/NowTab";
 import PlanTab from "@/components/plan/PlanTab";
 import SyllabusUploader from "@/components/upload/SyllabusUploader";
@@ -53,7 +52,12 @@ export default function AppPage() {
     ? courses.filter((c) => c.semester == null || c.semester === activeSemester)
     : courses;
 
-  const selectedCourse = visibleCourses.find((c) => c.id === selectedCourseId) ?? null;
+  const completedIds = new Set(state.completedTaskIds);
+  const toggleTask = (id: string) =>
+    dispatch({
+      type: completedIds.has(id) ? "UNCOMPLETE_TASK" : "COMPLETE_TASK",
+      taskId: id,
+    });
 
   // Upload overlay
   if (showUpload) {
@@ -68,20 +72,19 @@ export default function AppPage() {
     <MobileShell>
       <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
 
-        {/* Course detail overlays tab content when open */}
-        {activeTab === "courses" && selectedCourse ? (
-          <CourseDetail
-            course={selectedCourse}
-            onBack={() => dispatch({ type: "SET_SELECTED_COURSE", courseId: null })}
-            onDelete={(id) => dispatch({ type: "DELETE_COURSE", courseId: id })}
-          />
-        ) : activeTab === "courses" ? (
+        {activeTab === "courses" ? (
           <CourseList
             courses={visibleCourses}
             semesters={hasMultipleSemesters ? semestersPresent : []}
             activeSemester={activeSemester}
+            openCourseId={selectedCourseId}
+            completedIds={completedIds}
             onSemesterChange={(s) => dispatch({ type: "SET_SEMESTER", semester: s })}
-            onOpen={(id) => dispatch({ type: "SET_SELECTED_COURSE", courseId: id })}
+            onToggleCourse={(id) =>
+              dispatch({ type: "SET_SELECTED_COURSE", courseId: selectedCourseId === id ? null : id })
+            }
+            onToggleStudyTask={toggleTask}
+            onDelete={(id) => dispatch({ type: "DELETE_COURSE", courseId: id })}
             onAdd={() => setShowUpload(true)}
             onReset={handleReset}
           />

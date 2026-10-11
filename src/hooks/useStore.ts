@@ -21,6 +21,10 @@ const defaultState: AppState = {
   gradeSims: {},
   selectedCourseId: null,
   selectedDate: null,
+  personalEvents: [],
+  weekMood: null,
+  weekNotes: "",
+  hasOnboarded: false,
 };
 
 function reducer(state: AppState, action: AppAction): AppState {
@@ -101,6 +105,24 @@ function reducer(state: AppState, action: AppAction): AppState {
           },
         },
       };
+
+    case "ADD_PERSONAL_EVENT":
+      return { ...state, personalEvents: [...state.personalEvents, action.event] };
+
+    case "DELETE_PERSONAL_EVENT":
+      return {
+        ...state,
+        personalEvents: state.personalEvents.filter((e) => e.id !== action.id),
+      };
+
+    case "SET_MOOD":
+      return { ...state, weekMood: action.mood };
+
+    case "SET_WEEK_NOTES":
+      return { ...state, weekNotes: action.notes };
+
+    case "SET_ONBOARDED":
+      return { ...state, hasOnboarded: action.value };
 
     case "RESET":
       return defaultState;

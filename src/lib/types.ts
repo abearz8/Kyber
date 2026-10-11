@@ -62,6 +62,28 @@ export interface Course {
 export type Tab = "courses" | "now" | "plan";
 export type PlanView = "month" | "week" | "day";
 
+// Personal (user-added) plan items — Process Flow p.25 "Add to your plan" (7 types)
+export type PersonalEventKind =
+  | "personal"
+  | "work"
+  | "sport"
+  | "social"
+  | "appointment"
+  | "study"
+  | "other";
+
+export interface PersonalEvent {
+  id: string;
+  kind: PersonalEventKind;
+  title: string;
+  date: string; // ISO YYYY-MM-DD
+  start?: string; // "HH:MM"
+  end?: string; // "HH:MM"
+}
+
+// How a week feels — Process Flow p.22 check-in
+export type Mood = "light" | "good" | "busy" | "overwhelmed";
+
 export interface AppState {
   courses: Course[];
   activeTab: Tab;
@@ -71,6 +93,10 @@ export interface AppState {
   gradeSims: Record<string, Record<string, (number | null)[]>>;
   selectedCourseId: string | null;
   selectedDate: string | null; // ISO date for plan day-drill
+  personalEvents: PersonalEvent[];
+  weekMood: Mood | null;
+  weekNotes: string;
+  hasOnboarded: boolean; // true once the reveal has been shown
 }
 
 export type AppAction =
@@ -84,6 +110,11 @@ export type AppAction =
   | { type: "SET_SELECTED_DATE"; date: string | null }
   | { type: "COMPLETE_TASK"; taskId: string }
   | { type: "UNCOMPLETE_TASK"; taskId: string }
+  | { type: "ADD_PERSONAL_EVENT"; event: PersonalEvent }
+  | { type: "DELETE_PERSONAL_EVENT"; id: string }
+  | { type: "SET_MOOD"; mood: Mood }
+  | { type: "SET_WEEK_NOTES"; notes: string }
+  | { type: "SET_ONBOARDED"; value: boolean }
   | {
       type: "SET_GRADE_SIM";
       courseId: string;
@@ -91,6 +122,19 @@ export type AppAction =
       scores: (number | null)[];
     }
   | { type: "RESET" };
+
+// A generated study-prep step for an upcoming exam/deadline (Process Flow p.12/18)
+export interface StudyTask {
+  id: string; // stable, used in completedTaskIds
+  courseId: string;
+  courseCode: string;
+  courseColor: string;
+  label: string; // e.g. "Review lectures 1–6"
+  minutes: number;
+  targetEventId: string; // the exam/deadline this prepares for
+  targetTitle: string;
+  date: string; // ISO date this step is scheduled for
+}
 
 export interface NowTask {
   id: string;

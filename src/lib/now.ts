@@ -1,63 +1,87 @@
-import type { Course, NowTask, EventType } from "./types";
-import { daysUntil } from "./dates";
+import type { Course } from "./types";
+import { daysUntil, isoToday } from "./dates";
+import { allStudyTasks } from "./studyplan";
 
-function urgencyFactor(days: number): number {
-  if (days === 0) return 10;
-  if (days === 1) return 8;
-  if (days === 2) return 6;
-  if (days <= 5) return 4;
-  if (days <= 7) return 2;
-  return 0;
+// A single actionable item on the Now tab — either a generated study block or
+// a hard deadline that lands today. Process Flow p.19–20.
+export interface NowItem {
+  id: string; // stable id (study task id or `deadline-<eventId>`)
+  kind: "study" | "deadline";
+  title: string;
+  courseCode: string;
+  courseColor: string;
+  minutes: number; // estimated effort (study) or 0 for a deadline
+  note: string; // short why-line
+  targetTitle?: string; // what this prepares for (study tasks)
 }
 
-function bucket(days: number): "today" | "tomorrow" | "upcoming" {
-  if (days <= 0) return "today";
-  if (days === 1) return "tomorrow";
-  return "upcoming";
+export interface NowAgenda {
+  items: NowItem[]; // today's plan, deadlines first then study blocks
+  totalMinutes: number;
 }
 
-/**
- * Generate prioritised Now-tab tasks from all courses.
- * Only includes events in the next 7 days (or past-due today).
- */
-export function generateNowTasks(courses: Course[]): NowTask[] {
-  const tasks: NowTask[] = [];
+/** Build today's agenda: deadlines due today + study blocks scheduled today. */
+export function nowAgenda(courses: Course[]): NowAgenda {
+  const today = isoToday();
+  const items: NowItem[] = [];
 
-  for (const course of courses) {
-    for (const event of course.events) {
-      const days = daysUntil(event.date);
-      if (days < 0 || days > 7) continue;
-
-      // Skip low-weight readings (not worth surfacing)
-      if (event.type === "reading" && event.weight === 0 && days > 1) continue;
-
-      const factor = urgencyFactor(days);
-      const priority = event.weight > 0 ? event.weight * factor : factor * 0.5;
-
-      tasks.push({
-        id: `now-${event.id}`,
-        eventId: event.id,
-        courseId: course.id,
-        courseCode: course.code,
-        courseColor: course.color,
-        title: event.type === "exam"
-          ? `Exam: ${event.title}`
-          : event.type === "reading"
-          ? `Read: ${event.title}`
-          : event.title,
-        date: event.date,
-        type: event.type as EventType,
-        weight: event.weight,
-        daysUntil: days,
-        priority,
-        bucket: bucket(days),
+  // Deadlines due today
+  for (const c of courses) {
+    for (const e of c.events) {
+      if (e.date !== today || daysUntil(e.date) !== 0) continue;
+      if (e.type === "reading") continue;
+      items.push({
+        id: `deadline-${e.id}`,
+        kind: "deadline",
+        title: e.title,
+        courseCode: c.code,
+        courseColor: c.color,
+        minutes: 0,
+        note: e.weight > 0 ? `Due today · ${e.weight}% of grade` : "Due today",
       });
     }
   }
 
-  return tasks.sort((a, b) => b.priority - a.priority || a.daysUntil - b.daysUntil);
+  // Study blocks scheduled today
+  const study = allStudyTasks(courses).filter((t) => t.date === today);
+  for (const t of study) {
+    items.push({
+      id: t.id,
+      kind: "study",
+      title: t.label,
+      courseCode: t.courseCode,
+      courseColor: t.courseColor,
+      minutes: t.minutes,
+      note: `Prep for ${t.targetTitle}`,
+      targetTitle: t.targetTitle,
+    });
+  }
+
+  const totalMinutes = items.reduce((s, i) => s + i.minutes, 0);
+  return { items, totalMinutes };
 }
 
-export function topTask(tasks: NowTask[]): NowTask | null {
-  return tasks.find((t) => !t) ?? tasks[0] ?? null;
+/** The first not-yet-done item = the "Up next" hero. */
+export function upNext(agenda: NowAgenda, completedIds: Set<string>): NowItem | null {
+  return agenda.items.find((i) => !completedIds.has(i.id)) ?? null;
+}
+
+/** Time-of-day greeting (no name — shared demo link). */
+export function greeting(): string {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 18) return "Good afternoon";
+  return "Good evening";
+}
+
+/** Day summary line based on remaining work. Process Flow p.19/20. */
+export function daySummary(agenda: NowAgenda, completedIds: Set<string>): string {
+  const remaining = agenda.items.filter((i) => !completedIds.has(i.id));
+  if (agenda.items.length === 0) return "Nothing scheduled today — enjoy the breathing room.";
+  if (remaining.length === 0) return "All done for today — nice work. ✦";
+  const mins = remaining.reduce((s, i) => s + i.minutes, 0);
+  const timeLabel =
+    mins >= 60 ? `about ${Math.round(mins / 60)} hour${mins >= 120 ? "s" : ""}` : `about ${mins} minutes`;
+  if (remaining.length === 1) return `Nearly there — one thing left · ${timeLabel}`;
+  return `${remaining.length} things today · ${timeLabel}`;
 }
