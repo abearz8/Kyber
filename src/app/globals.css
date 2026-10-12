@@ -67,6 +67,52 @@ body {
   font-family: var(--ios-font);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overscroll-behavior: none;
+}
+
+/* Prevent iOS double-tap zoom on interactive elements */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
+input, textarea, select {
+  font-size: max(16px, 1em);
+}
+
+/* ── Mobile Shell ──────────────────────────────────────────────────────────── */
+
+.mobile-shell-outer {
+  min-height: 100dvh;
+  background: #17150f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-shell-inner {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  height: 100dvh;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop: render as a phone frame */
+@media (min-width: 480px) {
+  .mobile-shell-outer {
+    padding: 16px;
+  }
+  .mobile-shell-inner {
+    height: calc(100dvh - 32px);
+    min-height: calc(100dvh - 32px);
+    max-height: calc(100dvh - 32px);
+    border-radius: 40px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 32px 64px rgba(0, 0, 0, 0.6);
+  }
 }
 
 /* Eyebrow: small uppercase section label. Native screens use neutral gray. */

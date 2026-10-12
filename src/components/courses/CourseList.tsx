@@ -113,7 +113,7 @@ export default function CourseList({
       )}
 
       {/* Card list */}
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "10px 16px 120px" }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "10px 16px calc(120px + var(--safe-bottom))" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {courses.length === 0 ? (
             <div style={{ textAlign: "center", padding: "60px 20px", color: "var(--text-3)" }}>

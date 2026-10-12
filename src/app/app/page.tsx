@@ -34,10 +34,8 @@ export default function AppPage() {
   }
 
   function handleReset() {
-    if (confirm("Start over? This will clear all loaded courses.")) {
-      dispatch({ type: "RESET" });
-      router.replace("/");
-    }
+    dispatch({ type: "RESET" });
+    router.replace("/");
   }
 
   const { activeTab, courses, activeSemester } = state;
@@ -78,7 +76,7 @@ export default function AppPage() {
             onReset={handleReset}
           />
         ) : activeTab === "now" ? (
-          <NowTab courses={visibleCourses} />
+          <NowTab courses={visibleCourses} onAdd={() => setShowUpload(true)} onReset={handleReset} />
         ) : (
           <PlanTab courses={visibleCourses} onAdd={() => setShowUpload(true)} onReset={handleReset} />
         )}

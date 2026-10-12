@@ -152,7 +152,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
           onClick={() => setAdding(true)}
           aria-label="Add to plan"
           style={{
-            position: "absolute", right: 20, bottom: 110, width: 56, height: 56, borderRadius: 28,
+            position: "absolute", right: 20, bottom: "calc(110px + var(--safe-bottom))", width: 56, height: 56, borderRadius: 28,
             background: "var(--orange-cta)", border: "none", cursor: "pointer", color: "#fff",
             boxShadow: "0 8px 22px rgba(232,146,30,0.42)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 25,
           }}
@@ -210,7 +210,7 @@ function AgendaView({
   const anyItems = days.some((d) => d.items.length > 0);
 
   return (
-    <div style={{ padding: "6px 16px 130px", display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ padding: "6px 16px calc(130px + var(--safe-bottom))", display: "flex", flexDirection: "column", gap: 14 }}>
       {!anyItems && (
         <div style={{ textAlign: "center", padding: "50px 20px", color: "var(--text-3)" }}>
           <p style={{ fontSize: 30, marginBottom: 6 }}>✦</p>
@@ -288,7 +288,7 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }
   const today = isoToday();
   const days = weekDays(anchor);
   return (
-    <div style={{ padding: "6px 16px 130px" }}>
+    <div style={{ padding: "6px 16px calc(130px + var(--safe-bottom))" }}>
       <div className="flex flex-col gap-3">
         {days.map((day) => {
           const items = planItemsForDate(courses, personalEvents, day);
@@ -376,7 +376,7 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
   const selLabel = selDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   return (
-    <div style={{ padding: "6px 16px 130px" }}>
+    <div style={{ padding: "6px 16px calc(130px + var(--safe-bottom))" }}>
       {/* Calendar grid */}
       <div style={{ background: "var(--surface)", borderRadius: "var(--radius-card)", boxShadow: "var(--shadow-card)", padding: "16px 14px" }}>
         <div className="flex items-center justify-between mb-3">

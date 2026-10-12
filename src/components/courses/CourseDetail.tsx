@@ -97,6 +97,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
   const { dispatch } = useStore();
   const [calcOpen, setCalcOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const c = course.color;
   const progress = submittedProgress(course);
@@ -163,7 +164,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 16px 120px" }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 16px calc(120px + var(--safe-bottom))" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
 
           {/* Header card */}
@@ -323,18 +324,35 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
           )}
 
           {/* Remove */}
-          <button
-            onClick={() => { if (confirm(`Remove ${course.code}?`)) onDelete(); }}
-            style={{ alignSelf: "center", background: "none", border: "none", cursor: "pointer", color: "#d1544b", fontSize: 16, fontWeight: 600, padding: "6px 0" }}
-          >
-            Remove this course
-          </button>
+          {confirmDelete ? (
+            <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+              <button
+                onClick={() => { setConfirmDelete(false); onDelete(); }}
+                style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "9px 18px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}
+              >
+                Yes, remove
+              </button>
+              <button
+                onClick={() => setConfirmDelete(false)}
+                style={{ background: "var(--cream-deep)", color: "var(--text-2)", border: "none", borderRadius: 999, padding: "9px 18px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setConfirmDelete(true)}
+              style={{ alignSelf: "center", background: "none", border: "none", cursor: "pointer", color: "#d1544b", fontSize: 16, fontWeight: 600, padding: "6px 0" }}
+            >
+              Remove this course
+            </button>
+          )}
         </div>
       </div>
 
       {toast && (
         <div style={{
-          position: "absolute", left: "50%", bottom: 96, transform: "translateX(-50%)",
+          position: "absolute", left: "50%", bottom: "calc(96px + var(--safe-bottom))", transform: "translateX(-50%)",
           background: "var(--ink)", color: "#fff", padding: "10px 18px", borderRadius: 24,
           fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", boxShadow: "0 8px 24px rgba(0,0,0,.25)", zIndex: 20,
         }}>

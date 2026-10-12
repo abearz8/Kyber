@@ -8,6 +8,7 @@ import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
 import SummarySheet from "./SummarySheet";
 import KyberLogo from "@/components/shared/KyberLogo";
+import SettingsModal from "@/components/shared/SettingsModal";
 
 const MOODS: { key: Mood; label: string; reply: string }[] = [
   { key: "light", label: "Light", reply: "Nice — a breathing-room week. Keep the plan ticking and enjoy it." },
@@ -18,6 +19,8 @@ const MOODS: { key: Mood; label: string; reply: string }[] = [
 
 interface Props {
   courses: Course[];
+  onAdd: () => void;
+  onReset: () => void;
 }
 
 function weekNumber(courses: Course[]): number {
@@ -26,7 +29,7 @@ function weekNumber(courses: Course[]): number {
   return Math.max(1, Math.floor(-daysUntil(dates[0]) / 7) + 1);
 }
 
-export default function NowTab({ courses }: Props) {
+export default function NowTab({ courses, onAdd, onReset }: Props) {
   const { state, dispatch } = useStore();
   const completedIds = new Set(state.completedTaskIds);
   const agenda = nowAgenda(courses);
@@ -36,6 +39,7 @@ export default function NowTab({ courses }: Props) {
   const [openItem, setOpenItem] = useState<NowItem | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [checkInOpen, setCheckInOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   function showToast(msg: string) {
     setToast(msg);
@@ -73,18 +77,23 @@ export default function NowTab({ courses }: Props) {
       {/* Header */}
       <div style={{ padding: "14px 16px 6px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <KyberLogo size={40} />
-        <div style={{
-          width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
-          border: "1px solid var(--line)", boxShadow: "var(--shadow-card)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="8" r="4" /><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+        <button
+          onClick={() => setShowSettings(true)}
+          aria-label="Settings"
+          style={{
+            width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
+            border: "1px solid var(--line)", boxShadow: "var(--shadow-card)", cursor: "pointer",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55514a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
           </svg>
-        </div>
+        </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 16px 120px" }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 16px calc(120px + var(--safe-bottom))" }}>
        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Up next hero */}
         {hero ? (
@@ -229,12 +238,20 @@ export default function NowTab({ courses }: Props) {
 
       {toast && (
         <div style={{
-          position: "absolute", left: "50%", bottom: 96, transform: "translateX(-50%)",
+          position: "absolute", left: "50%", bottom: "calc(96px + var(--safe-bottom))", transform: "translateX(-50%)",
           background: "var(--ink)", color: "#fff", padding: "10px 18px", borderRadius: 24,
           fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", boxShadow: "0 8px 24px rgba(0,0,0,.25)", zIndex: 20,
         }}>
           {toast}
         </div>
+      )}
+
+      {showSettings && (
+        <SettingsModal
+          onClose={() => setShowSettings(false)}
+          onAdd={onAdd}
+          onReset={onReset}
+        />
       )}
     </div>
   );

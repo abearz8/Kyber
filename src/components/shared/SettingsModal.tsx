@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useStore } from "@/hooks/useStore";
 import type { Tab, PlanView } from "@/lib/types";
 
@@ -68,6 +69,7 @@ function SegmentPicker<T extends string | number>({
 export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
   const { state, dispatch } = useStore();
   const settings = state.settings;
+  const [confirmReset, setConfirmReset] = useState(false);
 
   function update<K extends keyof typeof settings>(key: K, value: typeof settings[K]) {
     dispatch({ type: "UPDATE_SETTINGS", settings: { [key]: value } });
@@ -172,17 +174,29 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
               </button>
             </Row>
             <Row label="Start over" divider={false}>
-              <button
-                onClick={() => {
-                  onClose();
-                  if (confirm("Start over? This will clear all courses and data.")) {
-                    onReset();
-                  }
-                }}
-                style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "7px 16px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
-              >
-                Clear all
-              </button>
+              {confirmReset ? (
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button
+                    onClick={() => { setConfirmReset(false); onClose(); onReset(); }}
+                    style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "7px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+                  >
+                    Yes, clear all
+                  </button>
+                  <button
+                    onClick={() => setConfirmReset(false)}
+                    style={{ background: "var(--cream-deep)", color: "var(--text-2)", border: "none", borderRadius: 999, padding: "7px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmReset(true)}
+                  style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "7px 16px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                >
+                  Clear all
+                </button>
+              )}
             </Row>
           </div>
 
