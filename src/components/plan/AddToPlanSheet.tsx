@@ -4,14 +4,11 @@ import { useState } from "react";
 import type { PersonalEvent, PersonalEventKind } from "@/lib/types";
 import { isoToday } from "@/lib/dates";
 
-const KINDS: { key: PersonalEventKind; label: string; icon: string }[] = [
-  { key: "personal", label: "Personal event", icon: "📌" },
-  { key: "work", label: "Work / shift", icon: "💼" },
-  { key: "sport", label: "Sport / workout", icon: "🏃" },
-  { key: "social", label: "Social", icon: "🎉" },
-  { key: "appointment", label: "Appointment", icon: "📅" },
-  { key: "study", label: "Extra study", icon: "📖" },
-  { key: "other", label: "Other", icon: "✨" },
+const KINDS: { key: PersonalEventKind; label: string; icon: string; description: string }[] = [
+  { key: "class",       label: "Class or lecture",      icon: "🎓", description: "Lecture, tutorial, or office hours" },
+  { key: "deadline",    label: "Assignment or deadline", icon: "📋", description: "Paper, project, quiz, or submission" },
+  { key: "study_block", label: "Study block",            icon: "📖", description: "Focused solo or group study session" },
+  { key: "fun",         label: "Something fun",          icon: "🎉", description: "Social, sport, event, or anything you enjoy" },
 ];
 
 interface Props {
@@ -61,10 +58,13 @@ export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) 
                   key={k.key}
                   onClick={() => setKind(k.key)}
                   className="w-full text-left flex items-center gap-3"
-                  style={{ background: "var(--cream-deep)", border: "none", borderRadius: 12, padding: "12px 14px", cursor: "pointer" }}
+                  style={{ background: "var(--cream-deep)", border: "none", borderRadius: 12, padding: "14px 14px", cursor: "pointer" }}
                 >
-                  <span style={{ fontSize: 18 }}>{k.icon}</span>
-                  <span style={{ flex: 1, fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>{k.label}</span>
+                  <span style={{ fontSize: 20 }}>{k.icon}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>{k.label}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 1 }}>{k.description}</div>
+                  </div>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
                 </button>
               ))}
@@ -81,7 +81,14 @@ export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) 
             </div>
 
             <label style={labelStyle}>Title</label>
-            <input autoFocus value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Gym, Shift at café" style={inputStyle} />
+            <input autoFocus value={title} onChange={(e) => setTitle(e.target.value)}
+              placeholder={
+                kind === "class" ? "e.g. MATH 1600A lecture" :
+                kind === "deadline" ? "e.g. Assignment 3" :
+                kind === "study_block" ? "e.g. Study for midterm" :
+                "e.g. Movie night, gym"
+              }
+              style={inputStyle} />
 
             <label style={labelStyle}>Date</label>
             <input type="date" value={date} onChange={(e) => setDate(e.target.value)} style={inputStyle} />

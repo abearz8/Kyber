@@ -255,7 +255,8 @@ export const dsS1: Course[] = [
       "The midterm covers only the first 7 weeks of material and is worth 35%; treat it as a major assessment requiring full documentation if missed.",
       "Written assignments are submitted via Gradescope — scan neatly and submit well before the deadline to avoid technical issues.",
       "Academic dishonesty on the midterm or final results in a failing grade for the entire course; on assignments it costs −5% overall plus a 0 on the set."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3, 5], "startTime": "10:30 AM", "room": "TC 141" }
   },
   {
     "id": "cs1026a",
@@ -535,7 +536,8 @@ export const dsS1: Course[] = [
       "No electronic devices (phones, calculators, etc.) are allowed on the midterm or final exam — practice working without them.",
       "Post-midterm topics are more heavily tested on the final, but all pre-midterm material is still fair game.",
       "Get the ZyBooks digital textbook — it is strongly recommended by instructors for doing well in the course."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "2:30 PM", "room": "WSS 55" }
   },
   {
     "id": "film1020e",
@@ -958,7 +960,8 @@ export const dsS1: Course[] = [
       "Laptop use is restricted to note-taking; misuse results in losing laptop privileges for the entire year.",
       "Midterm 2 (10%) is heavier than Midterm 1 (5%) — allocate study time accordingly.",
       "Start Essay #3 (Research Essay, 20%) early — it is the highest-weighted single written assignment."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "11:30 AM", "room": "UC 1400" }
   },
   {
     "id": "calc1000a",
@@ -1246,6 +1249,7 @@ export const dsS1: Course[] = [
       "iClicker is graded on participation (not correctness) and only counts in your registered section — just show up and answer.",
       "Use the free Math-Physics Accelerator help centre (PAB 48/49) starting Sept 16 — no appointment needed.",
       "The OpenStax textbook is free online; follow the listed sections each week to stay on track."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3, 5], "startTime": "9:30 AM", "room": "PAB 106" }
   }
 ];

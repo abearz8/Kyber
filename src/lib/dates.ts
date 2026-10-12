@@ -78,6 +78,11 @@ export function weekDays(iso: string): string[] {
   return Array.from({ length: 7 }, (_, i) => addDays(start, i));
 }
 
+/** 7 days starting from (and including) a given date — used for rolling week view */
+export function nextSevenDays(from: string): string[] {
+  return Array.from({ length: 7 }, (_, i) => addDays(from, i));
+}
+
 /** All days in a calendar month grid (fills to 42 cells, Mon-start) */
 export function monthGrid(year: number, month: number): (string | null)[] {
   const firstDay = new Date(year, month - 1, 1);

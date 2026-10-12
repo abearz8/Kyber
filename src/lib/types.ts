@@ -32,6 +32,8 @@ export interface CourseEvent {
   weight: number;
   component?: string; // GradeComponent.id
   courseId: string;
+  recurringPattern?: { dayOfWeek: number; endDate: string };
+  estimated?: boolean;
 }
 
 export interface Policy {
@@ -56,14 +58,20 @@ export interface Course {
   policies: Policy[];
   subjects: string[];
   tips: string[];
-  semester?: Semester; // which semester this course belongs to (demo data)
+  semester?: Semester;
+  classMeetings?: { days: number[]; startTime?: string; room?: string };
 }
 
 export type Tab = "courses" | "now" | "plan";
 export type PlanView = "month" | "week" | "day";
 
-// Personal (user-added) plan items — Process Flow p.25 "Add to your plan" (7 types)
+// Personal (user-added) plan items
 export type PersonalEventKind =
+  | "class"
+  | "deadline"
+  | "study_block"
+  | "fun"
+  // legacy kinds kept for backwards compatibility with stored data
   | "personal"
   | "work"
   | "sport"
@@ -92,8 +100,9 @@ export interface AppState {
   completedTaskIds: string[];
   gradeSims: Record<string, Record<string, (number | null)[]>>;
   selectedCourseId: string | null;
-  selectedDate: string | null; // ISO date for plan day-drill
+  selectedDate: string | null;
   personalEvents: PersonalEvent[];
+  aiTasks: AiTask[];
   weekMood: Mood | null;
   weekNotes: string;
   hasOnboarded: boolean;
@@ -121,6 +130,7 @@ export type AppAction =
   | { type: "UNCOMPLETE_TASK"; taskId: string }
   | { type: "ADD_PERSONAL_EVENT"; event: PersonalEvent }
   | { type: "DELETE_PERSONAL_EVENT"; id: string }
+  | { type: "SET_AI_TASKS"; tasks: AiTask[] }
   | { type: "SET_MOOD"; mood: Mood }
   | { type: "SET_WEEK_NOTES"; notes: string }
   | { type: "SET_ONBOARDED"; value: boolean }
@@ -133,6 +143,20 @@ export type AppAction =
       scores: (number | null)[];
     }
   | { type: "RESET" };
+
+// AI-generated weekly prep task (simulates output of a weekly AI scheduling script)
+export interface AiTask {
+  id: string;
+  courseId?: string;
+  courseCode?: string;
+  courseColor: string;
+  title: string;
+  kind: "reading" | "review" | "lab" | "practice" | "fun";
+  date: string; // ISO YYYY-MM-DD, within next 14 days
+  durationMin: number;
+  description: string;
+  generatedAt: string; // ISO date AI script last ran
+}
 
 // A generated study-prep step for an upcoming exam/deadline (Process Flow p.12/18)
 export interface StudyTask {

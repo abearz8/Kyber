@@ -85,6 +85,39 @@ export const EXTRACT_SCHEMA = {
         required: ["label", "value"],
       },
     },
+    classMeetings: {
+      type: "object",
+      description: "When the class meets each week.",
+      additionalProperties: false,
+      properties: {
+        days: {
+          type: "array",
+          description: "Days of the week the class meets, e.g. ['Mon','Wed','Fri'].",
+          items: { type: "string", enum: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] },
+        },
+        startTime: { type: "string", description: "Class start time, e.g. '10:30 AM'." },
+        room: { type: "string", description: "Room or location, if stated." },
+      },
+      required: ["days"],
+    },
+    recurringAssignments: {
+      type: "array",
+      description: "Assignments that recur on the same day every week (e.g. weekly problem sets due every Thursday). Only include if the syllabus explicitly states a recurring pattern.",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        properties: {
+          title: { type: "string" },
+          type: { type: "string", enum: ["reading","assignment","quiz","lab"] },
+          dayOfWeek: { type: "string", enum: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] },
+          startDate: { type: "string", description: "ISO date of first occurrence." },
+          endDate: { type: "string", description: "ISO date of last occurrence." },
+          weight: { type: "number", description: "Weight per item; 0 if unknown." },
+          component: { type: "string" },
+        },
+        required: ["title","type","dayOfWeek","startDate","endDate","weight","component"],
+      },
+    },
   },
   required: [
     "code", "title", "term", "instructor", "targetGrade",
@@ -103,6 +136,10 @@ function toNum(v: unknown, def = 0): number {
   const n = Number(v);
   return isNaN(n) ? def : n;
 }
+
+const DOW_MAP: Record<string, number> = {
+  Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6,
+};
 
 // Raw extraction shape (what Claude returns)
 export interface RawExtraction {
@@ -129,6 +166,16 @@ export interface RawExtraction {
     component?: string;
   }>;
   policies?: Array<{ label?: string; value?: string }>;
+  classMeetings?: { days?: string[]; startTime?: string; room?: string };
+  recurringAssignments?: Array<{
+    title?: string;
+    type?: string;
+    dayOfWeek?: string;
+    startDate?: string;
+    endDate?: string;
+    weight?: number;
+    component?: string;
+  }>;
 }
 
 /**
@@ -199,7 +246,65 @@ export function normalize(
     }
     events.push(ev);
   }
+  // Expand recurring assignments into individual dated events
+  const rawRecurring = raw.recurringAssignments || [];
+  let recurringIndex = events.length;
+  for (const r of rawRecurring) {
+    const title = (r.title || "").trim();
+    const startDate = (r.startDate || "").trim();
+    const endDate = (r.endDate || "").trim();
+    const dow = typeof r.dayOfWeek === "string" ? (DOW_MAP[r.dayOfWeek] ?? -1) : -1;
+    if (!title || !ISO_DATE.test(startDate) || !ISO_DATE.test(endDate) || dow < 0) continue;
+
+    const etype = EVENT_TYPES.includes(r.type as typeof EVENT_TYPES[number])
+      ? (r.type as CourseEvent["type"])
+      : "assignment";
+    const compName = (r.component || "").trim().toLowerCase();
+    const compId = compName && nameToId.has(compName) ? nameToId.get(compName) : undefined;
+    const weight = Math.round(toNum(r.weight, 0) * 100) / 100;
+
+    // Walk from startDate to endDate, emitting one event per matching weekday
+    const [sy, sm, sd] = startDate.split("-").map(Number);
+    const [ey, em, ed] = endDate.split("-").map(Number);
+    const start = new Date(sy, sm - 1, sd);
+    const end = new Date(ey, em - 1, ed);
+    const cur = new Date(start);
+    // Advance to first matching weekday
+    while (cur.getDay() !== dow && cur <= end) cur.setDate(cur.getDate() + 1);
+
+    while (cur <= end) {
+      const iso = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, "0")}-${String(cur.getDate()).padStart(2, "0")}`;
+      const ev: CourseEvent = {
+        id: `${cid}-r${recurringIndex}`,
+        type: etype,
+        title,
+        date: iso,
+        weight,
+        courseId: cid,
+        recurringPattern: { dayOfWeek: dow, endDate },
+      };
+      if (compId) ev.component = compId;
+      events.push(ev);
+      recurringIndex++;
+      cur.setDate(cur.getDate() + 7);
+    }
+  }
+
   events.sort((a, b) => a.date.localeCompare(b.date));
+
+  // Class meetings
+  const rawMeetings = raw.classMeetings;
+  let classMeetings: Course["classMeetings"] | undefined;
+  if (rawMeetings && (rawMeetings.days || []).length > 0) {
+    const days = (rawMeetings.days || [])
+      .map((d) => DOW_MAP[d])
+      .filter((n): n is number => n !== undefined);
+    if (days.length > 0) {
+      classMeetings = { days };
+      if (rawMeetings.startTime) classMeetings.startTime = rawMeetings.startTime;
+      if (rawMeetings.room) classMeetings.room = rawMeetings.room;
+    }
+  }
 
   const subjects = (raw.subjects || [])
     .map((s) => s.trim())
@@ -219,7 +324,7 @@ export function normalize(
     .filter((p) => (p.label || "").trim() && (p.value || "").trim())
     .map((p) => ({ label: p.label!.trim(), value: p.value!.trim() }));
 
-  return {
+  const course: Course = {
     id: cid,
     code,
     title,
@@ -235,4 +340,6 @@ export function normalize(
     subjects,
     tips,
   };
+  if (classMeetings) course.classMeetings = classMeetings;
+  return course;
 }

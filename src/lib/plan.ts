@@ -1,7 +1,7 @@
-import type { Course, PersonalEvent, StudyTask } from "./types";
+import type { Course, PersonalEvent, StudyTask, AiTask } from "./types";
 import { allStudyTasks } from "./studyplan";
 
-export type PlanItemKind = "course" | "study" | "personal";
+export type PlanItemKind = "course" | "study" | "personal" | "ai";
 
 export interface PlanItem {
   id: string;
@@ -17,13 +17,22 @@ export interface PlanItem {
   eventType?: string;
   personalId?: string; // set for personal events (deletable)
   studyId?: string; // set for study tasks (checkable)
+  aiTaskId?: string; // set for AI-generated tasks
+  aiDescription?: string; // detail sheet content for AI tasks
+  estimated?: boolean; // course event date was inferred from week number
 }
 
 const PERSONAL_COLORS: Record<string, string> = {
+  // new kinds
+  class: "#5aa6e6",
+  deadline: "#e8784a",
+  study_block: "#e9a319",
+  fun: "#3faf76",
+  // legacy kinds
   personal: "#8a8a8a",
   work: "#8a8a8a",
-  sport: "#8a8a8a",
-  social: "#8a8a8a",
+  sport: "#3faf76",
+  social: "#987be8",
   appointment: "#8a8a8a",
   study: "#e9a319",
   other: "#8a8a8a",
@@ -56,11 +65,20 @@ function studySlot(index: number): { startMin: number; durationMin: number } {
   return { startMin: base + (index % 3) * 75, durationMin: 60 };
 }
 
+const AI_KIND_SLOT: Record<string, { startMin: number; durationMin: number }> = {
+  reading:  { startMin: 8 * 60 + 30, durationMin: 30 },
+  review:   { startMin: 17 * 60,     durationMin: 20 },
+  lab:      { startMin: 13 * 60,     durationMin: 40 },
+  practice: { startMin: 18 * 60,     durationMin: 50 },
+  fun:      { startMin: 19 * 60,     durationMin: 60 },
+};
+
 /** All plan items for a single ISO date, time-ordered. */
 export function planItemsForDate(
   courses: Course[],
   personalEvents: PersonalEvent[],
-  date: string
+  date: string,
+  aiTasks: AiTask[] = []
 ): PlanItem[] {
   const items: PlanItem[] = [];
 
@@ -80,6 +98,7 @@ export function planItemsForDate(
         timeLabel: slot.durationMin === 0 ? `Due ${fmtTime(slot.startMin)}` : fmtTime(slot.startMin),
         subtitle: c.code,
         eventType: e.type,
+        estimated: e.estimated,
       });
     }
   }
@@ -117,6 +136,26 @@ export function planItemsForDate(
       timeLabel: p.start ? fmtTime(startMin) + (p.end ? `–${fmtTime(endMin)}` : "") : "All day",
       subtitle: p.kind.charAt(0).toUpperCase() + p.kind.slice(1),
       personalId: p.id,
+    });
+  }
+
+  // AI-generated tasks
+  for (const t of aiTasks) {
+    if (t.date !== date) continue;
+    const slot = AI_KIND_SLOT[t.kind] ?? { startMin: 15 * 60, durationMin: 30 };
+    items.push({
+      id: `pi-${t.id}`,
+      kind: "ai",
+      title: t.title,
+      courseCode: t.courseCode,
+      color: t.courseColor,
+      date,
+      startMin: slot.startMin,
+      durationMin: t.durationMin > 0 ? t.durationMin : slot.durationMin,
+      timeLabel: `${fmtTime(slot.startMin)} · ${t.durationMin} min`,
+      subtitle: t.courseCode ? `${t.courseCode} · AI suggestion` : "AI suggestion",
+      aiTaskId: t.id,
+      aiDescription: t.description,
     });
   }
 

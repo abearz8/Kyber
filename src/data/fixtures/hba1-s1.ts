@@ -127,7 +127,8 @@ export const hba1S1: Course[] = [
       "Prepare cases individually first (without AI), then discuss with your learning team — this develops the analytical skills tested on exams.",
       "Prohibited information (teaching notes, prior-year notes/spreadsheets on cases, outside company data) must never be used in class discussions.",
       "Academic consideration for missed exams requires documentation submitted within 48 hours; for varsity/religious conflicts, submit 10+ days in advance."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "8:30 AM", "room": "SH 3345" }
   },
   {
     "id": "business3302",
@@ -257,7 +258,8 @@ export const hba1S1: Course[] = [
       "For the Executive Memo (15%), apply all business writing principles: clear structure, concise language, and strategic framing.",
       "Do not use email to discuss grades or group dynamics — schedule a meeting instead, and always write with professional formatting and tone.",
       "The Communications Day Capstone (group, 15%) is a culminating event — coordinate early with your group and treat it like a real professional presentation."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "10:30 AM", "room": "SH 3345" }
   },
   {
     "id": "business3321",
@@ -384,7 +386,8 @@ export const hba1S1: Course[] = [
       "Outstanding contribution (90-100%) requires thorough preparation, active listening, strong follow-up, and evidence-backed arguments — aim for this standard.",
       "If you miss an exam, submit academic consideration documentation within 48 hours via LEARN.",
       "Use ratio analysis and accounting policy knowledge when studying for the midterm, as financial statement analysis is a major course theme."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "1:30 PM", "room": "SH 3355" }
   },
   {
     "id": "business3316",
@@ -505,7 +508,8 @@ export const hba1S1: Course[] = [
       "Missing more than 5 classes (80-minute sessions) can result in unsatisfactory standing and ineligibility to write final exams.",
       "Arriving late (even by a few minutes) counts as a contribution deduction (-1 point or 0 for the day) — punctuality matters.",
       "If you miss an exam, submit your academic consideration request in LEARN within 48 hours and gather medical documentation immediately."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "8:30 AM", "room": "SH 3365" }
   },
   {
     "id": "business3311",
@@ -680,6 +684,7 @@ export const hba1S1: Course[] = [
       "Two lowest class contribution scores are dropped — use this buffer wisely but do not rely on it habitually.",
       "Laptops and phones must be left out of the classroom; using technology when not allowed directly hurts your contribution grade.",
       "Avoid any prohibited information (notes from other sections/years, teaching notes, company info not in the case) — violations are treated as professional conduct breaches."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "10:30 AM", "room": "SH 3375" }
   }
 ];
