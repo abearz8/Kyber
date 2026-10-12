@@ -5,6 +5,7 @@
 
 import type { Course, GradeComponent, CourseEvent, Policy, PaletteColor } from "../types";
 import { PALETTE } from "../types";
+import { anchorAndFilterDates } from "../academicCalendar";
 
 export { PALETTE };
 
@@ -185,8 +186,15 @@ export interface RawExtraction {
 export function normalize(
   raw: RawExtraction,
   color: string = PALETTE[0],
-  _today?: string
+  today?: string
 ): Course {
+  // Reference date for anchoring extracted dates into the current academic
+  // year. Defaults to "now" so uploads are always current.
+  let ref = new Date();
+  if (today && ISO_DATE.test(today)) {
+    const [ty, tm, td] = today.split("-").map(Number);
+    ref = new Date(ty, tm - 1, td);
+  }
   const code = (raw.code || "").trim() || "COURSE";
   const title = (raw.title || "").trim() || code;
   const cid = slugify(code, "course");
@@ -290,7 +298,11 @@ export function normalize(
     }
   }
 
-  events.sort((a, b) => a.date.localeCompare(b.date));
+  // Anchor every extracted date into the current academic year (fixing stale
+  // or mis-parsed years) and keep only deadlines within the next ~8 months.
+  const normalizedEvents = anchorAndFilterDates(events, ref).sort((a, b) =>
+    a.date.localeCompare(b.date)
+  );
 
   // Class meetings
   const rawMeetings = raw.classMeetings;
@@ -335,7 +347,7 @@ export function normalize(
     currentTopic: subjects[0] || title,
     studyMethod,
     gradeComponents: components,
-    events,
+    events: normalizedEvents,
     policies,
     subjects,
     tips,

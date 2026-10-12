@@ -6,7 +6,7 @@ export const dsS2: Course[] = [
     "id": "calc1501b",
     "code": "CALC 1501B",
     "title": "Calculus II for Mathematical and Physical Sciences",
-    "term": "Winter 2022-2023",
+    "term": "Winter 2027",
     "instructor": "M. Pinsonnault (LEC 001), R. Shafikov (LEC 002)",
     "color": "#e8784a",
     "targetGrade": 85,
@@ -226,13 +226,21 @@ export const dsS2: Course[] = [
       "This course requires writing proofs (definitions, theorems, logical assembly); practice mathematical writing, not just computation.",
       "Use the Math Help Centre and office hours regularly — instructors do not provide detailed calculus feedback via email."
     ],
-    "classMeetings": { "days": [1, 3, 5], "startTime": "11:30 AM", "room": "MC 108" }
+    "classMeetings": {
+      "days": [
+        1,
+        3,
+        5
+      ],
+      "startTime": "11:30 AM",
+      "room": "MC 108"
+    }
   },
   {
     "id": "cs1027b",
     "code": "CS 1027B",
     "title": "Computer Science Fundamentals II",
-    "term": "Winter 2025",
+    "term": "Winter 2027",
     "instructor": "Bryan Sarlo (Course Coordinator), Gad Gad, Iqra Batool",
     "color": "#5aa6e6",
     "targetGrade": 85,
@@ -311,7 +319,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e0",
         "type": "lab",
         "title": "Lab 1",
-        "date": "2028-08-17",
+        "date": "2026-08-17",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -320,7 +328,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e1",
         "type": "lab",
         "title": "Lab 2",
-        "date": "2028-08-24",
+        "date": "2026-08-24",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -329,7 +337,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e2",
         "type": "lab",
         "title": "Lab 3",
-        "date": "2028-08-31",
+        "date": "2026-08-31",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -338,7 +346,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e4",
         "type": "lab",
         "title": "Lab 4",
-        "date": "2028-09-07",
+        "date": "2026-09-07",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -347,7 +355,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e3",
         "type": "assignment",
         "title": "Assignment 1",
-        "date": "2028-09-08",
+        "date": "2026-09-08",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -356,7 +364,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e5",
         "type": "lab",
         "title": "Lab 5",
-        "date": "2028-09-14",
+        "date": "2026-09-14",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -365,7 +373,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e6",
         "type": "assignment",
         "title": "Assignment 2",
-        "date": "2028-09-28",
+        "date": "2026-09-28",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -374,7 +382,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e7",
         "type": "lab",
         "title": "Lab 6",
-        "date": "2028-09-28",
+        "date": "2026-09-28",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -383,7 +391,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e9",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2028-10-03",
+        "date": "2026-10-03",
         "weight": 20,
         "courseId": "cs1027b",
         "component": "midtermtest"
@@ -392,7 +400,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e8",
         "type": "lab",
         "title": "Lab 7",
-        "date": "2028-10-05",
+        "date": "2026-10-05",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -401,7 +409,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e10",
         "type": "lab",
         "title": "Lab 8",
-        "date": "2028-10-12",
+        "date": "2026-10-12",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -410,7 +418,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e11",
         "type": "lab",
         "title": "Lab 9",
-        "date": "2028-10-19",
+        "date": "2026-10-19",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -419,7 +427,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e12",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2028-10-21",
+        "date": "2026-10-21",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -428,7 +436,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e13",
         "type": "lab",
         "title": "Lab 10",
-        "date": "2028-10-26",
+        "date": "2026-10-26",
         "weight": 1,
         "courseId": "cs1027b",
         "component": "labs"
@@ -437,7 +445,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e14",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2028-11-06",
+        "date": "2026-11-06",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -446,7 +454,7 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e15",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2028-11-09",
+        "date": "2026-11-09",
         "weight": 35,
         "courseId": "cs1027b",
         "component": "finalexam"
@@ -525,13 +533,20 @@ export const dsS2: Course[] = [
       "Read lab instructions before attending — coming in with work already done is prohibited and results in a 0.",
       "Never share or post your code anywhere; similarity-checking software is used on all assignments."
     ],
-    "classMeetings": { "days": [2, 4], "startTime": "2:30 PM", "room": "WSS 55" }
+    "classMeetings": {
+      "days": [
+        2,
+        4
+      ],
+      "startTime": "2:30 PM",
+      "room": "WSS 55"
+    }
   },
   {
     "id": "ds1000",
     "code": "DS1000",
     "title": "Data Science Concepts",
-    "term": "Summer 2023",
+    "term": "Summer 2027",
     "instructor": "Ashley McAlpine",
     "color": "#3faf76",
     "targetGrade": 85,
@@ -711,6 +726,14 @@ export const dsS2: Course[] = [
       "TA office hours (Mon/Wed/Fri 7–8:30 pm Zoom) are offered specifically before each assignment deadline and each exam — attend them.",
       "No mark bumping is done; the grade you earn is the grade you receive."
     ],
-    "classMeetings": { "days": [1, 3, 5], "startTime": "9:30 AM", "room": "PAB 150" }
+    "classMeetings": {
+      "days": [
+        1,
+        3,
+        5
+      ],
+      "startTime": "9:30 AM",
+      "room": "PAB 150"
+    }
   }
 ];

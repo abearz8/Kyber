@@ -6,7 +6,7 @@ export const dsS1: Course[] = [
     "id": "math1600a",
     "code": "MATH 1600A",
     "title": "Linear Algebra I",
-    "term": "Fall 2024",
+    "term": "Fall 2026",
     "instructor": "Instructor",
     "color": "#e8784a",
     "targetGrade": 85,
@@ -63,7 +63,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e0",
         "type": "assignment",
         "title": "Assignment 1",
-        "date": "2037-09-02",
+        "date": "2026-09-02",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -72,7 +72,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e1",
         "type": "assignment",
         "title": "Assignment 2",
-        "date": "2037-09-09",
+        "date": "2026-09-09",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -81,7 +81,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e2",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2037-09-16",
+        "date": "2026-09-16",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -90,7 +90,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e3",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2037-09-23",
+        "date": "2026-09-23",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -99,7 +99,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e4",
         "type": "assignment",
         "title": "Assignment 5",
-        "date": "2037-09-30",
+        "date": "2026-09-30",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -108,7 +108,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e5",
         "type": "assignment",
         "title": "Assignment 6 (Fall Break — skipped)",
-        "date": "2037-10-14",
+        "date": "2026-10-14",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -117,7 +117,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e6",
         "type": "assignment",
         "title": "Assignment 7",
-        "date": "2037-10-21",
+        "date": "2026-10-21",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -126,7 +126,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e7",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2037-10-30",
+        "date": "2026-10-30",
         "weight": 35,
         "courseId": "math1600a",
         "component": "midtermtest"
@@ -135,7 +135,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e9",
         "type": "assignment",
         "title": "Assignment 8 (week before midterm — skipped)",
-        "date": "2037-11-04",
+        "date": "2026-11-04",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -144,7 +144,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e8",
         "type": "exam",
         "title": "Makeup Midterm Test",
-        "date": "2037-11-06",
+        "date": "2026-11-06",
         "weight": 35,
         "courseId": "math1600a",
         "component": "midtermtest"
@@ -153,7 +153,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e10",
         "type": "assignment",
         "title": "Assignment 9",
-        "date": "2037-11-11",
+        "date": "2026-11-11",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -162,7 +162,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e11",
         "type": "assignment",
         "title": "Assignment 10",
-        "date": "2037-11-18",
+        "date": "2026-11-18",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -171,7 +171,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e12",
         "type": "assignment",
         "title": "Assignment 11",
-        "date": "2037-11-25",
+        "date": "2026-11-25",
         "weight": 0,
         "courseId": "math1600a",
         "component": "assignments"
@@ -180,7 +180,7 @@ export const dsS1: Course[] = [
         "id": "math1600a-e13",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2037-11-28",
+        "date": "2026-11-28",
         "weight": 50,
         "courseId": "math1600a",
         "component": "finalexam"
@@ -256,13 +256,21 @@ export const dsS1: Course[] = [
       "Written assignments are submitted via Gradescope — scan neatly and submit well before the deadline to avoid technical issues.",
       "Academic dishonesty on the midterm or final results in a failing grade for the entire course; on assignments it costs −5% overall plus a 0 on the set."
     ],
-    "classMeetings": { "days": [1, 3, 5], "startTime": "10:30 AM", "room": "TC 141" }
+    "classMeetings": {
+      "days": [
+        1,
+        3,
+        5
+      ],
+      "startTime": "10:30 AM",
+      "room": "TC 141"
+    }
   },
   {
     "id": "cs1026a",
     "code": "CS 1026A",
     "title": "Computer Science Fundamentals I",
-    "term": "Fall 2022",
+    "term": "Fall 2026",
     "instructor": "Hanan Lutfiyya, Bryan Sarlo, Saad Ahmed",
     "color": "#5aa6e6",
     "targetGrade": 85,
@@ -331,7 +339,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e0",
         "type": "lab",
         "title": "Lab 1",
-        "date": "2035-09-08",
+        "date": "2026-09-08",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -340,7 +348,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e1",
         "type": "lab",
         "title": "Lab 2",
-        "date": "2035-09-15",
+        "date": "2026-09-15",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -349,7 +357,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e2",
         "type": "lab",
         "title": "Lab 3",
-        "date": "2035-09-22",
+        "date": "2026-09-22",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -358,7 +366,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e6",
         "type": "assignment",
         "title": "Assignment 1",
-        "date": "2035-09-24",
+        "date": "2026-09-24",
         "weight": 5,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -367,7 +375,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e3",
         "type": "lab",
         "title": "Lab 4",
-        "date": "2035-09-29",
+        "date": "2026-09-29",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -376,7 +384,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e7",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2035-10-03",
+        "date": "2026-10-03",
         "weight": 20,
         "courseId": "cs1026a",
         "component": "midtermtest"
@@ -385,7 +393,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e4",
         "type": "lab",
         "title": "Lab 5",
-        "date": "2035-10-06",
+        "date": "2026-10-06",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -394,7 +402,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e5",
         "type": "lab",
         "title": "Lab 6",
-        "date": "2035-10-13",
+        "date": "2026-10-13",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -403,7 +411,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e8",
         "type": "assignment",
         "title": "Assignment 2",
-        "date": "2035-10-15",
+        "date": "2026-10-15",
         "weight": 8,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -412,7 +420,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e9",
         "type": "lab",
         "title": "Lab 7",
-        "date": "2035-10-27",
+        "date": "2026-10-27",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -421,7 +429,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e11",
         "type": "lab",
         "title": "Lab 8",
-        "date": "2035-11-03",
+        "date": "2026-11-03",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -430,7 +438,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e10",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2035-11-05",
+        "date": "2026-11-05",
         "weight": 12,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -439,7 +447,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e12",
         "type": "lab",
         "title": "Lab 9",
-        "date": "2035-11-10",
+        "date": "2026-11-10",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -448,7 +456,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e13",
         "type": "lab",
         "title": "Lab 10",
-        "date": "2035-11-17",
+        "date": "2026-11-17",
         "weight": 1,
         "courseId": "cs1026a",
         "component": "labs"
@@ -457,7 +465,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e14",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2035-11-26",
+        "date": "2026-11-26",
         "weight": 12,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -466,7 +474,7 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e15",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2035-11-29",
+        "date": "2026-11-29",
         "weight": 35,
         "courseId": "cs1026a",
         "component": "finalexam"
@@ -537,13 +545,20 @@ export const dsS1: Course[] = [
       "Post-midterm topics are more heavily tested on the final, but all pre-midterm material is still fair game.",
       "Get the ZyBooks digital textbook — it is strongly recommended by instructors for doing well in the course."
     ],
-    "classMeetings": { "days": [2, 4], "startTime": "2:30 PM", "room": "WSS 55" }
+    "classMeetings": {
+      "days": [
+        2,
+        4
+      ],
+      "startTime": "2:30 PM",
+      "room": "WSS 55"
+    }
   },
   {
     "id": "film1020e",
     "code": "FILM 1020E",
     "title": "Introduction to Film Studies",
-    "term": "2013/2014",
+    "term": "2026-2027",
     "instructor": "Professor Benjamin Wright",
     "color": "#3faf76",
     "targetGrade": 85,
@@ -961,13 +976,20 @@ export const dsS1: Course[] = [
       "Midterm 2 (10%) is heavier than Midterm 1 (5%) — allocate study time accordingly.",
       "Start Essay #3 (Research Essay, 20%) early — it is the highest-weighted single written assignment."
     ],
-    "classMeetings": { "days": [1, 3], "startTime": "11:30 AM", "room": "UC 1400" }
+    "classMeetings": {
+      "days": [
+        1,
+        3
+      ],
+      "startTime": "11:30 AM",
+      "room": "UC 1400"
+    }
   },
   {
     "id": "calc1000a",
     "code": "CALC 1000A",
     "title": "Calculus I",
-    "term": "Fall/Winter 2024-25",
+    "term": "Fall/Winter 2026-27",
     "instructor": "Instructor",
     "color": "#987be8",
     "targetGrade": 85,
@@ -1044,7 +1066,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e4",
         "type": "quiz",
         "title": "Quiz 1 (WebAssign)",
-        "date": "2037-09-09",
+        "date": "2026-09-09",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1053,7 +1075,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e5",
         "type": "quiz",
         "title": "Quiz 2 (WebAssign)",
-        "date": "2037-09-16",
+        "date": "2026-09-16",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1062,7 +1084,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e0",
         "type": "assignment",
         "title": "Homework Assignment 1",
-        "date": "2037-09-23",
+        "date": "2026-09-23",
         "weight": 4,
         "courseId": "calc1000a",
         "component": "submittedhomework"
@@ -1071,7 +1093,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e6",
         "type": "quiz",
         "title": "Quiz 3 (WebAssign)",
-        "date": "2037-09-23",
+        "date": "2026-09-23",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1080,7 +1102,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e7",
         "type": "quiz",
         "title": "Quiz 4 (WebAssign)",
-        "date": "2037-09-30",
+        "date": "2026-09-30",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1089,7 +1111,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e1",
         "type": "assignment",
         "title": "Homework Assignment 2",
-        "date": "2037-10-14",
+        "date": "2026-10-14",
         "weight": 4,
         "courseId": "calc1000a",
         "component": "submittedhomework"
@@ -1098,7 +1120,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e8",
         "type": "quiz",
         "title": "Quiz 5 (WebAssign)",
-        "date": "2037-10-14",
+        "date": "2026-10-14",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1107,7 +1129,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e9",
         "type": "quiz",
         "title": "Quiz 6 (WebAssign)",
-        "date": "2037-10-21",
+        "date": "2026-10-21",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1116,7 +1138,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e12",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2037-10-21",
+        "date": "2026-10-21",
         "weight": 30,
         "courseId": "calc1000a",
         "component": "midtermtest"
@@ -1125,7 +1147,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e13",
         "type": "exam",
         "title": "Make-Up Midterm Test",
-        "date": "2037-10-28",
+        "date": "2026-10-28",
         "weight": 30,
         "courseId": "calc1000a",
         "component": "midtermtest"
@@ -1134,7 +1156,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e2",
         "type": "assignment",
         "title": "Homework Assignment 3",
-        "date": "2037-11-04",
+        "date": "2026-11-04",
         "weight": 4,
         "courseId": "calc1000a",
         "component": "submittedhomework"
@@ -1143,7 +1165,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e10",
         "type": "quiz",
         "title": "Quiz 7 (WebAssign)",
-        "date": "2037-11-04",
+        "date": "2026-11-04",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1152,7 +1174,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e11",
         "type": "quiz",
         "title": "Quiz 8 (WebAssign)",
-        "date": "2037-11-11",
+        "date": "2026-11-11",
         "weight": 0,
         "courseId": "calc1000a",
         "component": "quizzes"
@@ -1161,7 +1183,7 @@ export const dsS1: Course[] = [
         "id": "calc1000a-e3",
         "type": "assignment",
         "title": "Homework Assignment 4",
-        "date": "2037-11-18",
+        "date": "2026-11-18",
         "weight": 4,
         "courseId": "calc1000a",
         "component": "submittedhomework"
@@ -1250,6 +1272,14 @@ export const dsS1: Course[] = [
       "Use the free Math-Physics Accelerator help centre (PAB 48/49) starting Sept 16 — no appointment needed.",
       "The OpenStax textbook is free online; follow the listed sections each week to stay on track."
     ],
-    "classMeetings": { "days": [1, 3, 5], "startTime": "9:30 AM", "room": "PAB 106" }
+    "classMeetings": {
+      "days": [
+        1,
+        3,
+        5
+      ],
+      "startTime": "9:30 AM",
+      "room": "PAB 106"
+    }
   }
 ];
