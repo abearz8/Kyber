@@ -225,7 +225,8 @@ export const dsS2: Course[] = [
       "Late assignments lose 10% per day and are not accepted after 3 days — plan ahead.",
       "This course requires writing proofs (definitions, theorems, logical assembly); practice mathematical writing, not just computation.",
       "Use the Math Help Centre and office hours regularly — instructors do not provide detailed calculus feedback via email."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3, 5], "startTime": "11:30 AM", "room": "MC 108" }
   },
   {
     "id": "cs1027b",
@@ -523,7 +524,8 @@ export const dsS2: Course[] = [
       "To remain eligible for a CS module (65%+), you must score at least 50% on both exams and assignments — don't neglect either.",
       "Read lab instructions before attending — coming in with work already done is prohibited and results in a 0.",
       "Never share or post your code anywhere; similarity-checking software is used on all assignments."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "2:30 PM", "room": "WSS 55" }
   },
   {
     "id": "ds1000",
@@ -708,6 +710,7 @@ export const dsS2: Course[] = [
       "Regrade requests must be submitted within 7 days of receiving your assignment grade.",
       "TA office hours (Mon/Wed/Fri 7–8:30 pm Zoom) are offered specifically before each assignment deadline and each exam — attend them.",
       "No mark bumping is done; the grade you earn is the grade you receive."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3, 5], "startTime": "9:30 AM", "room": "PAB 150" }
   }
 ];

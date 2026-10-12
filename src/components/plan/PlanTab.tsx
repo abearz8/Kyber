@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Course, PlanView, PersonalEvent } from "@/lib/types";
-import { isoToday, addDays, weekDays, monthGrid, fmtMonthYear } from "@/lib/dates";
+import { isoToday, addDays, nextSevenDays, monthGrid, fmtMonthYear } from "@/lib/dates";
 import { planItemsForDate, downloadICS, type PlanItem } from "@/lib/plan";
 import { allStudyTasks } from "@/lib/studyplan";
 import { track } from "@/lib/analytics";
@@ -31,6 +31,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 
   const completedIds = new Set(state.completedTaskIds);
   const personalEvents = state.personalEvents;
+  const aiTasks = state.aiTasks ?? [];
 
   function setView(v: PlanView) {
     dispatch({ type: "SET_PLAN_VIEW", view: v });
@@ -128,16 +129,17 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {view === "day" && (
-          <AgendaView courses={courses} personalEvents={personalEvents} completedIds={completedIds}
-            onToggleStudy={toggleStudy} onDeletePersonal={(id) => dispatch({ type: "DELETE_PERSONAL_EVENT", id })} />
+          <AgendaView courses={courses} personalEvents={personalEvents} aiTasks={aiTasks} completedIds={completedIds}
+            onToggleStudy={toggleStudy} onDeletePersonal={(id) => dispatch({ type: "DELETE_PERSONAL_EVENT", id })}
+            onSelectItem={setSelectedItem} />
         )}
         {view === "week" && (
-          <WeekView courses={courses} personalEvents={personalEvents} anchor={selectedDate}
+          <WeekView courses={courses} personalEvents={personalEvents} aiTasks={aiTasks}
             onSelectDay={(d) => { setSelectedDate(d); setView("day"); }}
             onSelectItem={setSelectedItem} />
         )}
         {view === "month" && (
-          <MonthView courses={courses} personalEvents={personalEvents} year={year} month={month} selected={selectedDate}
+          <MonthView courses={courses} personalEvents={personalEvents} aiTasks={aiTasks} year={year} month={month} selected={selectedDate}
             onSelect={(d) => setSelectedDate(d)}
             onGoToDay={(d) => { setSelectedDate(d); setView("day"); }}
             onPrev={() => setMonthOffset((o) => o - 1)} onNext={() => setMonthOffset((o) => o + 1)}
@@ -146,8 +148,8 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
         )}
       </div>
 
-      {/* FAB — sits above tab bar with safe clearance */}
-      {!adding && !showPalette && !showSettings && !selectedItem && (
+      {/* FAB — always visible unless add sheet is open */}
+      {!adding && !showPalette && !showSettings && (
         <button
           onClick={() => setAdding(true)}
           aria-label="Add to plan"
@@ -194,16 +196,17 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 // ─── Agenda (Day) ─────────────────────────────────────────────────────────────
 
 function AgendaView({
-  courses, personalEvents, completedIds, onToggleStudy, onDeletePersonal,
+  courses, personalEvents, aiTasks, completedIds, onToggleStudy, onDeletePersonal, onSelectItem,
 }: {
-  courses: Course[]; personalEvents: PersonalEvent[];
+  courses: Course[]; personalEvents: PersonalEvent[]; aiTasks: import("@/lib/types").AiTask[];
   completedIds: Set<string>; onToggleStudy: (id: string) => void; onDeletePersonal: (id: string) => void;
+  onSelectItem: (item: PlanItem) => void;
 }) {
   const today = isoToday();
   const days: { date: string; items: PlanItem[] }[] = [];
   for (let i = 0; i < 21 && days.length < 8; i++) {
     const d = addDays(today, i);
-    const items = planItemsForDate(courses, personalEvents, d);
+    const items = planItemsForDate(courses, personalEvents, d, aiTasks);
     if (i === 0 || items.length > 0) days.push({ date: d, items });
   }
 
@@ -244,20 +247,35 @@ function AgendaView({
             <div className="flex flex-col">
               {items.map((it, i) => {
                 const done = it.studyId ? completedIds.has(it.studyId) : false;
+                const isAi = it.kind === "ai";
                 return (
                   <div
                     key={it.id}
                     className="flex items-center gap-3"
                     style={{ padding: "11px 0", borderTop: i === 0 ? "none" : "1px solid var(--line)", opacity: done ? 0.55 : 1 }}
                   >
-                    <span style={{ width: 9, height: 9, borderRadius: it.kind === "study" ? 2 : "50%", background: it.color, flexShrink: 0 }} />
+                    {/* Dot — tapping toggles study completion */}
                     <button
-                      onClick={() => it.studyId && onToggleStudy(it.studyId)}
+                      onClick={() => it.studyId ? onToggleStudy(it.studyId) : undefined}
+                      style={{ background: "none", border: "none", padding: 0, cursor: it.studyId ? "pointer" : "default", flexShrink: 0, display: "flex", alignItems: "center" }}
+                      aria-label={it.studyId ? (done ? "Mark incomplete" : "Mark complete") : undefined}
+                    >
+                      <span style={{
+                        width: 9, height: 9,
+                        borderRadius: (it.kind === "study" || isAi) ? 2 : "50%",
+                        background: it.color, flexShrink: 0,
+                        outline: done ? `2px solid ${it.color}` : "none",
+                        outlineOffset: 1,
+                      }} />
+                    </button>
+                    {/* Title row — tapping opens detail sheet */}
+                    <button
+                      onClick={() => onSelectItem(it)}
                       className="flex-1 text-left"
-                      style={{ background: "none", border: "none", padding: 0, cursor: it.studyId ? "pointer" : "default", minWidth: 0 }}
+                      style={{ background: "none", border: "none", padding: 0, cursor: "pointer", minWidth: 0 }}
                     >
                       <p style={{ fontSize: 16, fontWeight: 500, color: done ? "var(--text-3)" : "var(--ink)", margin: 0, textDecoration: done ? "line-through" : "none", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {it.title}
+                        {isAi ? `✦ ${it.title}` : it.title}
                       </p>
                     </button>
                     <span style={{ fontSize: 14, color: "var(--text-2)", flexShrink: 0 }}>{it.timeLabel.replace("Due ", "")}</span>
@@ -281,17 +299,17 @@ function AgendaView({
 
 // ─── Week ───────────────────────────────────────────────────────────────────
 
-function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }: {
-  courses: Course[]; personalEvents: PersonalEvent[]; anchor: string;
+function WeekView({ courses, personalEvents, aiTasks, onSelectDay, onSelectItem }: {
+  courses: Course[]; personalEvents: PersonalEvent[]; aiTasks: import("@/lib/types").AiTask[];
   onSelectDay: (d: string) => void; onSelectItem: (item: PlanItem) => void;
 }) {
   const today = isoToday();
-  const days = weekDays(anchor);
+  const days = nextSevenDays(today);
   return (
     <div style={{ padding: "6px 16px calc(130px + var(--safe-bottom))" }}>
       <div className="flex flex-col gap-3">
         {days.map((day) => {
-          const items = planItemsForDate(courses, personalEvents, day);
+          const items = planItemsForDate(courses, personalEvents, day, aiTasks);
           const isToday = day === today;
           return (
             <div key={day}
@@ -320,24 +338,29 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }
                 </div>
               </div>
               {/* Items — each individually tappable */}
-              {items.map((it, i) => (
-                <div
-                  key={it.id}
-                  onClick={() => onSelectItem(it)}
-                  role="button" tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
-                  className="flex items-center gap-3"
-                  style={{
-                    padding: "10px 16px", cursor: "pointer",
-                    borderTop: i === 0 ? "none" : "1px solid var(--line)",
-                  }}
-                >
-                  <div style={{ width: 7, height: 7, borderRadius: it.kind === "study" ? 1 : "50%", background: it.color, flexShrink: 0 }} />
-                  <span style={{ fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{it.title}</span>
-                  {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
-                </div>
-              ))}
+              {items.map((it, i) => {
+                const isAi = it.kind === "ai";
+                return (
+                  <div
+                    key={it.id}
+                    onClick={() => onSelectItem(it)}
+                    role="button" tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
+                    className="flex items-center gap-3"
+                    style={{
+                      padding: "10px 16px", cursor: "pointer",
+                      borderTop: i === 0 ? "none" : "1px solid var(--line)",
+                    }}
+                  >
+                    <div style={{ width: 7, height: 7, borderRadius: (it.kind === "study" || isAi) ? 1 : "50%", background: it.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 14, color: "var(--ink)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
+                      {isAi ? `✦ ${it.title}` : it.title}
+                    </span>
+                    {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
+                  </div>
+                );
+              })}
             </div>
           );
         })}
@@ -348,8 +371,8 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }
 
 // ─── Month ──────────────────────────────────────────────────────────────────
 
-function MonthView({ courses, personalEvents, year, month, selected, onSelect, onGoToDay, onPrev, onNext, onExport, onSelectItem }: {
-  courses: Course[]; personalEvents: PersonalEvent[]; year: number; month: number; selected: string;
+function MonthView({ courses, personalEvents, aiTasks, year, month, selected, onSelect, onGoToDay, onPrev, onNext, onExport, onSelectItem }: {
+  courses: Course[]; personalEvents: PersonalEvent[]; aiTasks: import("@/lib/types").AiTask[]; year: number; month: number; selected: string;
   onSelect: (d: string) => void; onGoToDay: (d: string) => void;
   onPrev: () => void; onNext: () => void; onExport: () => void;
   onSelectItem: (item: PlanItem) => void;
@@ -359,8 +382,11 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const dotMap = new Map<string, string[]>();
+  const examDates = new Set<string>();
+
   for (const c of courses) for (const e of c.events) {
     const a = dotMap.get(e.date) ?? []; a.push(c.color); dotMap.set(e.date, a);
+    if (e.type === "exam") examDates.add(e.date);
   }
   for (const t of allStudyTasks(courses)) {
     const existing = dotMap.get(t.date) ?? [];
@@ -370,8 +396,13 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
   for (const p of personalEvents) {
     const a = dotMap.get(p.date) ?? []; a.push("#8a8a8a"); dotMap.set(p.date, a);
   }
+  for (const t of aiTasks) {
+    const existing = dotMap.get(t.date) ?? [];
+    if (!existing.includes(t.courseColor)) existing.push(t.courseColor);
+    dotMap.set(t.date, existing);
+  }
 
-  const selectedItems = planItemsForDate(courses, personalEvents, selected);
+  const selectedItems = planItemsForDate(courses, personalEvents, selected, aiTasks);
   const selDate = new Date(selected + "T12:00:00");
   const selLabel = selDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
@@ -394,12 +425,20 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
             const dots = dotMap.get(cell) ?? [];
             const isToday = cell === today;
             const isSel = cell === selected;
+            const isExam = examDates.has(cell);
             return (
               <button key={cell} onClick={() => onSelect(cell)} style={{
                 aspectRatio: "1", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 2,
-                borderRadius: 10, background: isSel ? "var(--orange-cta)" : isToday ? "var(--cream-deep)" : "transparent", border: "none", cursor: "pointer",
+                borderRadius: 10,
+                background: isSel ? "var(--orange-cta)" : isToday ? "var(--cream-deep)" : "transparent",
+                border: isExam && !isSel ? "1.5px solid #e8474a" : "none",
+                cursor: "pointer",
+                position: "relative",
               }}>
-                <span style={{ fontSize: 14, fontWeight: isToday ? 700 : 400, color: isSel ? "#fff" : isToday ? "var(--orange-cta)" : "var(--ink)" }}>{parseInt(cell.split("-")[2])}</span>
+                {isExam && !isSel && (
+                  <span style={{ position: "absolute", top: 2, right: 3, fontSize: 7, color: "#e8474a", lineHeight: 1 }}>▲</span>
+                )}
+                <span style={{ fontSize: 14, fontWeight: (isExam || isToday) && !isSel ? 700 : 400, color: isSel ? "#fff" : isToday ? "var(--orange-cta)" : isExam ? "#e8474a" : "var(--ink)" }}>{parseInt(cell.split("-")[2])}</span>
                 {dots.length > 0 && (
                   <div style={{ display: "flex", gap: 2 }}>
                     {dots.slice(0, 3).map((color, di) => <div key={di} style={{ width: 4, height: 4, borderRadius: "50%", background: isSel ? "#fff" : color }} />)}
@@ -428,21 +467,26 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
               <p style={{ fontSize: 14, color: "var(--text-3)", margin: 0 }}>Nothing scheduled</p>
             </div>
           ) : (
-            selectedItems.map((it, i) => (
-              <div
-                key={it.id}
-                onClick={() => onSelectItem(it)}
-                role="button" tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
-                className="flex items-center gap-3"
-                style={{ padding: "11px 14px", borderTop: i === 0 ? "none" : "1px solid var(--line)", cursor: "pointer" }}
-              >
-                <div style={{ width: 8, height: 8, borderRadius: it.kind === "study" ? 2 : "50%", background: it.color, flexShrink: 0 }} />
-                <span style={{ fontSize: 14, fontWeight: 500, color: "var(--ink)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{it.title}</span>
-                {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
-              </div>
-            ))
+            selectedItems.map((it, i) => {
+              const isAi = it.kind === "ai";
+              return (
+                <div
+                  key={it.id}
+                  onClick={() => onSelectItem(it)}
+                  role="button" tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && onSelectItem(it)}
+                  className="flex items-center gap-3"
+                  style={{ padding: "11px 14px", borderTop: i === 0 ? "none" : "1px solid var(--line)", cursor: "pointer" }}
+                >
+                  <div style={{ width: 8, height: 8, borderRadius: (it.kind === "study" || isAi) ? 2 : "50%", background: it.color, flexShrink: 0 }} />
+                  <span style={{ fontSize: 14, fontWeight: 500, color: "var(--ink)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {isAi ? `✦ ${it.title}` : it.title}
+                  </span>
+                  {it.courseCode && <span style={{ fontSize: 12, color: it.color, fontWeight: 700, flexShrink: 0 }}>{it.courseCode}</span>}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
+                </div>
+              );
+            })
           )}
         </div>
       </div>
@@ -473,6 +517,7 @@ const STUDY_TIPS: Record<string, string> = {
 function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void }) {
   const isStudy = item.kind === "study";
   const isCourse = item.kind === "course";
+  const isAi = item.kind === "ai";
   const tip = STUDY_TIPS[item.title];
   const timeParts = item.timeLabel.split(" · ");
   const duration = timeParts.length > 1 ? timeParts[1] : null;
@@ -499,7 +544,7 @@ function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void 
               }} />
               <div>
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: item.color, marginBottom: 3 }}>
-                  {isStudy ? "Study block" : isCourse ? (item.eventType === "exam" ? "Exam" : "Deadline") : "Personal"}
+                  {isStudy ? "Study block" : isAi ? "AI Suggestion ✦" : isCourse ? (item.eventType === "exam" ? "Exam" : "Deadline") : "Personal"}
                 </div>
                 <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 20, color: "var(--ink)", margin: 0, lineHeight: 1.2 }}>
                   {item.title}
@@ -537,6 +582,15 @@ function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void 
             </div>
           )}
 
+          {isAi && item.aiDescription && (
+            <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "14px 16px" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 6 }}>
+                What to do
+              </div>
+              <p style={{ fontSize: 14, color: "var(--ink)", margin: 0, lineHeight: 1.55 }}>{item.aiDescription}</p>
+            </div>
+          )}
+
           {isCourse && !tip && (
             <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "14px 16px" }}>
               <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0, lineHeight: 1.5 }}>
@@ -544,6 +598,11 @@ function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void 
                   ? "Exam day — review your summary sheet the night before and confirm the room and start time."
                   : "Submission deadline — confirm upload requirements and leave buffer time for any technical issues."}
               </p>
+              {item.estimated && (
+                <p style={{ fontSize: 12, color: "var(--text-3)", margin: "8px 0 0", fontStyle: "italic" }}>
+                  Date estimated from course schedule.
+                </p>
+              )}
             </div>
           )}
 

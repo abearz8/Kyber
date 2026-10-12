@@ -140,7 +140,8 @@ export const hba1S2: Course[] = [
       "For the Leveraging AI Assignment (5%), make sure to follow citation and acknowledgement guidelines for AI usage.",
       "Group assignment grades are 85% group-based and 15% peer evaluation — contribute consistently to avoid peer score penalties.",
       "Prepare cases independently first, then discuss with your learning team to sharpen your analysis before class."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "8:30 AM", "room": "SH 3345" }
   },
   {
     "id": "business3301",
@@ -268,7 +269,8 @@ export const hba1S2: Course[] = [
       "Missing more than 5 classes (80-min sessions) can result in unsatisfactory standing and ineligibility to write the final exam.",
       "Arrive on time — lates result in a contribution deduction (-1 point or 0 for the day).",
       "For the final exam (35%), practice integrating market analysis, strategic alternatives, and tactical recommendations into a cohesive argument."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "10:30 AM", "room": "SH 3345" }
   },
   {
     "id": "business3322",
@@ -412,7 +414,8 @@ export const hba1S2: Course[] = [
       "Group assignment grades are 85% group grade + 15% peer evaluation — document your contributions and be a reliable team member.",
       "Case preparation must rely only on materials provided by the instructor — using outside case notes or prior student materials is a conduct violation.",
       "Makeup exam requests require documentation submitted within 48 hours of the missed exam; for varsity/religious conflicts, notify at least 10 days in advance."
-    ]
+    ],
+    "classMeetings": { "days": [1, 3], "startTime": "1:30 PM", "room": "SH 3355" }
   },
   {
     "id": "business3300",
@@ -529,6 +532,7 @@ export const hba1S2: Course[] = [
       "Read cases and develop your own answers independently before using learning teams or any AI tools — individual preparation is foundational to contribution scores.",
       "Do not use external case information (notes from other sections/years, teaching notes, B-cases) — this is a violation of the Student Code of Professional Conduct.",
       "Outstanding contribution (90–100%) requires not just frequent participation but follow-up comments, integration of concepts, and evidence-backed arguments."
-    ]
+    ],
+    "classMeetings": { "days": [2, 4], "startTime": "8:30 AM", "room": "SH 3375" }
   }
 ];

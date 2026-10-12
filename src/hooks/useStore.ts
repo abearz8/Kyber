@@ -10,6 +10,8 @@ import {
   type Dispatch,
 } from "react";
 import type { AppState, AppAction, Course, AppSettings } from "@/lib/types";
+import { generateAiTasks } from "@/lib/aiTasks";
+import { isoToday } from "@/lib/dates";
 
 const STORAGE_KEY = "kyber-app-state-v1";
 
@@ -30,6 +32,7 @@ const defaultState: AppState = {
   selectedCourseId: null,
   selectedDate: null,
   personalEvents: [],
+  aiTasks: [],
   weekMood: null,
   weekNotes: "",
   hasOnboarded: false,
@@ -48,14 +51,23 @@ function reducer(state: AppState, action: AppAction): AppState {
         courses: action.courses,
         activeSemester: lowest,
         selectedCourseId: null,
+        aiTasks: generateAiTasks(action.courses, isoToday()),
       };
     }
 
     case "ADD_COURSES": {
       const existingIds = new Set(state.courses.map((c) => c.id));
       const fresh = action.courses.filter((c) => !existingIds.has(c.id));
-      return { ...state, courses: [...state.courses, ...fresh] };
+      const merged = [...state.courses, ...fresh];
+      return {
+        ...state,
+        courses: merged,
+        aiTasks: generateAiTasks(merged, isoToday()),
+      };
     }
+
+    case "SET_AI_TASKS":
+      return { ...state, aiTasks: action.tasks };
 
     case "DELETE_COURSE": {
       const courses = state.courses.filter((c) => c.id !== action.courseId);
@@ -149,8 +161,12 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "SET_ONBOARDED":
       return { ...state, hasOnboarded: action.value };
 
-    case "HYDRATE":
-      return { ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
+    case "HYDRATE": {
+      const hydratedState = { ...defaultState, ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
+      // Always regenerate AI tasks on hydrate so they're fresh for today
+      hydratedState.aiTasks = generateAiTasks(hydratedState.courses, isoToday());
+      return hydratedState;
+    }
 
     case "RESET":
       return defaultState;
