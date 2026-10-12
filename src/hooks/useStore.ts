@@ -17,7 +17,7 @@ const STORAGE_KEY = "kyber-app-state-v1";
 
 const defaultSettings: AppSettings = {
   defaultTab: "courses",
-  defaultPlanView: "day",
+  defaultPlanView: "week",
   weekStartsOn: 1,
   showCompletedTasks: true,
 };
@@ -26,7 +26,7 @@ const defaultState: AppState = {
   courses: [],
   activeTab: "courses",
   activeSemester: 1,
-  planView: "day",
+  planView: "week",
   completedTaskIds: [],
   gradeSims: {},
   selectedCourseId: null,
@@ -165,6 +165,9 @@ function reducer(state: AppState, action: AppAction): AppState {
       const hydratedState = { ...defaultState, ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
       // Always regenerate AI tasks on hydrate so they're fresh for today
       hydratedState.aiTasks = generateAiTasks(hydratedState.courses, isoToday());
+      // "day" view no longer exists — reset to "week"
+      if ((hydratedState.planView as string) === "day") hydratedState.planView = "week";
+      if ((hydratedState.settings.defaultPlanView as string) === "day") hydratedState.settings.defaultPlanView = "week";
       return hydratedState;
     }
 

@@ -63,7 +63,7 @@ export interface Course {
 }
 
 export type Tab = "courses" | "now" | "plan";
-export type PlanView = "month" | "week" | "day";
+export type PlanView = "month" | "week";
 
 // Personal (user-added) plan items
 export type PersonalEventKind =

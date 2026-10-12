@@ -135,7 +135,6 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
               <SegmentPicker<PlanView>
                 value={settings.defaultPlanView}
                 options={[
-                  { label: "Day", value: "day" },
                   { label: "Week", value: "week" },
                   { label: "Month", value: "month" },
                 ]}

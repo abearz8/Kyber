@@ -3,10 +3,12 @@
 import { useState } from "react";
 import type { Course, Mood } from "@/lib/types";
 import { nowAgenda, upNext, type NowItem } from "@/lib/now";
-import { daysUntil } from "@/lib/dates";
+import { daysUntil, isoToday } from "@/lib/dates";
+import { planItemsForDate, type PlanItem } from "@/lib/plan";
 import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
 import SummarySheet from "./SummarySheet";
+import PlanItemSheet from "@/components/plan/PlanItemSheet";
 import KyberLogo from "@/components/shared/KyberLogo";
 import SettingsModal from "@/components/shared/SettingsModal";
 
@@ -35,8 +37,13 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
   const agenda = nowAgenda(courses);
   const hero = upNext(agenda, completedIds);
   const week = weekNumber(courses);
+  const today = isoToday();
+  const aiTasks = state.aiTasks ?? [];
+  const personalEvents = state.personalEvents;
+  const todayItems = planItemsForDate(courses, personalEvents, today, aiTasks);
 
   const [openItem, setOpenItem] = useState<NowItem | null>(null);
+  const [selectedPlanItem, setSelectedPlanItem] = useState<PlanItem | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [checkInOpen, setCheckInOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -69,8 +76,6 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
       />
     );
   }
-
-  const doneCount = agenda.items.filter((i) => completedIds.has(i.id)).length;
 
   return (
     <div className="flex flex-col h-full" style={{ position: "relative", minHeight: 0 }}>
@@ -122,42 +127,60 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
           </div>
         )}
 
-        {/* Today's plan */}
-        {agenda.items.length > 0 && (
+        {/* Today's plan — all items for today */}
+        {todayItems.length > 0 && (
           <div style={{ background: "var(--surface)", borderRadius: "var(--radius-card)", boxShadow: "var(--shadow-card)", padding: "18px" }}>
             <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
               <span className="eyebrow">Today&apos;s plan</span>
-              <span style={{ fontSize: 13, color: "var(--text-3)", fontWeight: 600 }}>{doneCount} of {agenda.items.length}</span>
+              <span style={{ fontSize: 13, color: "var(--text-3)", fontWeight: 600 }}>
+                {todayItems.filter((it) => it.studyId && completedIds.has(it.studyId)).length} of {todayItems.length}
+              </span>
             </div>
             <div className="flex flex-col">
-              {agenda.items.map((item, i) => {
-                const done = completedIds.has(item.id);
+              {todayItems.map((it, i) => {
+                const done = it.studyId ? completedIds.has(it.studyId) : false;
+                const isAi = it.kind === "ai";
                 return (
                   <div
-                    key={item.id}
-                    className="flex items-start gap-3"
+                    key={it.id}
+                    className="flex items-center gap-3"
                     style={{ padding: "13px 0", borderTop: i === 0 ? "none" : "1px solid var(--line)", opacity: done ? 0.55 : 1 }}
                   >
-                    <button onClick={() => toggle(item)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", flexShrink: 0, marginTop: 1 }} aria-label="Toggle done">
-                      <span style={{
-                        width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
-                        border: `2px solid ${done ? "var(--orange-cta)" : "#cbc2b2"}`, background: done ? "var(--orange-cta)" : "transparent",
-                      }}>
-                        {done && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l2.5 2.5 4.5-5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                      </span>
-                    </button>
-                    <button onClick={() => { track.nowTaskOpened(item.kind); setOpenItem(item); }} className="flex-1 text-left" style={{ background: "none", border: "none", padding: 0, cursor: "pointer", minWidth: 0 }}>
-                      <p style={{ fontSize: 16, fontWeight: 600, color: done ? "var(--text-3)" : "var(--ink)", margin: 0, textDecoration: done ? "line-through" : "none", lineHeight: 1.3 }}>
-                        {item.title}
-                      </p>
-                      <p className="flex items-center gap-1.5" style={{ fontSize: 13, color: "var(--text-2)", margin: "3px 0 0" }}>
-                        <span style={{ width: 7, height: 7, borderRadius: "50%", background: item.courseColor, flexShrink: 0 }} />
-                        {item.courseCode}{item.note ? ` · ${item.note}` : ""}
-                      </p>
-                    </button>
-                    {item.minutes > 0 && (
-                      <span style={{ fontSize: 14, color: "var(--text-2)", flexShrink: 0, marginTop: 1 }}>{item.minutes} min</span>
+                    {/* Checkbox for study items, dot for others */}
+                    {it.studyId ? (
+                      <button
+                        onClick={() => dispatch({ type: done ? "UNCOMPLETE_TASK" : "COMPLETE_TASK", taskId: it.studyId! })}
+                        style={{ background: "none", border: "none", padding: 0, cursor: "pointer", flexShrink: 0 }}
+                        aria-label={done ? "Mark incomplete" : "Mark complete"}
+                      >
+                        <span style={{
+                          width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                          border: `2px solid ${done ? "var(--orange-cta)" : "#cbc2b2"}`, background: done ? "var(--orange-cta)" : "transparent",
+                        }}>
+                          {done && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6l2.5 2.5 4.5-5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                        </span>
+                      </button>
+                    ) : (
+                      <span style={{ width: 9, height: 9, borderRadius: isAi ? 2 : "50%", background: it.color, flexShrink: 0 }} />
                     )}
+                    {/* Title — tapping opens detail sheet */}
+                    <button
+                      onClick={() => setSelectedPlanItem(it)}
+                      className="flex-1 text-left"
+                      style={{ background: "none", border: "none", padding: 0, cursor: "pointer", minWidth: 0 }}
+                    >
+                      <p style={{ fontSize: 16, fontWeight: 600, color: done ? "var(--text-3)" : "var(--ink)", margin: 0, textDecoration: done ? "line-through" : "none", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {isAi ? `✦ ${it.title}` : it.title}
+                      </p>
+                      {it.courseCode && (
+                        <p className="flex items-center gap-1.5" style={{ fontSize: 13, color: "var(--text-2)", margin: "2px 0 0" }}>
+                          <span style={{ width: 7, height: 7, borderRadius: "50%", background: it.color, flexShrink: 0 }} />
+                          {it.courseCode}
+                        </p>
+                      )}
+                    </button>
+                    <span style={{ fontSize: 13, color: "var(--text-2)", flexShrink: 0 }}>{it.timeLabel.replace("Due ", "")}</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M9 18l6-6-6-6" /></svg>
                   </div>
                 );
               })}
@@ -252,6 +275,10 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
           onAdd={onAdd}
           onReset={onReset}
         />
+      )}
+
+      {selectedPlanItem && (
+        <PlanItemSheet item={selectedPlanItem} onClose={() => setSelectedPlanItem(null)} />
       )}
     </div>
   );
