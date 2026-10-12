@@ -253,7 +253,7 @@ function StepOpening({ onNext }: { onNext: () => void }) {
           {/* Amber radial glow */}
           <div style={{ position:"absolute", inset:"-45%", borderRadius:"50%", background:"radial-gradient(circle, rgba(255,200,60,.42) 0%, rgba(255,200,60,.16) 45%, rgba(255,200,60,0) 72%)" }} />
           {/* Logo fills container proportionally — vw-based so it scales with the screen */}
-          <div style={{ position:"relative", width:"clamp(200px, 62vw, 260px)", aspectRatio:"1", borderRadius:"22%", overflow:"hidden", boxShadow:"0 20px 50px rgba(233,163,25,.45)" }}>
+          <div style={{ position:"relative", width:"clamp(150px, 44vw, 190px)", aspectRatio:"1", borderRadius:"22%", overflow:"hidden", boxShadow:"0 16px 40px rgba(233,163,25,.45)" }}>
             <Image src="/kyber-logo.png" alt="Kyber" fill style={{ objectFit:"cover" }} priority />
           </div>
         </div>
