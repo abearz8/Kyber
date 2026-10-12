@@ -47,7 +47,15 @@ export default function CourseList({
     <div className="flex flex-col h-full" style={{ minHeight: 0 }}>
       {/* Header */}
       <div style={{ padding: "14px 16px 6px", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <KyberLogo size={40} />
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <KyberLogo size={40} />
+          <div>
+            <p style={{ margin: 0, fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 22, color: "var(--orange-cta)", letterSpacing: "-0.02em", lineHeight: 1.15 }}>Your courses</p>
+            <p style={{ margin: 0, fontSize: 12, color: "var(--text-2)", fontWeight: 500 }}>
+              {courses.length > 0 ? `${courses.length} course${courses.length !== 1 ? "s" : ""} · Semester ${activeSemester}` : "No courses yet"}
+            </p>
+          </div>
+        </div>
         <div className="flex items-center gap-2">
           {/* Colour palette */}
           <button

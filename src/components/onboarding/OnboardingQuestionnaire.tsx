@@ -248,9 +248,9 @@ function StepOpening({ onNext }: { onNext: () => void }) {
         Upload your syllabi and Kyber turns every course, deadline, reading, and exam into one plan built around your life.
       </p>
       <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24 }}>
-        <div style={{ width:460, height:460, maxWidth:"100%", borderRadius:"50%", background:"radial-gradient(circle, rgba(255,200,60,.42) 0%, rgba(255,200,60,.16) 45%, rgba(255,200,60,0) 72%)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <div style={{ width:156, height:156, borderRadius:40, overflow:"hidden", boxShadow:"0 18px 44px rgba(233,163,25,.35)", background:"#E9A319", display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <KyberLogo size={80} />
+        <div style={{ width:320, height:320, maxWidth:"100%", borderRadius:"50%", background:"radial-gradient(circle, rgba(255,200,60,.42) 0%, rgba(255,200,60,.16) 45%, rgba(255,200,60,0) 72%)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          <div style={{ width:210, height:210, borderRadius:52, overflow:"hidden", boxShadow:"0 18px 44px rgba(233,163,25,.35)", background:"#E9A319", display:"flex", alignItems:"center", justifyContent:"center" }}>
+            <KyberLogo size={130} />
           </div>
         </div>
       </div>

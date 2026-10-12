@@ -41,9 +41,8 @@
   --tab-height: 72px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-  /* iOS system font stack — matches SF Pro on Apple devices */
-  --ios-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Manrope — Kyber brand font (loaded via next/font/google) */
+  --ios-font: var(--font-manrope, "Manrope"), -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 }
 
 @theme inline {

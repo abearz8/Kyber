@@ -53,7 +53,13 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
       {/* Header */}
       <div style={{ padding: "14px 16px 10px", flexShrink: 0 }}>
         <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
-          <KyberLogo size={40} />
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <KyberLogo size={40} />
+            <div>
+              <p style={{ margin: 0, fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 22, color: "var(--orange-cta)", letterSpacing: "-0.02em", lineHeight: 1.15 }}>Your plan</p>
+              <p style={{ margin: 0, fontSize: 12, color: "var(--text-2)", fontWeight: 500 }}>{fmtMonthYear(year, month)}</p>
+            </div>
+          </div>
           <div className="flex items-center gap-2">
             {/* Export calendar */}
             <button
