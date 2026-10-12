@@ -7,6 +7,7 @@ import CourseDetail from "./CourseDetail";
 import KyberLogo from "@/components/shared/KyberLogo";
 import ColorPaletteModal from "@/components/shared/ColorPaletteModal";
 import SettingsModal from "@/components/shared/SettingsModal";
+import { useScreenTime } from "@/hooks/useScreenTime";
 
 interface Props {
   courses: Course[];
@@ -32,6 +33,9 @@ export default function CourseList({
   const [showPalette, setShowPalette] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const detailCourse = courses.find((c) => c.id === detailCourseId);
+
+  // Owns the "courses" area: list vs. an open course detail.
+  useScreenTime(detailCourse ? `course_detail:${detailCourse.code}` : "courses");
 
   if (detailCourse) {
     return (

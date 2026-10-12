@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Course } from "@/lib/types";
 import { useStore } from "@/hooks/useStore";
+import { track } from "@/lib/analytics";
 
 interface Props {
   courses: Course[];
@@ -81,11 +82,13 @@ export default function ColorPaletteModal({ courses, onClose }: Props) {
       });
     });
     setAppliedSchool(palette.name);
+    track.appearanceCustomized("palette");
     setTimeout(() => setAppliedSchool(null), 1800);
   }
 
   function setCourseColor(courseId: string, color: string) {
     dispatch({ type: "UPDATE_COURSE_COLOR", courseId, color });
+    track.appearanceCustomized("palette");
   }
 
   return (

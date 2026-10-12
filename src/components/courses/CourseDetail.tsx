@@ -12,6 +12,7 @@ import {
 } from "@/lib/grades";
 import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
+import { useScreenTime } from "@/hooks/useScreenTime";
 import InsightCards from "./InsightCards";
 import GradeCalculator from "./GradeCalculator";
 
@@ -99,6 +100,9 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
   const [toast, setToast] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  // Grade calculator is a full-screen replacement of the detail view.
+  useScreenTime(calcOpen ? `grade_calculator:${course.code}` : null);
+
   const c = course.color;
   const progress = submittedProgress(course);
   const assumptions = Object.fromEntries(
@@ -128,6 +132,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
       type: "ADD_PERSONAL_EVENT",
       event: { id: `evt-${e.id}`, kind: "study", title: e.title, date: e.date },
     });
+    track.courseDatesAdded(course.code, 1);
     showToast("✦ Added to your plan");
   }
 
@@ -138,6 +143,7 @@ export default function CourseDetail({ course, onBack, onDelete }: Props) {
         event: { id: `evt-${e.id}`, kind: "study", title: e.title, date: e.date },
       });
     }
+    track.courseDatesAdded(course.code, sortedEvents.length);
     showToast(`✦ Added ${sortedEvents.length} dates to your plan`);
   }
 

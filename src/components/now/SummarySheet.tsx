@@ -75,7 +75,7 @@ export default function SummarySheet({ item, course, onDone, onClose }: Props) {
       {/* Actions */}
       <div style={{ padding: 16, borderTop: "1px solid var(--border)", background: "var(--surface)", flexShrink: 0 }}>
         <button
-          onClick={() => { track.nowTaskCompleted(item.kind, 0); onDone(); }}
+          onClick={() => { track.nowTaskCompleted(item.kind); onDone(); }}
           className="w-full rounded-xl py-3"
           style={{ background: "var(--amber)", color: "var(--ink)", fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer" }}
         >

@@ -4,6 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import type { UserProfile, CommitmentEntry } from "@/lib/types";
 import KyberLogo from "@/components/shared/KyberLogo";
+import { track } from "@/lib/analytics";
+
+// Questionnaire step names for the activation funnel (index = step).
+const STEP_NAMES = ["opening", "school_info", "theme", "goals", "study_time", "study_block", "commitments"];
 
 // ─── data ────────────────────────────────────────────────────────────────────
 
@@ -853,7 +857,10 @@ export default function OnboardingQuestionnaire({ onComplete }: Props) {
   const [draft, setDraft] = useState<Draft>(initialDraft);
 
   const update = useCallback((patch: Partial<Draft>) => setDraft(d => ({ ...d, ...patch })), []);
-  const next = () => setStep(s => s + 1);
+  const next = () => {
+    track.onboardingStepCompleted(step, STEP_NAMES[step] ?? String(step));
+    setStep(s => s + 1);
+  };
   const back = () => setStep(s => Math.max(0, s - 1));
 
   function resolvePalette(): string[] {
@@ -863,6 +870,7 @@ export default function OnboardingQuestionnaire({ onComplete }: Props) {
   }
 
   function finish() {
+    track.onboardingStepCompleted(6, STEP_NAMES[6]);
     const profile: UserProfile = {
       university: draft.university,
       year: draft.year,

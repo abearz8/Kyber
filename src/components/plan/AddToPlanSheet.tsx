@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { PersonalEvent, PersonalEventKind } from "@/lib/types";
 import { isoToday } from "@/lib/dates";
+import { useScreenTime } from "@/hooks/useScreenTime";
 
 const KINDS: { key: PersonalEventKind; label: string; icon: string; description: string }[] = [
   { key: "class",       label: "Class or lecture",      icon: "🎓", description: "Lecture, tutorial, or office hours" },
@@ -26,6 +27,7 @@ function newId(): string {
 }
 
 export default function AddToPlanSheet({ defaultDate, onAdd, onCancel }: Props) {
+  useScreenTime("add_to_plan"); // mounted only while open
   const [kind, setKind] = useState<PersonalEventKind | null>(null);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(defaultDate || isoToday());

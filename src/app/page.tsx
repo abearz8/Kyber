@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/hooks/useStore";
+import { useScreenTime } from "@/hooks/useScreenTime";
+import { track } from "@/lib/analytics";
 import MobileShell from "@/components/shared/MobileShell";
 import OnboardingScreen from "@/components/onboarding/OnboardingScreen";
 import OnboardingQuestionnaire from "@/components/onboarding/OnboardingQuestionnaire";
@@ -99,8 +101,18 @@ export default function Home() {
     }
   }, [state.courses.length, state.hasOnboarded, router]);
 
+  // Onboarding screen tracking (phase + reveal are local state here).
+  useScreenTime(
+    pending
+      ? "onboarding_reveal"
+      : phase === "questionnaire"
+        ? "onboarding_questionnaire"
+        : "onboarding_upload"
+  );
+
   function handleProfileComplete(profile: UserProfile) {
     dispatch({ type: "SET_USER_PROFILE", profile });
+    track.setUserContext(profile);
     setPhase("upload");
   }
 

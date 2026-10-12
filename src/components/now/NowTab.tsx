@@ -7,6 +7,7 @@ import { daysUntil, isoToday } from "@/lib/dates";
 import { planItemsForDate, type PlanItem } from "@/lib/plan";
 import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
+import { useScreenTime } from "@/hooks/useScreenTime";
 import SummarySheet from "./SummarySheet";
 import PlanItemSheet from "@/components/plan/PlanItemSheet";
 import KyberLogo from "@/components/shared/KyberLogo";
@@ -51,6 +52,9 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
   const [checkInOpen, setCheckInOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  // The summary sheet fully replaces the Now view when an item is open.
+  useScreenTime(openItem ? `now_summary:${openItem.kind}` : null);
+
   function showToast(msg: string) {
     setToast(msg);
     setTimeout(() => setToast(null), 2200);
@@ -58,7 +62,7 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
 
   function complete(item: NowItem) {
     dispatch({ type: "COMPLETE_TASK", taskId: item.id });
-    track.nowTaskCompleted(item.kind, 0);
+    track.nowTaskCompleted(item.kind);
     showToast("✦ Nice — that's done");
   }
 
@@ -214,7 +218,7 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
             <p style={{ fontSize: 14, color: "var(--text-2)", margin: "3px 0 0", lineHeight: 1.4 }}>See how Kyber adjusts. No lectures, ever.</p>
           </div>
           <button
-            onClick={() => showToast("✦ Re-planned — nothing lost")}
+            onClick={() => { track.replanTapped(); showToast("✦ Re-planned — nothing lost"); }}
             style={{ background: "var(--orange-cta)", border: "none", borderRadius: 12, padding: "11px 14px", fontSize: 14, fontWeight: 700, color: "#fff", cursor: "pointer", flexShrink: 0 }}
           >
             I missed yesterday
@@ -244,7 +248,7 @@ export default function NowTab({ courses, onAdd, onReset }: Props) {
                   return (
                     <button
                       key={m.key}
-                      onClick={() => dispatch({ type: "SET_MOOD", mood: m.key })}
+                      onClick={() => { dispatch({ type: "SET_MOOD", mood: m.key }); track.weekMoodSet(m.key); }}
                       style={{
                         background: active ? "var(--orange-cta)" : "var(--cream-deep)",
                         color: active ? "#fff" : "var(--text-2)",

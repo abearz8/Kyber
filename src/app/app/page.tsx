@@ -11,6 +11,8 @@ import PlanTab from "@/components/plan/PlanTab";
 import SyllabusUploader from "@/components/upload/SyllabusUploader";
 import type { Course } from "@/lib/types";
 import { useState } from "react";
+import { useScreenTime } from "@/hooks/useScreenTime";
+import { track } from "@/lib/analytics";
 
 export default function AppPage() {
   const { state, dispatch, addCourses, hydrated } = useStore();
@@ -23,6 +25,24 @@ export default function AppPage() {
       router.replace("/");
     }
   }, [hydrated, state.courses.length, router]);
+
+  // Re-register cohort super-properties each session (register() isn't
+  // persisted across reloads) so returning-user events stay segmentable.
+  useEffect(() => {
+    if (hydrated && state.userProfile) track.setUserContext(state.userProfile);
+  }, [hydrated, state.userProfile]);
+
+  // Tab-level screen tracking. `null` for "courses" (CourseList owns that,
+  // distinguishing list vs detail) and until hydration (avoids a phantom view).
+  useScreenTime(
+    !hydrated
+      ? null
+      : showUpload
+        ? "syllabus_upload"
+        : state.activeTab === "courses"
+          ? null
+          : state.activeTab
+  );
 
   // Render nothing until hydration completes so the server and first client
   // render match; then gate on whether any courses are present.

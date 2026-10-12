@@ -63,7 +63,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
           <div className="flex items-center gap-2">
             {/* Export calendar */}
             <button
-              onClick={() => downloadICS(courses, personalEvents)}
+              onClick={() => { track.calendarExported("plan"); downloadICS(courses, personalEvents); }}
               aria-label="Export calendar"
               style={{
                 width: 40, height: 40, borderRadius: "50%", background: "var(--surface)",
@@ -145,7 +145,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
           <MonthView courses={courses} personalEvents={personalEvents} aiTasks={aiTasks} year={year} month={month} selected={selectedDate}
             onSelect={(d) => setSelectedDate(d)}
             onPrev={() => setMonthOffset((o) => o - 1)} onNext={() => setMonthOffset((o) => o + 1)}
-            onExport={() => downloadICS(courses, personalEvents)}
+            onExport={() => { track.calendarExported("plan"); downloadICS(courses, personalEvents); }}
             onSelectItem={setSelectedItem} studyBlock={studyBlock} />
         )}
       </div>

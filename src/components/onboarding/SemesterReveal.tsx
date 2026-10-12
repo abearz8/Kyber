@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Course } from "@/lib/types";
 import KyberLogo from "@/components/shared/KyberLogo";
 import { downloadICS } from "@/lib/plan";
+import { track } from "@/lib/analytics";
 
 interface Props {
   courses: Course[];
@@ -181,7 +182,7 @@ export default function SemesterReveal({ courses, onEnter }: Props) {
           </button>
 
           <button
-            onClick={() => downloadICS(courses, [])}
+            onClick={() => { track.calendarExported("reveal"); downloadICS(courses, []); }}
             className="w-full flex items-center justify-center gap-2"
             style={{
               marginTop: 16,

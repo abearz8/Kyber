@@ -1,6 +1,7 @@
 "use client";
 
 import type { PlanItem } from "@/lib/plan";
+import { useScreenTime } from "@/hooks/useScreenTime";
 
 const STUDY_TIPS: Record<string, string> = {
   "Review lecture notes": "Go through your lecture slides and handouts. Highlight key concepts and rewrite them in your own words — this forces active recall.",
@@ -13,6 +14,9 @@ const STUDY_TIPS: Record<string, string> = {
 };
 
 export default function PlanItemSheet({ item, onClose }: { item: PlanItem; onClose: () => void }) {
+  // Mounted only while open, so mount = enter and unmount = dwell. Covers both
+  // the Now and Plan callers.
+  useScreenTime(`plan_item:${item.kind}`);
   const isStudy = item.kind === "study";
   const isCourse = item.kind === "course";
   const isAi = item.kind === "ai";

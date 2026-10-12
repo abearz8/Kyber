@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useStore } from "@/hooks/useStore";
+import { track } from "@/lib/analytics";
 import type { Tab, PlanView } from "@/lib/types";
 
 interface Props {
@@ -73,6 +74,7 @@ export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
 
   function update<K extends keyof typeof settings>(key: K, value: typeof settings[K]) {
     dispatch({ type: "UPDATE_SETTINGS", settings: { [key]: value } });
+    track.appearanceCustomized("settings");
   }
 
   return (
