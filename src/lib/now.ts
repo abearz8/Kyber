@@ -21,7 +21,7 @@ export interface NowAgenda {
 }
 
 /** Build today's agenda: deadlines due today + study blocks scheduled today. */
-export function nowAgenda(courses: Course[]): NowAgenda {
+export function nowAgenda(courses: Course[], studyBlock?: string): NowAgenda {
   const today = isoToday();
   const items: NowItem[] = [];
 
@@ -43,7 +43,7 @@ export function nowAgenda(courses: Course[]): NowAgenda {
   }
 
   // Study blocks scheduled today
-  const study = allStudyTasks(courses).filter((t) => t.date === today);
+  const study = allStudyTasks(courses, studyBlock).filter((t) => t.date === today);
   for (const t of study) {
     items.push({
       id: t.id,
@@ -66,12 +66,26 @@ export function upNext(agenda: NowAgenda, completedIds: Set<string>): NowItem | 
   return agenda.items.find((i) => !completedIds.has(i.id)) ?? null;
 }
 
-/** Time-of-day greeting (no name — shared demo link). */
-export function greeting(): string {
+/** Time-of-day greeting, optionally personalised with study time preference. */
+export function greeting(studyTimes?: string[]): string {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 18) return "Good afternoon";
-  return "Good evening";
+  let base: string;
+  let currentWindow: string | null = null;
+
+  if (h < 12) { base = "Good morning"; currentWindow = "morning"; }
+  else if (h < 18) { base = "Good afternoon"; currentWindow = "afternoon"; }
+  else if (h < 21) { base = "Good evening"; currentWindow = "evening"; }
+  else { base = "Good evening"; currentWindow = "latenight"; }
+
+  if (
+    studyTimes &&
+    currentWindow &&
+    studyTimes.includes(currentWindow) &&
+    !studyTimes.includes("nopref")
+  ) {
+    return `${base} — your preferred study window`;
+  }
+  return base;
 }
 
 /** Day summary line based on remaining work. Process Flow p.19/20. */

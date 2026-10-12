@@ -78,7 +78,8 @@ export function planItemsForDate(
   courses: Course[],
   personalEvents: PersonalEvent[],
   date: string,
-  aiTasks: AiTask[] = []
+  aiTasks: AiTask[] = [],
+  studyBlock?: string
 ): PlanItem[] {
   const items: PlanItem[] = [];
 
@@ -103,7 +104,7 @@ export function planItemsForDate(
     }
   }
 
-  const studyTasks = allStudyTasks(courses).filter((t) => t.date === date);
+  const studyTasks = allStudyTasks(courses, studyBlock).filter((t) => t.date === date);
   studyTasks.forEach((t, i) => {
     const slot = studySlot(i);
     items.push({

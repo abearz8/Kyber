@@ -33,6 +33,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
   const completedIds = new Set(state.completedTaskIds);
   const personalEvents = state.personalEvents;
   const aiTasks = state.aiTasks ?? [];
+  const studyBlock = state.userProfile?.studyBlock;
 
   function setView(v: PlanView) {
     dispatch({ type: "SET_PLAN_VIEW", view: v });
@@ -131,6 +132,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {view === "week" && (
           <WeekView courses={courses} personalEvents={personalEvents} aiTasks={aiTasks}
+            studyBlock={studyBlock}
             onSelectItem={setSelectedItem} />
         )}
         {view === "month" && (
@@ -138,7 +140,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
             onSelect={(d) => setSelectedDate(d)}
             onPrev={() => setMonthOffset((o) => o - 1)} onNext={() => setMonthOffset((o) => o + 1)}
             onExport={() => downloadICS(courses, personalEvents)}
-            onSelectItem={setSelectedItem} />
+            onSelectItem={setSelectedItem} studyBlock={studyBlock} />
         )}
       </div>
 
@@ -189,8 +191,9 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 
 // ─── Week ───────────────────────────────────────────────────────────────────
 
-function WeekView({ courses, personalEvents, aiTasks, onSelectItem }: {
+function WeekView({ courses, personalEvents, aiTasks, studyBlock, onSelectItem }: {
   courses: Course[]; personalEvents: PersonalEvent[]; aiTasks: import("@/lib/types").AiTask[];
+  studyBlock?: string;
   onSelectItem: (item: PlanItem) => void;
 }) {
   const today = isoToday();
@@ -199,7 +202,7 @@ function WeekView({ courses, personalEvents, aiTasks, onSelectItem }: {
     <div style={{ padding: "6px 16px calc(130px + var(--safe-bottom))" }}>
       <div className="flex flex-col gap-3">
         {days.map((day) => {
-          const items = planItemsForDate(courses, personalEvents, day, aiTasks);
+          const items = planItemsForDate(courses, personalEvents, day, aiTasks, studyBlock);
           const isToday = day === today;
           const dayLabel = isToday
             ? "Today"
@@ -258,11 +261,11 @@ function WeekView({ courses, personalEvents, aiTasks, onSelectItem }: {
 
 // ─── Month ──────────────────────────────────────────────────────────────────
 
-function MonthView({ courses, personalEvents, aiTasks, year, month, selected, onSelect, onPrev, onNext, onExport, onSelectItem }: {
+function MonthView({ courses, personalEvents, aiTasks, year, month, selected, onSelect, onPrev, onNext, onExport, onSelectItem, studyBlock }: {
   courses: Course[]; personalEvents: PersonalEvent[]; aiTasks: import("@/lib/types").AiTask[]; year: number; month: number; selected: string;
   onSelect: (d: string) => void;
   onPrev: () => void; onNext: () => void; onExport: () => void;
-  onSelectItem: (item: PlanItem) => void;
+  onSelectItem: (item: PlanItem) => void; studyBlock?: string;
 }) {
   const today = isoToday();
   const cells = monthGrid(year, month);
@@ -275,7 +278,7 @@ function MonthView({ courses, personalEvents, aiTasks, year, month, selected, on
     const a = dotMap.get(e.date) ?? []; a.push(c.color); dotMap.set(e.date, a);
     if (e.type === "exam") examDates.add(e.date);
   }
-  for (const t of allStudyTasks(courses)) {
+  for (const t of allStudyTasks(courses, studyBlock)) {
     const existing = dotMap.get(t.date) ?? [];
     if (!existing.includes(t.courseColor)) existing.push(t.courseColor);
     dotMap.set(t.date, existing);
@@ -289,7 +292,7 @@ function MonthView({ courses, personalEvents, aiTasks, year, month, selected, on
     dotMap.set(t.date, existing);
   }
 
-  const selectedItems = planItemsForDate(courses, personalEvents, selected, aiTasks);
+  const selectedItems = planItemsForDate(courses, personalEvents, selected, aiTasks, studyBlock);
   const selDate = new Date(selected + "T12:00:00");
   const selLabel = selDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 

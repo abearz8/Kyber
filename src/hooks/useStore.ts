@@ -36,6 +36,7 @@ const defaultState: AppState = {
   weekMood: null,
   weekNotes: "",
   hasOnboarded: false,
+  userProfile: null,
   settings: defaultSettings,
 };
 
@@ -160,6 +161,9 @@ function reducer(state: AppState, action: AppAction): AppState {
 
     case "SET_ONBOARDED":
       return { ...state, hasOnboarded: action.value };
+
+    case "SET_USER_PROFILE":
+      return { ...state, userProfile: action.profile };
 
     case "HYDRATE": {
       const hydratedState = { ...defaultState, ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
