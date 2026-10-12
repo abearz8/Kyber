@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import type { UserProfile, CommitmentEntry } from "@/lib/types";
 import KyberLogo from "@/components/shared/KyberLogo";
 
@@ -248,9 +249,12 @@ function StepOpening({ onNext }: { onNext: () => void }) {
         Upload your syllabi and Kyber turns every course, deadline, reading, and exam into one plan built around your life.
       </p>
       <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24 }}>
-        <div style={{ width:320, height:320, maxWidth:"100%", borderRadius:"50%", background:"radial-gradient(circle, rgba(255,200,60,.42) 0%, rgba(255,200,60,.16) 45%, rgba(255,200,60,0) 72%)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-          <div style={{ width:210, height:210, borderRadius:52, overflow:"hidden", boxShadow:"0 18px 44px rgba(233,163,25,.35)", background:"#E9A319", display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <KyberLogo size={130} />
+        <div style={{ position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          {/* Amber radial glow */}
+          <div style={{ position:"absolute", inset:"-45%", borderRadius:"50%", background:"radial-gradient(circle, rgba(255,200,60,.42) 0%, rgba(255,200,60,.16) 45%, rgba(255,200,60,0) 72%)" }} />
+          {/* Logo fills container proportionally — vw-based so it scales with the screen */}
+          <div style={{ position:"relative", width:"clamp(200px, 62vw, 260px)", aspectRatio:"1", borderRadius:"22%", overflow:"hidden", boxShadow:"0 20px 50px rgba(233,163,25,.45)" }}>
+            <Image src="/kyber-logo.png" alt="Kyber" fill style={{ objectFit:"cover" }} priority />
           </div>
         </div>
       </div>
