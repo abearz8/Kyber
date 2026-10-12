@@ -17,28 +17,60 @@ export function nextMajor(course: Course): CourseEvent | null {
   );
 }
 
-// Prep-step templates per event type.
-const EXAM_STEPS: { label: string; minutes: number }[] = [
+// Prep-step templates per event type — three tiers matching user's study block pref.
+const EXAM_STEPS = [
   { label: "Review lecture notes", minutes: 45 },
   { label: "Work through practice problems", minutes: 50 },
   { label: "Do a past exam under time", minutes: 60 },
   { label: "Build a one-page summary sheet", minutes: 30 },
 ];
 
-const DELIVERABLE_STEPS: { label: string; minutes: number }[] = [
+const DELIVERABLE_STEPS = [
   { label: "Outline and gather sources", minutes: 40 },
   { label: "Draft the main sections", minutes: 60 },
   { label: "Revise and finalise", minutes: 45 },
 ];
 
+const EXAM_STEPS_SHORT = [
+  { label: "Review lecture notes", minutes: 20 },
+  { label: "Work through practice problems", minutes: 25 },
+  { label: "Do a past exam under time", minutes: 30 },
+  { label: "Build a one-page summary sheet", minutes: 20 },
+];
+
+const DELIVERABLE_STEPS_SHORT = [
+  { label: "Outline and gather sources", minutes: 20 },
+  { label: "Draft the main sections", minutes: 30 },
+  { label: "Revise and finalise", minutes: 20 },
+];
+
+const EXAM_STEPS_LONG = [
+  { label: "Review lecture notes", minutes: 60 },
+  { label: "Work through practice problems", minutes: 90 },
+  { label: "Do a past exam under time", minutes: 90 },
+  { label: "Build a one-page summary sheet", minutes: 45 },
+];
+
+const DELIVERABLE_STEPS_LONG = [
+  { label: "Outline and gather sources", minutes: 45 },
+  { label: "Draft the main sections", minutes: 90 },
+  { label: "Revise and finalise", minutes: 60 },
+];
+
+function pickSteps(isExam: boolean, studyBlock?: string) {
+  if (studyBlock === "short") return isExam ? EXAM_STEPS_SHORT : DELIVERABLE_STEPS_SHORT;
+  if (studyBlock === "long") return isExam ? EXAM_STEPS_LONG : DELIVERABLE_STEPS_LONG;
+  return isExam ? EXAM_STEPS : DELIVERABLE_STEPS;
+}
+
 /**
  * Generate prep steps for a course's next major event, spread evenly from today
  * through the day before the event — so there is always a first step to do now.
  */
-export function studyTasksForCourse(course: Course): StudyTask[] {
+export function studyTasksForCourse(course: Course, studyBlock?: string): StudyTask[] {
   const target = nextMajor(course);
   if (!target) return [];
-  const steps = target.type === "exam" ? EXAM_STEPS : DELIVERABLE_STEPS;
+  const steps = pickSteps(target.type === "exam", studyBlock);
   const today = isoToday();
   const window = Math.max(0, daysUntil(target.date) - 1); // last step the day before
   const n = steps.length;
@@ -60,8 +92,8 @@ export function studyTasksForCourse(course: Course): StudyTask[] {
 }
 
 /** All study tasks across every course. */
-export function allStudyTasks(courses: Course[]): StudyTask[] {
-  return courses.flatMap(studyTasksForCourse);
+export function allStudyTasks(courses: Course[], studyBlock?: string): StudyTask[] {
+  return courses.flatMap((c) => studyTasksForCourse(c, studyBlock));
 }
 
 /**

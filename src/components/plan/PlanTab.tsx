@@ -31,6 +31,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 
   const completedIds = new Set(state.completedTaskIds);
   const personalEvents = state.personalEvents;
+  const studyBlock = state.userProfile?.studyBlock;
 
   function setView(v: PlanView) {
     dispatch({ type: "SET_PLAN_VIEW", view: v });
@@ -129,12 +130,12 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
       <div className="flex-1 overflow-y-auto no-scrollbar">
         {view === "day" && (
           <AgendaView courses={courses} personalEvents={personalEvents} completedIds={completedIds}
-            onToggleStudy={toggleStudy} onDeletePersonal={(id) => dispatch({ type: "DELETE_PERSONAL_EVENT", id })} />
+            onToggleStudy={toggleStudy} onDeletePersonal={(id) => dispatch({ type: "DELETE_PERSONAL_EVENT", id })} studyBlock={studyBlock} />
         )}
         {view === "week" && (
           <WeekView courses={courses} personalEvents={personalEvents} anchor={selectedDate}
             onSelectDay={(d) => { setSelectedDate(d); setView("day"); }}
-            onSelectItem={setSelectedItem} />
+            onSelectItem={setSelectedItem} studyBlock={studyBlock} />
         )}
         {view === "month" && (
           <MonthView courses={courses} personalEvents={personalEvents} year={year} month={month} selected={selectedDate}
@@ -142,7 +143,7 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
             onGoToDay={(d) => { setSelectedDate(d); setView("day"); }}
             onPrev={() => setMonthOffset((o) => o - 1)} onNext={() => setMonthOffset((o) => o + 1)}
             onExport={() => downloadICS(courses, personalEvents)}
-            onSelectItem={setSelectedItem} />
+            onSelectItem={setSelectedItem} studyBlock={studyBlock} />
         )}
       </div>
 
@@ -194,16 +195,17 @@ export default function PlanTab({ courses, onAdd, onReset }: Props) {
 // ─── Agenda (Day) ─────────────────────────────────────────────────────────────
 
 function AgendaView({
-  courses, personalEvents, completedIds, onToggleStudy, onDeletePersonal,
+  courses, personalEvents, completedIds, onToggleStudy, onDeletePersonal, studyBlock,
 }: {
   courses: Course[]; personalEvents: PersonalEvent[];
   completedIds: Set<string>; onToggleStudy: (id: string) => void; onDeletePersonal: (id: string) => void;
+  studyBlock?: string;
 }) {
   const today = isoToday();
   const days: { date: string; items: PlanItem[] }[] = [];
   for (let i = 0; i < 21 && days.length < 8; i++) {
     const d = addDays(today, i);
-    const items = planItemsForDate(courses, personalEvents, d);
+    const items = planItemsForDate(courses, personalEvents, d, studyBlock);
     if (i === 0 || items.length > 0) days.push({ date: d, items });
   }
 
@@ -281,9 +283,9 @@ function AgendaView({
 
 // ─── Week ───────────────────────────────────────────────────────────────────
 
-function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }: {
+function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem, studyBlock }: {
   courses: Course[]; personalEvents: PersonalEvent[]; anchor: string;
-  onSelectDay: (d: string) => void; onSelectItem: (item: PlanItem) => void;
+  onSelectDay: (d: string) => void; onSelectItem: (item: PlanItem) => void; studyBlock?: string;
 }) {
   const today = isoToday();
   const days = weekDays(anchor);
@@ -291,7 +293,7 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }
     <div style={{ padding: "6px 16px 130px" }}>
       <div className="flex flex-col gap-3">
         {days.map((day) => {
-          const items = planItemsForDate(courses, personalEvents, day);
+          const items = planItemsForDate(courses, personalEvents, day, studyBlock);
           const isToday = day === today;
           return (
             <div key={day}
@@ -348,11 +350,11 @@ function WeekView({ courses, personalEvents, anchor, onSelectDay, onSelectItem }
 
 // ─── Month ──────────────────────────────────────────────────────────────────
 
-function MonthView({ courses, personalEvents, year, month, selected, onSelect, onGoToDay, onPrev, onNext, onExport, onSelectItem }: {
+function MonthView({ courses, personalEvents, year, month, selected, onSelect, onGoToDay, onPrev, onNext, onExport, onSelectItem, studyBlock }: {
   courses: Course[]; personalEvents: PersonalEvent[]; year: number; month: number; selected: string;
   onSelect: (d: string) => void; onGoToDay: (d: string) => void;
   onPrev: () => void; onNext: () => void; onExport: () => void;
-  onSelectItem: (item: PlanItem) => void;
+  onSelectItem: (item: PlanItem) => void; studyBlock?: string;
 }) {
   const today = isoToday();
   const cells = monthGrid(year, month);
@@ -362,7 +364,7 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
   for (const c of courses) for (const e of c.events) {
     const a = dotMap.get(e.date) ?? []; a.push(c.color); dotMap.set(e.date, a);
   }
-  for (const t of allStudyTasks(courses)) {
+  for (const t of allStudyTasks(courses, studyBlock)) {
     const existing = dotMap.get(t.date) ?? [];
     if (!existing.includes(t.courseColor)) existing.push(t.courseColor);
     dotMap.set(t.date, existing);
@@ -371,7 +373,7 @@ function MonthView({ courses, personalEvents, year, month, selected, onSelect, o
     const a = dotMap.get(p.date) ?? []; a.push("#8a8a8a"); dotMap.set(p.date, a);
   }
 
-  const selectedItems = planItemsForDate(courses, personalEvents, selected);
+  const selectedItems = planItemsForDate(courses, personalEvents, selected, studyBlock);
   const selDate = new Date(selected + "T12:00:00");
   const selLabel = selDate.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 

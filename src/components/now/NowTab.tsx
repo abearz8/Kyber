@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Course, Mood } from "@/lib/types";
-import { nowAgenda, upNext, type NowItem } from "@/lib/now";
+import { nowAgenda, upNext, greeting, daySummary, type NowItem } from "@/lib/now";
 import { daysUntil } from "@/lib/dates";
 import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
@@ -29,7 +29,10 @@ function weekNumber(courses: Course[]): number {
 export default function NowTab({ courses }: Props) {
   const { state, dispatch } = useStore();
   const completedIds = new Set(state.completedTaskIds);
-  const agenda = nowAgenda(courses);
+  const profile = state.userProfile;
+  const agenda = nowAgenda(courses, profile?.studyBlock);
+  const greetingText = greeting(profile?.studyTimes);
+  const summaryText = daySummary(agenda, completedIds);
   const hero = upNext(agenda, completedIds);
   const week = weekNumber(courses);
 
@@ -84,7 +87,15 @@ export default function NowTab({ courses }: Props) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 16px 120px" }}>
+      {/* Greeting */}
+      <div style={{ padding: "4px 16px 12px", flexShrink: 0 }}>
+        <p style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 26, letterSpacing: "-0.02em", color: "var(--ink)", margin: 0, lineHeight: 1.2 }}>
+          {greetingText}
+        </p>
+        <p style={{ fontSize: 14, color: "var(--text-2)", margin: "4px 0 0" }}>{summaryText}</p>
+      </div>
+
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "0 16px 120px" }}>
        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Up next hero */}
         {hero ? (

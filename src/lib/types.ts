@@ -84,6 +84,28 @@ export interface PersonalEvent {
 // How a week feels — Process Flow p.22 check-in
 export type Mood = "light" | "good" | "busy" | "overwhelmed";
 
+export interface CommitmentEntry {
+  type: string;
+  title: string;
+  days: number[]; // 0=Mon … 6=Sun
+  period: string | null;
+  startTime: string | null;
+  duration: string | null;
+  fixed: boolean;
+}
+
+export interface UserProfile {
+  university: string;
+  year: string;
+  program: string;
+  goals: string[];
+  studyTimes: string[];
+  studyBlock: string;
+  themeMode: "school" | "kyber" | "own";
+  palette: string[];
+  commitments: CommitmentEntry[];
+}
+
 export interface AppState {
   courses: Course[];
   activeTab: Tab;
@@ -97,6 +119,7 @@ export interface AppState {
   weekMood: Mood | null;
   weekNotes: string;
   hasOnboarded: boolean;
+  userProfile: UserProfile | null;
   settings: AppSettings;
 }
 
@@ -124,6 +147,7 @@ export type AppAction =
   | { type: "SET_MOOD"; mood: Mood }
   | { type: "SET_WEEK_NOTES"; notes: string }
   | { type: "SET_ONBOARDED"; value: boolean }
+  | { type: "SET_USER_PROFILE"; profile: UserProfile }
   | { type: "UPDATE_SETTINGS"; settings: Partial<AppSettings> }
   | { type: "HYDRATE"; state: AppState }
   | {
