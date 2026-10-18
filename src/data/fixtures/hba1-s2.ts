@@ -5,15 +5,15 @@ export const hba1S2: Course[] = [
   {
     "id": "business3304",
     "code": "BUSINESS 3304",
-    "title": "HBA Program: Operations Management",
-    "term": "2025-2026",
+    "title": "Operations Management",
+    "term": "This term",
     "instructor": "Scott Loveland",
     "color": "#e8784a",
     "targetGrade": 85,
     "currentTopic": "Operational System Design and Delivery",
     "studyMethod": {
-      "name": "Case-Based Active Recall with Concept Mapping",
-      "why": "Because 65% of the grade comes from exams on applied OM concepts and 30% from case-discussion contribution, combining pre-class case analysis with concept maps reinforces both the analytical frameworks needed for exams and the structured arguments needed for high-quality class participation."
+      "name": "Active Case Discussion and Problem-Solving",
+      "why": "The course is heavily weighted toward class contribution (30%) and exams (65%), requiring thorough case preparation, engaged classroom discussion, and application of operations management concepts to real-world scenarios."
     },
     "gradeComponents": [
       {
@@ -60,101 +60,56 @@ export const hba1S2: Course[] = [
     "events": [],
     "policies": [
       {
-        "label": "Attendance",
-        "value": "Attendance is mandatory. Missing more than 5 (80-minute) sessions may result in unsatisfactory standing and ineligibility to write final exams. All absences count toward the total except those due to religious observance."
+        "label": "Attendance Policy",
+        "value": "Attendance is mandatory. Students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing or become ineligible to write final exams. All absences count toward the total except those due to religious observance. Late arrival (after discussion begins) or early departure results in a contribution deduction. Students absent more than 20 minutes of any class period are counted as absent."
       },
       {
-        "label": "Lateness",
-        "value": "Arriving after discussion has begun or departing before it ends counts as 'late' and results in a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes of any class counts as a full absence."
+        "label": "Makeup Exam Policy",
+        "value": "Students granted academic consideration for a missed exam will be offered one official makeup exam opportunity, scheduled within the same academic term where possible. Missing the makeup exam results in unsatisfactory academic standing. A second makeup exam is authorized only at the Dean's discretion."
       },
       {
-        "label": "Missed Exam – Documentation",
-        "value": "Students must formally request academic consideration as soon as possible, ideally before the exam. Documentation must be submitted within 48 hours of the missed exam."
+        "label": "Academic Consideration",
+        "value": "Students must formally request academic consideration as soon as possible, ideally before the scheduled event. Requests must be supported by appropriate documentation and submitted within 48 hours of the missed exam/assignment. Valid grounds include catastrophic events, illness, religious observance, and varsity/case competition participation."
       },
       {
-        "label": "Makeup Exam",
-        "value": "One official makeup exam is offered per term. Missing the makeup results in unsatisfactory academic standing. A second makeup requires Dean's approval after formal review."
+        "label": "Group Assignment Grading",
+        "value": "85% of group assignment grade is based on group performance; 15% is based on peer evaluation of individual contribution. If a group member has not contributed substantially, they may be severed and receive an independent grade."
       },
       {
-        "label": "AI Use – In Class",
-        "value": "Use of AI tools during class sessions is expressly prohibited and constitutes an academic integrity violation. Exceptions only if explicitly granted by the instructor."
-      },
-      {
-        "label": "AI Use – Written Work",
-        "value": "AI use must be explicitly acknowledged (cited as a personal communication or footnote). Final written work must be in the student's own words. AI may be used for background research only."
-      },
-      {
-        "label": "AI Use – Preparation",
-        "value": "Students should read cases and develop answers without AI first to build analytical skills. AI may be used after individual preparation to further augment understanding."
-      },
-      {
-        "label": "Group Assignments – Peer Evaluation",
-        "value": "85% of group assignment grade is based on the group grade; 15% is based on peer evaluation. Points are allocated among group members (10 points per member excluding yourself). Non-equal allocations require written explanation."
-      },
-      {
-        "label": "Plagiarism",
-        "value": "All submitted work may be reviewed by Turnitin. Students must write in their own words and properly cite all sources. Plagiarism is a major academic offence."
+        "label": "Plagiarism Policy",
+        "value": "All written work must be in students' own words with proper citations. All papers may be submitted to Turnitin for plagiarism detection. Plagiarism is a major academic offense."
       },
       {
         "label": "Prohibited Information",
-        "value": "Preparation must be limited to instructor-provided materials and own experience. Use of external case notes, teaching notes, prior-year student notes, or B-cases not provided by the instructor is a violation of the Student Code of Professional Conduct."
-      },
-      {
-        "label": "Recording",
-        "value": "Video or audio recording of classes, guest presentations, or other academic activities is strictly prohibited without express written permission."
-      },
-      {
-        "label": "Technology in Class",
-        "value": "General use of technology devices in class is not allowed unless explicitly permitted for specific activities. Unauthorized use negatively affects contribution grade."
-      },
-      {
-        "label": "Academic Consideration – Varsity/Religious",
-        "value": "Documentation must be submitted via LEARN at least 10 days before the planned event."
-      },
-      {
-        "label": "Academic Consideration – Illness/Catastrophe",
-        "value": "Request must be submitted via LEARN with a Western Medical Documentation Form within 48 hours of the absence."
+        "value": "Preparation must be limited to instructor-provided materials, personal experience, and peer discussion. Case information from sources other than the instructor (handouts, follow-on cases, exam feedback, external notes, company information) is prohibited for class contribution purposes."
       }
     ],
     "subjects": [
       "Operational System Design and Delivery",
-      "Capacity and Bottleneck Analysis",
-      "Inventory Management",
-      "Throughput Performance",
       "Quality and Systematic Operational System Improvement",
-      "Statistical Process Control",
-      "Lean Operations",
       "Supply Management",
-      "Procurement and Distribution",
-      "Buyer-Supplier Relationships",
       "Competing on Operations Strategy"
     ],
     "tips": [
-      "Class Contribution is worth 30% — prepare cases thoroughly before every session and engage actively throughout the entire class, not just at the start.",
-      "The Final Exam (35%) is the single heaviest graded item; prioritize review of all four modules leading up to it.",
-      "Midterm (30%) and Final (35%) together account for 65% of your grade — strong exam performance is essential.",
-      "Read 'The Goal' (Goldratt & Cox) early; it underpins the bottleneck/throughput concepts tested on exams.",
-      "Arriving late or leaving early results in a contribution deduction (-1 point or 0 for the day), so punctuality directly affects your grade.",
-      "Missing more than 5 classes (80-min sessions) can result in unsatisfactory standing and exam ineligibility — track your absences carefully.",
-      "AI tools are expressly prohibited during in-class sessions; use them only for background research in written work and cite them explicitly.",
-      "For the Leveraging AI Assignment (5%), make sure to follow citation and acknowledgement guidelines for AI usage.",
-      "Group assignment grades are 85% group-based and 15% peer evaluation — contribute consistently to avoid peer score penalties.",
-      "Prepare cases independently first, then discuss with your learning team to sharpen your analysis before class."
-    ],
-    "classMeetings": { "days": [1, 3], "startTime": "8:30 AM", "room": "SH 3345" }
+      "Attendance is mandatory; missing more than 5 sessions may result in unsatisfactory standing or exam ineligibility",
+      "Class contribution is 30% of grade; meaningful engagement and thorough preparation are essential",
+      "Prepare assigned cases and readings before class; prohibited information from external sources cannot be used for contribution",
+      "Leverage AI Assignment counts for 5% of grade",
+      "Midterm and Final exams combined are 65% of grade; treat exam schedules with professional seriousness"
+    ]
   },
   {
     "id": "business3301",
     "code": "BUSINESS 3301",
-    "title": "Marketing Management",
-    "term": "2025-2026",
+    "title": "HBA PROGRAM: Marketing Management",
+    "term": "This term",
     "instructor": "Zhe Zhang",
     "color": "#5aa6e6",
     "targetGrade": 85,
-    "currentTopic": "Market Orientation and Strategic Marketing Overview",
+    "currentTopic": "Market Opportunities and Threats Analysis",
     "studyMethod": {
-      "name": "Case-Based Active Learning with Pre-Class Individual Preparation",
-      "why": "With 30% of the grade tied to class contribution and cases as the primary learning vehicle, consistent daily case prep and confident in-class participation are the most direct drivers of success."
+      "name": "Case-Based Active Learning with Peer Discussion",
+      "why": "The course is built on case analysis and class discussions where students must prepare individually, develop positions, and defend them in group settings, mirroring real-world marketing decision-making scenarios."
     },
     "gradeComponents": [
       {
@@ -191,99 +146,85 @@ export const hba1S2: Course[] = [
     "events": [],
     "policies": [
       {
-        "label": "Attendance",
-        "value": "Mandatory; missing more than 5 (80-minute) sessions may result in unsatisfactory standing and ineligibility to write the final exam. Religious observance absences are exempt from the count."
+        "label": "Attendance Requirement",
+        "value": "Mandatory attendance; students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing and be ineligible to write final exams, regardless of academic consideration. All absences count toward total except those due to religious observance."
       },
       {
-        "label": "Lateness",
-        "value": "'Late is Late' — arriving after discussion begins or leaving before it ends counts as late and results in a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes counts as a full absence."
+        "label": "Late Policy",
+        "value": "Late arrival after discussion begins or early departure before discussion ends results in incomplete attendance and contribution deduction (-1 point or 0 for the day). Students departing and returning may not be invited into later discussions. Missing more than 20 minutes of class counts as absent."
       },
       {
-        "label": "Missed Exam — Illness/Emergency",
-        "value": "Must formally request academic consideration via LEARN within 48 hours of absence, supported by a Western Medical Documentation Form."
+        "label": "Academic Consideration for Missed Exams",
+        "value": "Must be formally requested as soon as possible, ideally before exam. Requests must be supported by documentation and submitted within 48 hours. One official makeup exam opportunity will be offered, scheduled within the same academic term. Missing the makeup exam results in unsatisfactory standing. Second makeup only at Dean's discretion."
       },
       {
-        "label": "Missed Exam — Varsity/Religious",
-        "value": "Must submit documentation via LEARN at least 10 days before the event."
-      },
-      {
-        "label": "Makeup Exam",
-        "value": "One official makeup exam offered within the same academic term. Missing the makeup results in unsatisfactory standing. A second makeup requires Dean's discretion after formal review."
-      },
-      {
-        "label": "Peer Evaluation",
-        "value": "15% of the Team Report grade is based on peer evaluation. Points (10 per group member excluding self) are allocated by teammates; non-equal allocations require written justification."
-      },
-      {
-        "label": "AI Use — In Class",
-        "value": "Expressly prohibited during class sessions; constitutes an academic integrity violation affecting contribution grade."
-      },
-      {
-        "label": "AI Use — Written Work",
-        "value": "Permitted for background research but final work must be in your own words; AI usage must be explicitly acknowledged/cited."
-      },
-      {
-        "label": "AI Use — Case Preparation",
-        "value": "Cases must be prepared individually without AI first; instructor may recommend AI tools to augment preparation afterward."
-      },
-      {
-        "label": "Prohibited Information",
-        "value": "Use of outside case information (prior student notes, teaching notes, B-cases, company data not in the case) is a violation of Ivey's Student Code of Professional Conduct."
-      },
-      {
-        "label": "Recording Policy",
-        "value": "Video or audio recording of classes, guest presentations, or academic activities is strictly prohibited without express written permission. Photographing professor slides is not permitted."
+        "label": "Group Work Grading",
+        "value": "All group members receive same grade except for peer evaluation impact. 85% based on group grade; 15% based on peer assessment of individual contribution. Allocate 10 points per group member (excluding self); allocations other than 10 must include explanations. Substantially undercontributing members may be severed and graded independently."
       },
       {
         "label": "Plagiarism",
-        "value": "All written work must be in students' own words; submitted work may be reviewed via Turnitin. Plagiarism is a major academic offence."
+        "value": "Students must write assignments in their own words and properly cite sources. All required papers and reports subject to textual similarity review using Turnitin. Plagiarism is a major academic offense."
       },
       {
-        "label": "Office Hours",
-        "value": "By appointment only; email zzhang@ivey.ca to book. Office: 2306."
+        "label": "Prohibited Information",
+        "value": "Case preparation limited to instructor-provided materials, own experience, and classmate discussions. Prohibited: hand-outs/B-cases, exam/report feedback from other students/sections/years, notes/spreadsheets from other students, external company information, and teaching notes. Use of prohibited information violates Student Code of Professional Conduct."
+      },
+      {
+        "label": "Recording Policy",
+        "value": "Video or audio recording of classes, presentations, and academic activities strictly prohibited without express written permission from faculty or Program Services office."
+      },
+      {
+        "label": "AI/Technology Use",
+        "value": "Individual case preparation should be completed without AI use to develop analytical abilities. After individual preparation, AI may be used for learning team discussions. Over-reliance on AI hindering critical thinking is not acceptable. GenAI simulation tool available for contribution assessment."
+      },
+      {
+        "label": "Class Contribution Grading Scale",
+        "value": "Outstanding (90-100%): thorough preparation, strong follow-up, integrates concepts, explains difficult points, sustained support. Excellent (80-89%): frequent contributions, careful preparation, explains concepts, guides discussions. Good (70-79%): fairly regular contributions, consistent preparation, thoughtful responses. Fair (60-69%): irregular contributions, occasional preparation indication. Poor (50-59%): rare contributions, little preparation evidence, confuses opinion with fact. Unsatisfactory (0-49%): actively inhibits discussion, misses sessions, disruptive behavior."
       }
     ],
     "subjects": [
-      "Market Orientation and Strategic Marketing Overview",
-      "Market Analysis and Opportunity Identification",
-      "Market Segmentation (B2C and B2B)",
-      "Buying Behaviour and Channel Behaviour",
-      "Competitive Analysis (Direct and Indirect)",
-      "Market Sizing, Trends, and External Forces",
-      "Technology Implications and Product Life Cycle",
-      "Qualitative Evaluation of Marketing Alternatives",
-      "Quantitative Evaluation of Marketing Alternatives (Pricing, CLV, Contribution, Forecasting)",
-      "Generative AI for Marketing Decisions",
-      "Marketing Strategy Development and Positioning",
-      "Tactical Implementation Planning",
-      "Persuasive Communication of Marketing Decisions"
+      "Market Opportunities and Threats Analysis",
+      "Marketing Decision-Making Under Uncertainty",
+      "Alternative Marketing Strategies and Competitive Advantage",
+      "Strategic and Tactical Action Plans",
+      "Market Positioning and Differentiation",
+      "Pricing Decisions",
+      "Product Definition and Management",
+      "Market Communication and Promotion",
+      "B2C and B2B Buying Behavior",
+      "Channel Management and Distribution",
+      "Competitive Analysis",
+      "Market Segmentation",
+      "Technology and Product Life Cycle",
+      "Customer Lifetime Value",
+      "GenAI Applications in Marketing",
+      "Market Value Chain Analysis"
     ],
     "tips": [
-      "Contribution (30%) is heavily weighted — prepare every case thoroughly before class and take a personal position before arriving.",
-      "Actively participate in class discussions throughout the entire session, not just the opening; contribution grades drop for students who only engage early.",
-      "The Team Report is 35% of your grade and includes a 15% peer evaluation component — be a reliable, engaged group member.",
-      "Do not use AI tools during class sessions — it is an academic integrity violation and will hurt your contribution grade.",
-      "Prepare cases independently without AI first; critical thinking and personal analysis are explicitly required and tested.",
-      "Quantitative skills matter — practice financial contribution calculations, CLV, channel margin, share-point values, and cannibalization analysis.",
-      "Slides are generally not distributed after class; take thorough notes and never photograph professor slides.",
-      "Missing more than 5 classes (80-min sessions) can result in unsatisfactory standing and ineligibility to write the final exam.",
-      "Arrive on time — lates result in a contribution deduction (-1 point or 0 for the day).",
-      "For the final exam (35%), practice integrating market analysis, strategic alternatives, and tactical recommendations into a cohesive argument."
-    ],
-    "classMeetings": { "days": [2, 4], "startTime": "10:30 AM", "room": "SH 3345" }
+      "Thoroughly prepare cases before class and develop personal positions before attending",
+      "Actively participate in class discussions and be ready to defend your positions",
+      "Develop your own personal frameworks for marketing decision-making rather than relying solely on lecture content",
+      "Do not use ChatGPT or AI tools as a substitute for your own critical analysis during initial case preparation",
+      "Understand that complex cases often lack complete information; make reasonable assumptions",
+      "Attendance is mandatory; missing more than 5 classes can result in unsatisfactory standing and ineligibility for final exam",
+      "Late arrivals/departures count as incomplete attendance with contribution deductions",
+      "Group work requires substantial individual contribution; peer evaluation affects 15% of group grade",
+      "Final exam is 35% of grade; ensure strong preparation",
+      "Class contribution is heavily weighted (30%); consistent, thoughtful participation is essential"
+    ]
   },
   {
     "id": "business3322",
     "code": "BUSINESS 3322",
-    "title": "Leveraging Information Technology",
-    "term": "2025-2026",
+    "title": "HBA PROGRAM: Leveraging Information Technology",
+    "term": "This term",
     "instructor": "Lameck Osinde",
     "color": "#3faf76",
     "targetGrade": 85,
-    "currentTopic": "Module 1: Competing in a Digital World",
+    "currentTopic": "Competing in a Digital World",
     "studyMethod": {
-      "name": "Case-Based Active Preparation",
-      "why": "With 30% of the grade tied to class contribution and the mid-term being a written case analysis, consistently preparing each case in advance and practicing structured oral and written arguments is the single highest-leverage study habit."
+      "name": "Active Case Analysis with Design Thinking",
+      "why": "The course heavily weights in-class contribution (30%) and culminates in a design project requiring real-world problem-solving, making active case preparation and design thinking the dominant study approach."
     },
     "gradeComponents": [
       {
@@ -321,114 +262,65 @@ export const hba1S2: Course[] = [
     "policies": [
       {
         "label": "Attendance",
-        "value": "Mandatory; missing more than 5 x 80-minute sessions may result in unsatisfactory standing and ineligibility to write exams. Religious observance absences are the only exceptions that do not count toward the total."
+        "value": "Mandatory attendance required. Students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing or become ineligible to write exams. Late arrivals after discussion begins or early departures result in a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes counts as an absence."
       },
       {
-        "label": "Lateness",
-        "value": "Arriving after discussion begins or leaving before it ends counts as 'late' and results in a contribution deduction (-1 point or 0 for the day). Missing 20+ minutes of any session counts as a full absence."
+        "label": "Late Submission / Late Arrivals",
+        "value": "'Late is Late'—arriving after discussion begins or departing before it finishes results in contribution deduction. Students departing and returning may not be invited into later discussion. Departing with food/beverages may be counted as disruptive/disrespectful."
       },
       {
-        "label": "Missed Exam — Illness/Emergency",
-        "value": "Submit academic consideration request via LEARN + Western Medical Documentation Form within 48 hours of the missed exam."
+        "label": "Makeup Exam Policy",
+        "value": "Students granted academic consideration will be offered one official makeup exam within the same academic term where possible. Missing the makeup exam results in unsatisfactory academic standing. A second makeup is authorized only at the Dean's discretion after formal review."
       },
       {
-        "label": "Missed Exam — Varsity/Religious",
-        "value": "Submit documentation via LEARN at least 10 days before the event."
+        "label": "Academic Consideration",
+        "value": "Students must request academic consideration as soon as possible (ideally before the exam) and submit supporting documentation within 48 hours of missed exam. Valid grounds include catastrophic events, illness (physical or mental), religious observance, and Varsity/Case competition participation. All absences count toward the 5-class limit except religious observance."
       },
       {
-        "label": "Makeup Exam",
-        "value": "One official makeup opportunity per term; missing the makeup results in unsatisfactory standing. A second makeup requires Dean's discretion after formal review."
+        "label": "Group Assignment Evaluation",
+        "value": "Students receive the same grade as group members for group submissions, with 85% based on group grade and 15% on peer evaluation. Peer evaluation uses 10 points per group member (excluding self). Allocations other than 10 must be explained. Students must contribute substantially or may be severed from the group and receive an independent grade."
       },
       {
-        "label": "Group Assignment Grading",
-        "value": "85% group grade + 15% peer evaluation. Non-contributing members may be severed from the group and receive an independent or failing grade."
+        "label": "Plagiarism and Academic Integrity",
+        "value": "All written work (including case exams and reports) must be in students' own words with proper citations. Submissions are subject to textual similarity review via Turnitin. Using prohibited information (teaching notes, other students' work, external case research) for class contribution is a violation of the Student Code of Professional Conduct."
       },
       {
-        "label": "AI Use — In Class",
-        "value": "Expressly prohibited during class sessions; violation constitutes an academic integrity offence affecting contribution grade."
+        "label": "AI and Technology Use",
+        "value": "Students must read cases and develop answers without AI to develop analytical abilities. Individual preparation must precede learning team discussions. In-class technology use (including AI tools) is generally prohibited and negatively affects contribution grade. For written work, acknowledge AI usage explicitly (treat as external expert consultation). Final product must represent student's own synthesis in their own words. AI use for background research is permitted if final work is original."
       },
       {
-        "label": "AI Use — Written Work",
-        "value": "Permitted for background research only; final work must be in your own words with explicit citation of any AI tool used."
-      },
-      {
-        "label": "AI Use — Case Preparation",
-        "value": "Cases and assignment questions must be prepared without AI; AI may be used after individual preparation to augment understanding, or when explicitly recommended by the instructor."
-      },
-      {
-        "label": "Prohibited Information",
-        "value": "Case preparation must use only instructor-provided materials and personal/peer experience. Using outside case notes, prior student work, teaching notes, or non-case company data is a conduct violation."
-      },
-      {
-        "label": "Plagiarism",
-        "value": "All written work may be submitted to Turnitin. Plagiarism is a major academic offence."
-      },
-      {
-        "label": "Recording",
-        "value": "Video or audio recording of classes, guest presentations, or events is strictly prohibited without express written permission."
-      },
-      {
-        "label": "Technology in Class",
-        "value": "Generally not allowed; specific exceptions established by the professor in the first session. Unauthorized use negatively affects contribution grade."
+        "label": "Recording Policy",
+        "value": "Video or audio recording of classes, guest presentations, and academic activities is strictly prohibited without express written permission from faculty or Program Services office."
       }
     ],
     "subjects": [
-      "Module 1: Competing in a Digital World",
-      "Netflix Inc. The Disruptor Faces Disruption",
-      "RBC Mobile Wallet",
-      "Google Car",
-      "JP Morgan Chase: Open Banking",
-      "Wendy's: Capitalizing on Emerging Social Media Trends",
-      "Digital Transformation at GE: What Went Wrong?",
-      "Siemens Canada: Digital Transformation",
-      "The DAO Hack: A Blockchain Dilemma",
-      "Module 2: Building Digital Capabilities",
-      "Carolinas HealthCare System: Consumer Analytics",
-      "Moderna: Democratizing Artificial Intelligence",
-      "Challenges in Commercial Deployment of AI: Insights from The Rise and Fall of IBM Watson's AI Medical System",
-      "Leslie Stowe Fine Foods: The ERP Decision",
-      "Transforming the Business Service Portfolio at Global Consultancy / The Long Tail Strategy of IT Outsourcing",
-      "TopCoder",
-      "Microsoft: Saying Yes to Accessibility and Inclusiveness",
-      "Module 3: Managing Digital Risks",
-      "NASDAQ OMX: The Facebook Debacle",
-      "iPremier: Denial of Service Attack",
-      "IT Management Simulation: Cyber Attack",
-      "The Obamacare Website",
-      "Monsters in the Machine? Tackling the Challenge of Responsible AI",
-      "Module 4: Leading Digital Design & Development",
-      "DeepSeek: The Emergence and Evolution of AI Technology / Open-Source AI Monetization",
-      "Systems Design (Lego)",
-      "Design Thinking",
-      "In-class Working Session",
-      "Design Project Presentation"
+      "Competing in a Digital World",
+      "Building Digital Capabilities",
+      "Managing Digital Risks",
+      "Leading Digital Design & Development"
     ],
     "tips": [
-      "Class contribution is 30% of your grade — prepare cases thoroughly before every session and speak up early and often in discussion.",
-      "The mid-term exam is a written case analysis (35%); practice structuring clear, evidence-based arguments on case issues covered up to that point.",
-      "The LIT Design Project (35%) runs in the last two weeks — start thinking about real-world problems early so you aren't scrambling during the sprint.",
-      "Missing more than 5 classes (80-min sessions) risks unsatisfactory standing and ineligibility to write exams — treat attendance like a professional commitment.",
-      "Arriving late counts against your contribution grade (-1 point or 0 for the day); missing 20+ minutes counts as a full absence.",
-      "Do NOT use AI tools during in-class discussions — it is an explicit academic integrity violation and will hurt your contribution grade.",
-      "For written work, you may use AI for background research but must write the final product in your own words and explicitly cite any AI usage.",
-      "Group assignment grades are 85% group grade + 15% peer evaluation — document your contributions and be a reliable team member.",
-      "Case preparation must rely only on materials provided by the instructor — using outside case notes or prior student materials is a conduct violation.",
-      "Makeup exam requests require documentation submitted within 48 hours of the missed exam; for varsity/religious conflicts, notify at least 10 days in advance."
-    ],
-    "classMeetings": { "days": [1, 3], "startTime": "1:30 PM", "room": "SH 3355" }
+      "Case-based learning environment—thorough preparation is essential for class contribution",
+      "Class contribution is heavily weighted (30%) and requires active, thoughtful engagement throughout discussions",
+      "Mid-term exam (35%) focuses on written case analysis of issues covered up to that point",
+      "LIT Design Project (35%) takes place in the final two weeks and requires systems thinking, prototyping, and design tools",
+      "Late arrivals and early departures result in contribution deductions; plan to attend full class sessions",
+      "Over-reliance on AI tools will hinder development of critical analytical skills; use AI ethically and acknowledge its use in written work",
+      "Attendance is mandatory—more than 5 absences may result in unsatisfactory standing and ineligibility for exams"
+    ]
   },
   {
-    "id": "business3300",
-    "code": "BUSINESS 3300",
-    "title": "HBA Program: Strategy",
-    "term": "2025-2026",
-    "instructor": "Krista Pettit; Dilan Eren; Mazi Raz; Lara Liboni; Mohammad Hosseini",
+    "id": "bus3300",
+    "code": "BUS 3300",
+    "title": "Strategy",
+    "term": "This term",
+    "instructor": "Krista Pettit, Lina Gallego, Dilan Eren, Amy Silva, Mazi Raz, Nataliia Sukhostavska, Lara Liboni, Gina Luciani, Mohammad Hosseini, Olga Aguilar",
     "color": "#987be8",
     "targetGrade": 85,
-    "currentTopic": "Introduction to Strategic Management and the Diamond-E Framework",
+    "currentTopic": "Strategic management and value creation",
     "studyMethod": {
-      "name": "Case-Based Active Preparation",
-      "why": "With 35% of the grade tied to in-class contribution through case discussions, daily thorough individual case preparation and structured team debriefs are essential to performing well."
+      "name": "Case-Based Active Learning with Integrated Analysis",
+      "why": "The course is heavily weighted toward class contribution (35%) and emphasizes case-based discussion and critical thinking using frameworks like the Diamond-E model, necessitating active preparation, participation, and collaborative problem-solving."
     },
     "gradeComponents": [
       {
@@ -466,73 +358,56 @@ export const hba1S2: Course[] = [
     "policies": [
       {
         "label": "Attendance",
-        "value": "Attendance is mandatory. Missing more than 5 (80-minute) sessions may result in unsatisfactory standing and ineligibility to write the final exam, regardless of academic consideration. Religious observance absences are exempt from the count."
+        "value": "Mandatory; more than 5 absences (80-minute sessions) may result in unsatisfactory standing and ineligibility to write final exams. All absences count toward the total except those due to religious observance. Students arriving after discussion begins or departing before it ends are marked late and receive a -1 point contribution deduction. Missing more than 20 minutes counts as absent."
       },
       {
-        "label": "Late Arrival / Early Departure",
-        "value": "'Late is Late' — students arriving after discussion begins or leaving before it ends receive a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes counts as a full absence."
+        "label": "Late Exam Makeup",
+        "value": "Students granted academic consideration will be offered one official makeup exam opportunity scheduled within the same academic term. Missing the makeup exam results in unsatisfactory academic standing. A second makeup is authorized only at the Dean's discretion after formal review."
       },
       {
-        "label": "Missed Exam – Academic Consideration",
-        "value": "Students must formally request consideration as soon as possible (ideally before the exam) and submit supporting documentation within 48 hours of the missed exam. One official makeup exam will be offered within the same term. Missing the makeup results in unsatisfactory standing."
+        "label": "Class Contribution Expectations",
+        "value": "Outstanding (90–100%): highest-level contributions with thorough preparation and strong evidence; Excellent (80–89%): frequent contributions with careful preparation; Good (70–79%): fairly regular contributions with consistent preparation; Fair (60–69%): irregular contributions with occasional preparation; Poor (50–59%): rare contributions with little evidence of preparation; Unsatisfactory (0–49%): actively inhibits discussion or disruptive behavior."
       },
       {
-        "label": "Group Assignment – Peer Evaluation",
-        "value": "85% of the group assignment grade is based on the group submission; 15% is based on peer evaluation of each member's contribution. Points are allocated among teammates (10 points per member expected for equal contribution). Any allocation other than 10 must be explained with specific behavioural examples."
+        "label": "Group Assignment Peer Evaluation",
+        "value": "85% of group grade is based on group submission; 15% based on peer evaluation. Allocate 10 points per group member (excluding yourself). All allocations other than 10 must include constructive explanation with specific behavioral examples. Instructor may disregard unfair evaluations and penalize those involved."
       },
       {
-        "label": "AI / Technology Use – In-Class",
-        "value": "Use of technology devices in class is generally not allowed. Using AI tools during class is expressly prohibited and constitutes an academic integrity violation affecting contribution grade, unless the instructor makes an explicit exception."
+        "label": "Academic Consideration Policy",
+        "value": "Students must request consideration as soon as possible, ideally before the assessment. For illness/catastrophe, submit within 48 hours with Western Medical Documentation Form. For varsity or religious observance, submit 10+ days in advance. All absences count toward the 5-class threshold except religious observance."
       },
       {
-        "label": "AI / Technology Use – Written Work",
-        "value": "AI may be used for background research, but the final submission must be written in the student's own words. AI usage must be explicitly acknowledged (cited as a personal communication or footnote). Undisclosed AI use may constitute plagiarism."
+        "label": "Plagiarism & Academic Integrity",
+        "value": "Students must write in their own words and cite all sources. Papers may be submitted to Turnitin for plagiarism detection. Use of prohibited information (teaching notes, exam feedback for other sections, company information not in case, student notes from other years) is a violation of Ivey's Student Code of Professional Conduct."
       },
       {
-        "label": "AI / Technology Use – Preparation",
-        "value": "Cases must be read and assignment questions developed independently without AI first. Students may then use learning teams and, if recommended by the instructor, AI tools to augment preparation."
+        "label": "AI and Technology Use",
+        "value": "Preparation: read cases and develop answers without AI before team discussion. In-class: use of AI tools is expressly prohibited and is an academic integrity violation affecting contribution grade. Written work: acknowledge AI usage explicitly as consultation with an external expert. Final submission must represent your own synthesis written in your own words."
       },
       {
-        "label": "Prohibited Information",
-        "value": "Preparation must be limited to instructor-provided materials and personal/peer experience. Using notes, spreadsheets, B-cases, or teaching notes from other sections or years, or external company information not in the case, is a violation of the Student Code of Professional Conduct."
-      },
-      {
-        "label": "Plagiarism",
-        "value": "All written work (including case exams and reports) must be in the student's own words with proper citation of sources. Submitted work may be reviewed via Turnitin. Plagiarism is a major academic offence."
-      },
-      {
-        "label": "Recording",
-        "value": "Video or audio recording of classes, guest presentations, or other academic activities is strictly prohibited without express written permission from faculty or Program Services."
-      },
-      {
-        "label": "Academic Consideration – Submission Timeline",
-        "value": "Varsity/religious conflicts: submit documentation via LEARN ≥10 days before the event. Illness/catastrophe: submit via LEARN + Western Medical Documentation Form within 48 hours of the absence. Review completed within 3 business days by Academic Advisor."
+        "label": "Recording & Technology",
+        "value": "Video or audio recording of classes, presentations, and academic activities is strictly prohibited without express written permission from faculty or Program Services. Technology use in class is established by professor on a per-course basis to accommodate diverse learning needs."
       }
     ],
     "subjects": [
-      "Introduction to Strategic Management and the Diamond-E Framework",
-      "Value Creation, Capture, and Distribution",
-      "Stakeholder Analysis and Social Value",
-      "Environmental Analysis (PESTLE, Porter's Five Forces)",
-      "Organizational Ecosystems and Competitive Dynamics",
-      "Resources, Capabilities, and Organizational Configuration",
-      "Value Chain Analysis",
-      "Strategic Tensions and Trade-offs",
-      "Formulating and Evaluating Strategic Options",
-      "Strategy Implementation and Organizational Inertia"
+      "Strategic management and value creation",
+      "The Diamond-E Framework",
+      "Environment and organizational ecosystems",
+      "Porter's Five Forces, PESTLE analysis, value chain analysis",
+      "Organizational resources and capabilities",
+      "Strategic tensions and trade-offs",
+      "Strategy implementation",
+      "Sustainable and responsible business practices"
     ],
     "tips": [
-      "Class contribution is worth 35% — prepare thoroughly for every case before class and engage actively and consistently throughout discussion, not just at the start.",
-      "The final exam is the single largest grade component at 40%; prioritize mastering the Diamond-E framework and key tools (PESTLE, Porter's Five Forces, value chain analysis) as these underpin all analysis.",
-      "For the Team 24-Hour Report (25%), only 85% of your grade comes from the group score — the other 15% comes from peer evaluation, so contribute visibly and equitably to your team.",
-      "Do NOT use AI during in-class sessions; this is an express academic integrity violation that will hurt your contribution grade.",
-      "If using AI for written work preparation, disclose it explicitly via footnote or citation — undisclosed use can be treated as plagiarism.",
-      "Missing more than 5 classes (80-minute sessions) can result in unsatisfactory standing and ineligibility to write the final exam — treat attendance as mandatory.",
-      "Arrive on time: arriving late or leaving early counts as a 'late' and results in a contribution deduction (-1 point or 0 for the day).",
-      "Read cases and develop your own answers independently before using learning teams or any AI tools — individual preparation is foundational to contribution scores.",
-      "Do not use external case information (notes from other sections/years, teaching notes, B-cases) — this is a violation of the Student Code of Professional Conduct.",
-      "Outstanding contribution (90–100%) requires not just frequent participation but follow-up comments, integration of concepts, and evidence-backed arguments."
-    ],
-    "classMeetings": { "days": [2, 4], "startTime": "8:30 AM", "room": "SH 3375" }
+      "Class contribution is 35% of your grade, so active and thoughtful participation in case discussions is critical",
+      "The Team 24-Hour Report comprises 25% of your grade—collaborative effort and clear writing are essential",
+      "The Individual Final Exam is worth 40% and requires synthesis of frameworks and case insights",
+      "Attendance is mandatory; more than 5 absences (80-minute sessions) can result in unsatisfactory standing and exam ineligibility",
+      "Arriving late or leaving early counts as a late; departing and returning negatively affects your contribution grade",
+      "Use only instructor-provided materials and your own experience for case analysis; prohibited information includes teaching notes, company information not in the case, and feedback from other sections",
+      "Prepare cases individually without AI before team discussions to develop your analytical abilities",
+      "In written work, acknowledge any AI tool usage explicitly as you would cite an external expert"
+    ]
   }
 ];

@@ -19,7 +19,8 @@ export interface PlanItem {
   studyId?: string; // set for study tasks (checkable)
   aiTaskId?: string; // set for AI-generated tasks
   aiDescription?: string; // detail sheet content for AI tasks
-  estimated?: boolean; // course event date was inferred from week number
+  estimated?: boolean; // course event date was inferred from week number or exam period
+  dateNote?: string; // note for a tentative date, e.g. "Registrar-scheduled; exam period Dec 10–22"
 }
 
 const PERSONAL_COLORS: Record<string, string> = {
@@ -100,6 +101,7 @@ export function planItemsForDate(
         subtitle: c.code,
         eventType: e.type,
         estimated: e.estimated,
+        dateNote: e.dateNote,
       });
     }
   }

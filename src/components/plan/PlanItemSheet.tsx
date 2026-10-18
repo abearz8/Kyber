@@ -102,7 +102,7 @@ export default function PlanItemSheet({ item, onClose }: { item: PlanItem; onClo
               </p>
               {item.estimated && (
                 <p style={{ fontSize: 12, color: "var(--text-3)", margin: "8px 0 0", fontStyle: "italic" }}>
-                  Date estimated from course schedule.
+                  {item.dateNote || "Date estimated from course schedule."}
                 </p>
               )}
             </div>

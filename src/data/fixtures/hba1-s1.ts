@@ -5,15 +5,15 @@ export const hba1S1: Course[] = [
   {
     "id": "business3303",
     "code": "BUSINESS 3303",
-    "title": "HBA Program: Finance",
-    "term": "2025-2026",
+    "title": "Finance",
+    "term": "This term",
     "instructor": "Sherry Xue",
     "color": "#e8784a",
     "targetGrade": 85,
     "currentTopic": "Time value of money",
     "studyMethod": {
-      "name": "Case-Based Active Preparation",
-      "why": "With 30% of the grade tied to class contribution in a case-method environment, disciplined pre-class individual case analysis followed by learning team discussion directly drives both participation quality and exam readiness."
+      "name": "Active Case Discussion and Exam Preparation",
+      "why": "The course emphasizes case-based learning with heavy weighting on class contribution (30%) and two exams (70%), requiring thorough preparation, active participation, and mastery of frameworks."
     },
     "gradeComponents": [
       {
@@ -51,8 +51,8 @@ export const hba1S1: Course[] = [
       {
         "id": "business3303-e0",
         "type": "exam",
-        "title": "Midterm Exam (covers TVM, Financial Markets, and Capital Structure modules)",
-        "date": "2026-09-22",
+        "title": "Midterm Exam",
+        "date": "2026-10-22",
         "weight": 30,
         "courseId": "business3303",
         "component": "midtermexam"
@@ -60,8 +60,8 @@ export const hba1S1: Course[] = [
       {
         "id": "business3303-e1",
         "type": "exam",
-        "title": "Final Exam (covers all course content)",
-        "date": "2026-11-12",
+        "title": "Final Exam",
+        "date": "2026-12-12",
         "weight": 40,
         "courseId": "business3303",
         "component": "finalexam"
@@ -70,43 +70,27 @@ export const hba1S1: Course[] = [
     "policies": [
       {
         "label": "Attendance",
-        "value": "Mandatory. Missing more than 5 (80-minute) sessions may result in unsatisfactory standing and ineligibility to write the final exam. All absences (except religious observance) count toward the total."
+        "value": "Mandatory. Students who miss more than 5 (80-minute) classes may be placed in unsatisfactory standing or be ineligible to write final exams. Absences due to religious observance do not count toward the limit. Arriving late or leaving early counts as incomplete attendance; departing more than 20 minutes constitutes an absence."
       },
       {
-        "label": "Lateness",
-        "value": "'Late is Late' — arriving after discussion begins or leaving before it ends counts as late and results in a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes counts as a full absence."
+        "label": "Late Submission",
+        "value": "Policy not explicitly stated for regular assignments, but makeup exam policy requires students to prepare fully and approach makeup exams with professional responsibility. Missing a makeup exam results in unsatisfactory academic standing."
       },
       {
-        "label": "Makeup Exam",
-        "value": "One makeup exam offered per term for students granted academic consideration. Missing the makeup results in unsatisfactory academic standing. A second makeup requires Dean's discretion."
+        "label": "Academic Consideration for Missed Exams",
+        "value": "Students must formally request consideration as soon as possible, ideally before the exam, with documentation submitted within 48 hours. One official makeup exam opportunity will be offered, scheduled within the same term where possible. A second makeup requires Dean's discretion after formal review."
       },
       {
-        "label": "Missed Exam Documentation",
-        "value": "For illness/catastrophe: submit request via LEARN + Western Medical Documentation Form within 48 hours. For varsity/religious conflicts: submit documentation 10+ days in advance."
-      },
-      {
-        "label": "Group Assignment Grading",
-        "value": "85% of group assignment grade is based on the group submission; 15% is based on peer evaluation of individual contribution."
-      },
-      {
-        "label": "AI Policy",
-        "value": "AI tools are prohibited during in-class sessions and exams. For written work, AI use must be explicitly cited. Individual case preparation should be done without AI."
+        "label": "Class Contribution Grading",
+        "value": "Graded on preparation, attention to discussion, quality of arguments, and evidence. Outstanding (90-100%), Excellent (80-89%), Good (70-79%), Fair (60-69%), Poor (50-59%), Unsatisfactory (0-49%). Late arrivals/early departures result in -1 point or 0 for the day."
       },
       {
         "label": "Plagiarism",
-        "value": "All written work must be in the student's own words with proper citations. Papers may be submitted to Turnitin for plagiarism detection."
+        "value": "Students must write essays and assignments in their own words. Plagiarism is a major academic offense. All papers may be submitted to Turnitin.com for textual similarity review."
       },
       {
-        "label": "Prohibited Information",
-        "value": "Use of prior-year notes, teaching notes, outside company data, or other non-instructor-provided case materials in class discussions is a violation of the Ivey Student Code of Professional Conduct."
-      },
-      {
-        "label": "Technology in Class",
-        "value": "General use of technology devices in class is not allowed. Using technology when not permitted negatively affects contribution grade."
-      },
-      {
-        "label": "Recording",
-        "value": "Video or audio recording of classes, guest presentations, or other academic activities is strictly prohibited without express written permission."
+        "label": "AI Usage",
+        "value": "AI use in class is expressly prohibited as an academic integrity violation. For written work, acknowledge AI usage explicitly (as a personal communication or footnote). Prepare cases independently before group discussions without AI assistance. Final submission must represent your own synthesis written in your own words."
       }
     ],
     "subjects": [
@@ -117,36 +101,30 @@ export const hba1S1: Course[] = [
       "Valuing long-term investments and businesses"
     ],
     "tips": [
-      "Class Contribution is worth 30% — prepare cases thoroughly before every session and engage actively in discussion from the start of class, not just the opening.",
-      "The midterm (30%) covers only Modules 1–3 (TVM, financial markets, capital structure); focus your early-term review on these quantitative frameworks.",
-      "The final exam (40%) is cumulative and the single largest grade item — allocate the most study time here, especially cost of capital and valuation.",
-      "Missing more than 5 classes (80-min sessions) can result in unsatisfactory standing and ineligibility to write the final exam — treat attendance as non-negotiable.",
-      "Arriving late or leaving early costs you contribution points (-1 or 0 for the day); plan around class times.",
-      "Do NOT use AI tools during class or in-class exams — this is an academic integrity violation. AI may be used for background research only, with explicit citation.",
-      "For group assignments, 85% of your grade is the group grade and 15% is peer evaluation — be a cooperative, present, and contributing team member.",
-      "Prepare cases individually first (without AI), then discuss with your learning team — this develops the analytical skills tested on exams.",
-      "Prohibited information (teaching notes, prior-year notes/spreadsheets on cases, outside company data) must never be used in class discussions.",
-      "Academic consideration for missed exams requires documentation submitted within 48 hours; for varsity/religious conflicts, submit 10+ days in advance."
-    ],
-    "classMeetings": { "days": [1, 3], "startTime": "8:30 AM", "room": "SH 3345" }
+      "Prepare thoroughly for discussions and case-based learning; class contribution is 30% of grade",
+      "Midterm exam covers material through capital structure module; final exam covers all course content",
+      "Two exams (midterm on Oct 22 and final on Dec 12) comprise 70% of grade; understand time value of money, capital structure decisions, cost of capital, and valuation frameworks",
+      "Attendance is mandatory; missing more than 5 classes may result in unsatisfactory standing or ineligibility for exams",
+      "Use of AI is prohibited in class discussions and contribution; prepare cases independently before group discussions"
+    ]
   },
   {
     "id": "business3302",
     "code": "BUSINESS 3302",
     "title": "Business Communication",
-    "term": "2025-2026",
+    "term": "2025-26",
     "instructor": "Michele Martin",
     "color": "#5aa6e6",
     "targetGrade": 85,
     "currentTopic": "Critical Thinking, Problem-Solving, and Interpersonal Skills",
     "studyMethod": {
-      "name": "Active Participation + Iterative Practice",
-      "why": "With 30% of the grade tied to class contribution and 35% to presentations, consistent daily preparation, verbal engagement, and repeated practice of speaking and writing skills are the highest-leverage activities in this course."
+      "name": "Active Participation and Case-Based Learning",
+      "why": "The course heavily weights class contribution (30%) and requires engagement in case-based discussions, with group projects accounting for 50% of the grade, making active participation and collaborative problem-solving the dominant assessment modes."
     },
     "gradeComponents": [
       {
-        "id": "classcontributionindividualincludesonlineinclassandquizzes",
-        "name": "Class Contribution (individual) — includes online, in-class, and quizzes",
+        "id": "classcontributionindividual",
+        "name": "Class Contribution (individual)",
         "weight": 30,
         "type": "assignment",
         "count": 1,
@@ -176,7 +154,7 @@ export const hba1S1: Course[] = [
       },
       {
         "id": "presentation20individual15group",
-        "name": "Presentation (20% individual / 15% group)",
+        "name": "Presentation (20% individual, 15% group)",
         "weight": 35,
         "type": "assignment",
         "count": 1,
@@ -198,81 +176,98 @@ export const hba1S1: Course[] = [
     "events": [],
     "policies": [
       {
-        "label": "Attendance",
-        "value": "Attendance is mandatory. Missing more than 5 (five) 80-minute sessions may result in unsatisfactory standing and ineligibility to write final exams or assessments, regardless of academic consideration. All absences count toward the total except those due to religious observance."
+        "label": "Attendance Requirement",
+        "value": "Mandatory for all scheduled classes. Students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing or be ineligible to write final exams, regardless of academic consideration. Lates (arriving after discussion begins or departing before discussion ends) result in contribution deduction. Absences due to religious observance are exempt from the 5-session limit."
       },
       {
-        "label": "Lateness / Incomplete Attendance",
-        "value": "'Late is Late' — students arriving after discussion has begun or departing before it ends are counted late and receive a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes of any class counts as an absence."
+        "label": "Late Arrival",
+        "value": "'Late is Late' policy: Students arriving after discussion begins or departing before discussion finishes receive a contribution deduction (-1 point or 0 for the day). Missing more than 20 minutes of any class period counts as an absence."
       },
       {
-        "label": "Missed Exam / Academic Consideration",
-        "value": "Students must formally request consideration before the exam when possible, with documentation submitted within 48 hours of the missed exam. One official makeup exam opportunity is granted per term. Missing the makeup results in unsatisfactory academic standing. A second makeup requires Dean's discretion after formal review."
+        "label": "Academic Consideration Process",
+        "value": "Students must request academic consideration as soon as possible. For illness/catastrophe, submit request via LEARN with medical documentation within 48 hours. For varsity/religious events, submit documentation 10+ days in advance. Academic Advisor reviews within 3 business days. All absences (including those with consideration) count toward the 5-class limit except religious observance."
       },
       {
-        "label": "Plagiarism",
-        "value": "All written work must be in the student's own words with proper citations. Submitted papers may be reviewed via Turnitin. Plagiarism is a major academic offence."
+        "label": "Makeup Exam Policy",
+        "value": "Students granted academic consideration receive one official makeup exam opportunity scheduled within the same academic term. Missing the makeup exam results in unsatisfactory standing. A second makeup is authorized only at the Dean's discretion after formal review."
       },
       {
-        "label": "AI / Technology Use",
-        "value": "AI use during in-class sessions is expressly prohibited and constitutes an academic integrity violation. For written work, AI may be used for background research but the final submission must be the student's own synthesis; AI usage must be explicitly acknowledged. Technology devices are generally not allowed in class unless specified by the instructor."
+        "label": "Group Assignment Grading",
+        "value": "Group members receive the same grade for group submissions unless peer evaluation is used (85% group grade, 15% peer evaluation). All members are equally responsible unless otherwise indicated. Non-contributing members may be severed from the group and receive an independent grade or failing grade."
       },
       {
-        "label": "Group Assignment Peer Evaluation",
-        "value": "If requested, peer assessment may be incorporated: 85% of the group assignment grade is based on the group grade and 15% on peer assessment of individual contribution."
+        "label": "Peer Evaluation",
+        "value": "If peer assessment is used, even allocation is 10 points per group member if all contributed equally. Allocations other than 10 require written explanation with specific behavioral examples. Recipient reviews feedback. Instructor may disregard unfair evaluations and apply penalties."
       },
       {
-        "label": "Email Policy",
-        "value": "Emails must include an informative subject line (name, ID, course, section, group), professional greeting/closing, and signature block. Do not email about grades or group dynamics — schedule a meeting. Replies expected within 24–48 hours on weekdays only."
+        "label": "Class Contribution Deductions",
+        "value": "Contribution grade is reduced for: arriving late, departing early, leaving and returning to class, returning with food/beverages (counted as disruptive), and missing more than 20 minutes of class."
+      },
+      {
+        "label": "Technology in Classroom",
+        "value": "General prohibition on technology use in class; guidelines established by professor in first session. Using AI tools in class is expressly prohibited as an academic integrity violation. Technology for learning accommodations exempt from this policy."
+      },
+      {
+        "label": "AI Usage Policy - Preparation",
+        "value": "Read cases and develop answers without AI to develop analytical abilities. Following individual preparation, engage in learning team discussions. Respect intellectual property rights and do not upload copyrighted material without permission."
+      },
+      {
+        "label": "AI Usage Policy - Written Work",
+        "value": "Acknowledge AI usage explicitly (treat as external expert consultation via personal communication or footnote). AI tools welcome for background research, but final product must represent own synthesis in your own words. Group is collectively responsible for submission and plagiarism."
       },
       {
         "label": "Recording Policy",
-        "value": "Video or audio recording of classes, guest presentations, and other academic activities is strictly prohibited without express written permission of the faculty or Program Services office."
+        "value": "Video or audio recording of classes, guest presentations, and academic activities is strictly prohibited without express written permission of faculty or Program Services office."
+      },
+      {
+        "label": "Plagiarism",
+        "value": "Students must write essays, assignments, case exams, and reports in their own words. All required papers may be submitted to Turnitin plagiarism detection software. Plagiarism is a major academic offense."
       },
       {
         "label": "Prohibited Information",
-        "value": "Preparation must be limited to instructor-provided materials and personal/peer experience. Use of outside case notes, teaching notes, prior-year feedback, or company information not in the case is a violation of Ivey's Student Code of Professional Conduct."
+        "value": "Preparation limited to instructor-provided information, own experience, and class peer discussions. Prohibited sources include: handouts, exam/report feedback from other students/sections, case-specific notes from prior years, company information not in case, and teaching notes. Using prohibited information violates the Student Code of Professional Conduct."
       },
       {
-        "label": "Guest Speaker Conduct",
-        "value": "Students must arrive on time, give full attention (laptops/phones closed unless for notes), stay for the full session, and address guests respectfully. Disrespectful behaviour results in a negative contribution grade or escalation to the program office."
+        "label": "Professional Email Standards",
+        "value": "Emails should use professional language with proper grammar, mechanics, formatting, and tone. Include informative subject line with full identification (name, ID, course name/number, section, group number). Use email for information sharing, meeting setup, and simple clarification only. Schedule meetings for questions requiring more than 1-2 sentence response. Do not use email to discuss grades or group dynamics."
+      },
+      {
+        "label": "Office Hours",
+        "value": "Professor does not have weekly office hours but is willing to schedule meetings in-person or virtual via email. Email response expected within 24-48 hours, Monday-Friday during business hours. Does not respond on weekends or holidays."
+      },
+      {
+        "label": "Guest Speaker Etiquette",
+        "value": "Arrive on time, give full attention, avoid side conversations and open laptops/phones, prepare thoughtful questions, use proper titles unless invited otherwise, stay for entire session. Disrespectful behavior results in negative contribution or escalation to program office."
       }
     ],
     "subjects": [
       "Critical Thinking, Problem-Solving, and Interpersonal Skills",
       "Business Writing",
-      "Presentation Skills (in-person, standing, seated, and virtual)",
-      "Strategic Communication",
-      "Audience Adaptation and Communication Strategy",
-      "Document Organization and Clear/Concise Writing",
-      "Visual Aids and Technology in Presentations",
-      "Have Impact with Your Own Insights / Differentiating Through Communication",
-      "Generative AI and Communication"
+      "Presentation Skills",
+      "Have Impact with Your Own Insights"
     ],
     "tips": [
-      "Class Contribution is the single largest component at 30% — speak up early and often, and come thoroughly prepared to every session.",
-      "Presentations combined (individual + group) total 35% of your grade; rehearse vocal delivery, physical presence, and clear structure (intro/body/conclusion).",
-      "Lateness counts against your contribution grade — arriving after discussion begins results in a -1 point deduction or 0 for the day.",
-      "Missing more than 5 classes (80-min sessions) can place you in unsatisfactory standing and bar you from final assessments, so protect your attendance record.",
-      "AI use in class is expressly prohibited and an academic integrity violation; written work must be your own synthesis even when AI is used for background research.",
-      "For the Executive Memo (15%), apply all business writing principles: clear structure, concise language, and strategic framing.",
-      "Do not use email to discuss grades or group dynamics — schedule a meeting instead, and always write with professional formatting and tone.",
-      "The Communications Day Capstone (group, 15%) is a culminating event — coordinate early with your group and treat it like a real professional presentation."
-    ],
-    "classMeetings": { "days": [2, 4], "startTime": "10:30 AM", "room": "SH 3345" }
+      "Attendance is mandatory; missing more than 5 sessions may result in unsatisfactory standing or ineligibility to write exams",
+      "Class contribution is 30% of grade and requires thorough preparation and active participation",
+      "Group assignments are significant (35% for presentation, 15% for capstone); peer evaluation may adjust individual grades",
+      "Late arrival results in contribution deduction; missing 20+ minutes counts as absence",
+      "Prepare individual work without AI before group discussions; AI use in class is prohibited",
+      "Professional communication standards expected in emails and classroom interactions",
+      "Case-based learning environment; prohibited information from external sources cannot be used for class contribution"
+    ]
   },
   {
     "id": "business3321",
     "code": "BUSINESS 3321",
     "title": "Accounting and Financial Fundamentals",
-    "term": "2025-2026",
-    "instructor": "Steve Wu / Nicholle Kovach / Jessica Kelly / Di Yang / Joanne Lansink",
+    "term": "This term",
+    "instructor": "Steve Wu, Nicholle Kovach, Jessica Kelly, Di Yang, Joanne Lansink",
     "color": "#3faf76",
     "targetGrade": 85,
-    "currentTopic": "Cost behaviour and cost classification",
+    "currentTopic": "Cost behaviour and relevant costs for short-term decision making",
     "studyMethod": {
-      "name": "Case-Based Active Preparation",
-      "why": "With 30% of the grade tied to class contribution in a case-based environment, deeply preparing each case before class and practicing structured argumentation is essential to performing well."
+      "name": "Active Case-Based Learning with Group Collaboration",
+      "why": "The course emphasizes case-based learning with significant weight on class contribution (30%) and group project work (35%), requiring active preparation and meaningful class participation alongside individual exam performance (35%)."
     },
     "gradeComponents": [
       {
@@ -311,7 +306,7 @@ export const hba1S1: Course[] = [
         "id": "business3321-e0",
         "type": "exam",
         "title": "Midterm Examination",
-        "date": "2026-09-24",
+        "date": "2026-10-24",
         "weight": 35,
         "courseId": "business3321",
         "component": "midtermexamination"
@@ -320,7 +315,7 @@ export const hba1S1: Course[] = [
         "id": "business3321-e1",
         "type": "assignment",
         "title": "Group Project",
-        "date": "2026-11-08",
+        "date": "2026-12-08",
         "weight": 35,
         "courseId": "business3321",
         "component": "groupproject"
@@ -329,65 +324,53 @@ export const hba1S1: Course[] = [
     "policies": [
       {
         "label": "Attendance",
-        "value": "Attendance is mandatory. Missing more than 5 (80-minute) sessions may result in unsatisfactory standing and ineligibility to write final exams. Students who miss more than 20 minutes of a class are counted as absent. All absences (except religious observance) count toward the total."
+        "value": "Mandatory; students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing or be ineligible to write final exams. All absences count toward total except religious observance. Late arrivals or early departures result in contribution deduction."
       },
       {
-        "label": "Late Arrival",
-        "value": "'Late is Late' — arriving after discussion has begun or departing before it ends results in a contribution deduction (-1 point or 0 for the day)."
+        "label": "Makeup Exam Policy",
+        "value": "Students granted academic consideration will be offered one official makeup exam opportunity within the same academic term. Missing the makeup exam results in unsatisfactory academic standing. A second makeup is only authorized at the Dean's discretion."
       },
       {
-        "label": "Missed Exam",
-        "value": "Students must formally request academic consideration as soon as possible and submit supporting documentation within 48 hours of the missed exam via LEARN."
+        "label": "Academic Consideration",
+        "value": "Submit requests within 48 hours of absence for illness/catastrophe or 10+ days in advance for varsity/religious conflicts. Valid grounds include catastrophic events, illness, religious observance, and varsity/case competition commitments."
       },
       {
-        "label": "Makeup Exam",
-        "value": "One official makeup exam will be offered within the same academic term. Missing the makeup results in unsatisfactory standing. A second makeup requires Dean's discretion after formal review."
+        "label": "Group Work",
+        "value": "Group members receive the same grade; 85% from group grade and 15% from peer evaluation. Faculty reserves right to assign failing grade to students who do not contribute substantially."
       },
       {
-        "label": "Group Assignment Peer Evaluation",
-        "value": "85% of group assignment grade is based on the group grade; 15% is based on peer evaluation of individual contribution. Allocations other than 10 points must include a written explanation."
-      },
-      {
-        "label": "AI / Technology Use",
-        "value": "AI tools are prohibited during in-class sessions. Cases must be prepared without AI. AI may be used for background research in written work but must be explicitly cited. Technology devices generally not allowed in class."
+        "label": "Late Work & Incomplete Attendance",
+        "value": "'Late is Late' - arriving after discussion begins or departing before it ends results in contribution deduction. Missing more than 20 minutes counts as absent. Departing and returning with food/beverages may be counted as disruptive."
       },
       {
         "label": "Plagiarism",
-        "value": "All written work must be in the student's own words. Papers may be submitted to Turnitin. Plagiarism is a major academic offence."
+        "value": "All required papers subject to plagiarism detection software (Turnitin). Students must acknowledge ideas from other sources with proper referencing and quotation marks."
       },
       {
         "label": "Prohibited Information",
-        "value": "Preparation must be limited to instructor-provided materials and personal/peer experience. Use of outside case notes, prior-year feedback, teaching notes, or non-case company information is a conduct violation."
+        "value": "Class preparation limited to instructor-provided materials, personal experience, and peer discussions. Use of external case information, teaching notes, or exam feedback from other students/sections is prohibited."
       },
       {
-        "label": "Recording Policy",
-        "value": "Video or audio recording of classes, guest presentations, and academic activities is strictly prohibited without express written permission from faculty or Program Services."
+        "label": "AI/Technology Use",
+        "value": "Individual case preparation should be done without AI. AI use in class is expressly prohibited. For written work, explicitly acknowledge AI usage. Final work must represent student's own synthesis and be written in own words."
       }
     ],
     "subjects": [
-      "Cost behaviour and cost classification",
-      "Relationship between costs, profits, and competitive performance",
-      "Relevant costs for short-term decision making",
+      "Cost behaviour and relevant costs for short-term decision making",
       "Financial analysis and projected financial statements",
-      "Cash flow analysis and credit decisions",
-      "Organizational form",
-      "Introduction to the Canadian income tax system",
+      "Organizational form and Canadian income tax system",
       "Long-term investment decisions",
-      "Financial accounting and reporting issues",
-      "Analysis of a public company's annual report"
+      "Financial accounting and reporting issues"
     ],
     "tips": [
-      "Class contribution is worth 30% — prepare thoroughly for every case and engage actively throughout the entire class, not just at the start.",
-      "The midterm (35%) and group project (35%) are equally weighted — don't neglect either one.",
-      "For the group project, 15% of your grade comes from peer evaluation; be a cooperative, reliable team member.",
-      "Prepare cases independently before team discussions; do not use AI tools during case prep or in-class sessions.",
-      "Arrive on time — arriving late results in a contribution deduction (-1 point or 0 for the day).",
-      "Missing more than 5 classes (80-min sessions) can result in unsatisfactory standing and ineligibility to write exams.",
-      "Outstanding contribution (90-100%) requires thorough preparation, active listening, strong follow-up, and evidence-backed arguments — aim for this standard.",
-      "If you miss an exam, submit academic consideration documentation within 48 hours via LEARN.",
-      "Use ratio analysis and accounting policy knowledge when studying for the midterm, as financial statement analysis is a major course theme."
-    ],
-    "classMeetings": { "days": [1, 3], "startTime": "1:30 PM", "room": "SH 3355" }
+      "Attendance is mandatory; missing more than 5 classes may result in unsatisfactory standing",
+      "Class contribution (30%) requires active engagement and preparation throughout the course",
+      "Midterm (35%) scheduled October 24, 2025 - prepare thoroughly as it's a major component",
+      "Group project (35%) due December 8-9, 2025 - requires substantial individual contribution; peer evaluation affects 15% of grade",
+      "Focus on case-based learning and applying accounting concepts to real business decisions",
+      "Develop skills in cost classification, financial statement analysis, and investment evaluation",
+      "Prepare for makeup exam only if granted academic consideration; missing makeup may result in unsatisfactory standing"
+    ]
   },
   {
     "id": "business3316",
@@ -399,13 +382,13 @@ export const hba1S1: Course[] = [
     "targetGrade": 85,
     "currentTopic": "Decision Making under Uncertainty and Analyzing Sequential Decisions",
     "studyMethod": {
-      "name": "Active Case Preparation with Quantitative Practice",
-      "why": "With 75% of the grade on two exams covering decision trees, regression, simulation, and optimization, repeated hands-on problem-solving with Excel before each class builds both the technical fluency and managerial interpretation skills tested on exams."
+      "name": "Case-Based Active Learning with Quantitative Analysis",
+      "why": "The course emphasizes learning through real business cases, class participation, and building practical models, requiring active engagement and preparation."
     },
     "gradeComponents": [
       {
-        "id": "classcontribution",
-        "name": "Class Contribution",
+        "id": "contribution",
+        "name": "Contribution",
         "weight": 25,
         "type": "assignment",
         "count": 1,
@@ -438,56 +421,40 @@ export const hba1S1: Course[] = [
     "events": [],
     "policies": [
       {
-        "label": "Attendance Limit",
-        "value": "Students who miss more than 5 (80-minute) sessions may be placed in unsatisfactory standing and become ineligible to write final exams, regardless of academic consideration. Absences due to religious observance are exempt from the count."
+        "label": "Attendance Requirement",
+        "value": "Mandatory attendance for all scheduled classes. Students who miss more than 5 sessions may be placed in unsatisfactory standing and become ineligible to write final exams, regardless of academic consideration. All absences—including those with academic consideration—count toward the total, except for absences due to religious observance."
       },
       {
-        "label": "Lateness",
-        "value": "'Late is Late' — arriving after discussion begins or leaving before it ends counts as late. Penalty is -1 contribution point or 0 for the day. Missing more than 20 minutes of any class counts as a full absence."
+        "label": "Late Policy",
+        "value": "'Late is Late'—students arriving after discussion begins or departing before discussion ends are counted late and receive a contribution deduction (-1 point or 0 for the day). Students missing more than 20 minutes of any class period should be counted as absent."
       },
       {
-        "label": "Makeup Exam",
-        "value": "Students granted academic consideration receive one official makeup exam, scheduled within the same term. Missing the makeup results in unsatisfactory academic standing. A second makeup requires Dean's discretion after formal review."
+        "label": "Makeup Exam Policy",
+        "value": "Students granted academic consideration for a missed exam will be offered one official makeup exam opportunity, scheduled within the same academic term where possible. Missing the makeup exam results in unsatisfactory academic standing. A second makeup exam is authorized only at the Dean's discretion. Unsatisfactory standing remains until review is complete."
       },
       {
-        "label": "Missed Exam Reporting",
-        "value": "Academic consideration requests must be submitted as soon as possible, ideally before the exam, with supporting documentation submitted within 48 hours of the missed exam via LEARN."
-      },
-      {
-        "label": "Varsity / Religious Absence Reporting",
-        "value": "Must submit documentation in LEARN at least 10 days before the event."
-      },
-      {
-        "label": "AI Use — Preparation",
-        "value": "Cases and assignment questions must be prepared individually without AI. AI may be used after individual prep for background research, but the final written product must be in the student's own words with explicit AI attribution."
-      },
-      {
-        "label": "AI Use — In-Class",
-        "value": "Use of AI tools during class sessions is expressly prohibited and constitutes an academic integrity violation. Technology devices are generally not allowed in class unless the instructor explicitly permits them."
-      },
-      {
-        "label": "AI Use — Written Work",
-        "value": "AI usage must be explicitly acknowledged (treated as a personal communication citation or footnote). Final submissions must represent the student's own synthesis."
+        "label": "Academic Consideration for Exams",
+        "value": "Students must formally request academic consideration as soon as possible, ideally before the scheduled exam. Requests must be supported by appropriate documentation and submitted within 48 hours of the missed exam. Valid grounds include catastrophic events, illness (physical or mental health), religious observance, and Varsity or Case competition participation."
       },
       {
         "label": "Plagiarism",
-        "value": "All written work may be submitted to Turnitin for plagiarism detection. Using prohibited outside information (notes, spreadsheets, or case materials from other sections/years) is a violation of Ivey's Student Code of Professional Conduct."
+        "value": "Students must write essays and assignments in their own words. All required papers may be subject to plagiarism detection software (Turnitin). Plagiarism is a major academic offense."
+      },
+      {
+        "label": "Prohibited Information",
+        "value": "Preparation must be limited to instructor-provided information plus own experience and class peer discussions. Prohibited information includes hand-outs, exam/report feedback from other students/sections, case-specific notes from other years, and company information not in the case. Using such information violates the Student Code of Professional Conduct."
+      },
+      {
+        "label": "AI and Technology Use",
+        "value": "Individual preparation must be done without AI to develop analytical abilities. AI use in class sessions is expressly prohibited as an academic integrity violation. For written work, explicitly acknowledge AI usage. Over-reliance on AI substituting for critical thinking will hinder skill development."
+      },
+      {
+        "label": "Technology in Classroom",
+        "value": "General use of technology devices in class is not allowed unless explicitly permitted by the instructor for specific activities. Unauthorized technology use negatively affects contribution grade. Video or audio recording of classes is strictly prohibited without express written permission."
       },
       {
         "label": "Software Requirement",
-        "value": "Microsoft Excel for Windows (Microsoft 365 desktop app) with Data Analysis ToolPak and Solver add-ins is required. Mac Excel is not supported; issues arising from Mac use may negatively affect grades and faculty cannot provide support."
-      },
-      {
-        "label": "Contribution — Drop Policy",
-        "value": "Lowest two non-negative scoring contribution sessions are ignored when calculating the contribution grade."
-      },
-      {
-        "label": "Contribution — Quality Scaling",
-        "value": "The Quality sub-component (30% of contribution) has no maximum and will be scaled so that the average class contribution grade is 80."
-      },
-      {
-        "label": "Recording Policy",
-        "value": "Video or audio recording of classes, guest presentations, and other academic activities is strictly prohibited without express written permission from faculty or Program Services."
+        "value": "Microsoft Excel for Windows (Microsoft 365 desktop app) with Data Analysis Tool Pack and Solver add-ins is required. Mac users are advised to use Boot Camp or virtual software; Excel on Mac is at own risk and past issues have negatively affected grades."
       }
     ],
     "subjects": [
@@ -498,31 +465,26 @@ export const hba1S1: Course[] = [
       "Simultaneous Decision Problems and Optimization"
     ],
     "tips": [
-      "Exams make up 75% of your grade (35% midterm + 40% final) — prioritize exam prep above all else.",
-      "Class contribution is 25% of your grade and is graded every single session; consistent attendance and speaking up regularly is critical.",
-      "The lowest two non-negative scoring contribution sessions are dropped — use these strategically if needed, but don't waste them early.",
-      "Contribution quality is scaled to an average of 80 — aim to make substantive, evidence-backed comments to stand out above the curve.",
-      "You must speak in at least 10 sessions to max out the Quantity sub-component of contribution; aim to speak in every class.",
-      "Master Excel for Windows with the Data Analysis ToolPak and Solver add-ins — these are required for assignments and exams. Do NOT use Mac Excel.",
-      "Prepare all cases individually without AI before class; AI use during in-class sessions is an academic integrity violation.",
-      "Missing more than 5 classes (80-minute sessions) can result in unsatisfactory standing and ineligibility to write final exams.",
-      "Arriving late (even by a few minutes) counts as a contribution deduction (-1 point or 0 for the day) — punctuality matters.",
-      "If you miss an exam, submit your academic consideration request in LEARN within 48 hours and gather medical documentation immediately."
-    ],
-    "classMeetings": { "days": [2, 4], "startTime": "8:30 AM", "room": "SH 3365" }
+      "Excel for Windows is required; Mac users must use Boot Camp or virtual software due to unreliable add-ins",
+      "Class contribution is heavily weighted (25%) and based on session-by-session assessment with lowest 2 sessions dropped",
+      "Exams are major components: Midterm (35%) and Final (40%)",
+      "Preparation without AI is essential for developing analytical skills; AI use in class is prohibited",
+      "Attendance is mandatory; more than 5 absences may result in unsatisfactory standing and exam ineligibility",
+      "Use real business cases and decision trees; focus on problem framing and communicating insights"
+    ]
   },
   {
     "id": "business3311",
     "code": "BUSINESS 3311",
     "title": "Leading People and Organizations",
-    "term": "2025",
+    "term": "This term",
     "instructor": "Dr. Barnini Bhattacharyya",
     "color": "#d3a608",
     "targetGrade": 85,
     "currentTopic": "Introduction to Leadership Development",
     "studyMethod": {
-      "name": "Active Case Preparation",
-      "why": "With 30% of the grade tied to in-class and online contribution assessed daily, consistent pre-class case analysis and Perusall annotation is the most direct path to a high grade."
+      "name": "Case Method with Active Participation and Team Collaboration",
+      "why": "The course is heavily weighted toward class contribution (30%) and uses case analyses in assignments and exams, requiring constant preparation, engagement with peers, and application of concepts to realistic management scenarios."
     },
     "gradeComponents": [
       {
@@ -547,7 +509,7 @@ export const hba1S1: Course[] = [
       },
       {
         "id": "24hourteamchallenge",
-        "name": "24-Hour Team Challenge",
+        "name": "24-hour Team Challenge",
         "weight": 25,
         "type": "assignment",
         "count": 1,
@@ -573,8 +535,7 @@ export const hba1S1: Course[] = [
         "count": 1,
         "scores": [
           null
-        ],
-        "dropLowest": 2
+        ]
       }
     ],
     "events": [
@@ -582,7 +543,7 @@ export const hba1S1: Course[] = [
         "id": "business3311-e0",
         "type": "assignment",
         "title": "Team Charter",
-        "date": "2026-08-30",
+        "date": "2026-09-29",
         "weight": 5,
         "courseId": "business3311",
         "component": "teamcharter"
@@ -590,8 +551,8 @@ export const hba1S1: Course[] = [
       {
         "id": "business3311-e1",
         "type": "assignment",
-        "title": "24-Hour Team Challenge — Case Released",
-        "date": "2026-09-03",
+        "title": "24-hour Team Challenge - Case Given",
+        "date": "2026-10-03",
         "weight": 0,
         "courseId": "business3311",
         "component": "24hourteamchallenge"
@@ -599,8 +560,8 @@ export const hba1S1: Course[] = [
       {
         "id": "business3311-e2",
         "type": "assignment",
-        "title": "24-Hour Team Challenge — Submission Due",
-        "date": "2026-09-04",
+        "title": "24-hour Team Challenge - Submission Due",
+        "date": "2026-10-04",
         "weight": 25,
         "courseId": "business3311",
         "component": "24hourteamchallenge"
@@ -609,7 +570,7 @@ export const hba1S1: Course[] = [
         "id": "business3311-e3",
         "type": "assignment",
         "title": "Team Debrief Report",
-        "date": "2026-10-15",
+        "date": "2026-11-14",
         "weight": 10,
         "courseId": "business3311",
         "component": "teamdebriefreport"
@@ -618,7 +579,7 @@ export const hba1S1: Course[] = [
         "id": "business3311-e4",
         "type": "exam",
         "title": "Final Individual 4-Hour Exam",
-        "date": "2026-11-11",
+        "date": "2026-12-11",
         "weight": 30,
         "courseId": "business3311",
         "component": "finalindividual4hourexam"
@@ -626,48 +587,32 @@ export const hba1S1: Course[] = [
     ],
     "policies": [
       {
-        "label": "Attendance Minimum",
-        "value": "Students must attend at least 75% of class periods to be eligible for the final exam/assessment. For HBA2 courses, this means missing no more than 5 out of 20 class periods."
+        "label": "Attendance Requirement",
+        "value": "Students must attend at least 75% of class periods to participate in final exams/assessments. For HBA1 courses (25 class periods), students may miss no more than 6 classes."
       },
       {
-        "label": "Absence Reporting",
-        "value": "Students must report absences on LEARN before the missed class. Excused absences receive attendance credit only, not the performance portion of the contribution mark."
+        "label": "Late Penalty",
+        "value": "Tardiness can negatively affect your contribution grade. Distracting activities, leaving class early, and lack of preparation also count as negative contributions."
       },
       {
-        "label": "Technology in Class",
-        "value": "Laptops and phones must be left out of the classroom unless required for accessibility accommodations. Unauthorized technology use negatively affects contribution grade."
+        "label": "Technology in Classroom",
+        "value": "Laptops and phones are to be left out of the classroom unless for accessibility accommodations. Using AI tools in class sessions is expressly prohibited and an academic integrity violation."
       },
       {
-        "label": "AI Usage",
-        "value": "AI tools are prohibited in class sessions and for individual case preparation. AI may be used for background research in written work, but the final submission must be in the student's own words and AI usage must be explicitly cited."
+        "label": "Class Contribution Grading",
+        "value": "Based on daily assessment of preparation, quality and quantity of contributions, and engagement in discussions. Two lowest scores are dropped. 30% comes from Perusall online work, 70% from in-class participation."
       },
       {
-        "label": "Plagiarism",
-        "value": "All written work may be submitted to Turnitin for plagiarism detection. Students must write in their own words and properly cite all sources."
-      },
-      {
-        "label": "Prohibited Information",
-        "value": "Case preparation must be limited to instructor-provided materials and personal/peer experience. Using notes, spreadsheets, or feedback from other sections or years is a violation of the Student Code of Professional Conduct."
-      },
-      {
-        "label": "Perusall Deadline",
-        "value": "Perusall readings and annotations must be completed BEFORE class by the stated deadline. No extensions granted for technology issues."
-      },
-      {
-        "label": "Contribution Drop Policy",
-        "value": "The two lowest class contribution scores will be dropped when calculating the final contribution grade."
+        "label": "Preparation Expectations",
+        "value": "Students must read cases and develop answers without AI assistance before team discussions. Information from prohibited sources (teaching notes, case feedback from other sections, notes from prior years) cannot be used."
       },
       {
         "label": "Recording Policy",
-        "value": "Video or audio recording of classes, guest presentations, and other academic activities is strictly prohibited without express written permission."
+        "value": "Video or audio recording of classes is strictly prohibited without express written permission of faculty or Program Services."
       },
       {
-        "label": "Tardiness",
-        "value": "Late arrival is distracting and can negatively affect your contribution grade. Notify the faculty member in advance if you expect to be late."
-      },
-      {
-        "label": "Negative Contribution",
-        "value": "Lack of preparation, tardiness, leaving class early without emergency, distracting behaviour, and unexcused absences can result in a negative contribution score."
+        "label": "AI/Technology Assistance",
+        "value": "For written work, explicitly acknowledge AI usage. AI can be used for background research, but final product must be your own synthesis. Do not use AI in individual preparation or in-class work."
       }
     ],
     "subjects": [
@@ -677,14 +622,13 @@ export const hba1S1: Course[] = [
       "Leading Organizational Culture"
     ],
     "tips": [
-      "Class contribution is worth 30% — prepare thoroughly before every class, speak up early and often, and engage with Perusall readings before their deadlines.",
-      "The 24-hour Team Challenge (25%) is time-pressured; coordinate your team's roles and workflow well in advance of October 3rd case release.",
-      "The final exam is a 4-hour open-ended case analysis — practice structuring situation analyses, linking recommendations clearly back to your analysis, and writing concisely under time pressure.",
-      "Perusall annotations make up 30% of your contribution mark; make high-quality comments and replies, and do not leave them until the last minute due to technology risks.",
-      "Two lowest class contribution scores are dropped — use this buffer wisely but do not rely on it habitually.",
-      "Laptops and phones must be left out of the classroom; using technology when not allowed directly hurts your contribution grade.",
-      "Avoid any prohibited information (notes from other sections/years, teaching notes, company info not in the case) — violations are treated as professional conduct breaches."
-    ],
-    "classMeetings": { "days": [1, 3], "startTime": "10:30 AM", "room": "SH 3375" }
+      "Class contribution is heavily weighted (30%) and includes both in-class participation and Perusall online preparation",
+      "The case method requires thorough preparation before class; discussing cases with those who have already experienced them is prohibited",
+      "The 24-hour Team Challenge requires fair contribution from all team members and instructors may adjust grades for unequal contributions",
+      "Final exam is a 4-hour management case analysis worth 30% of grade; quality of situation analysis and communication are key",
+      "Two lowest class contribution scores are dropped; tardiness and distracting activities negatively affect your contribution grade",
+      "Minimum 75% attendance required to participate in final exam; this means missing no more than 6 class periods out of 25 for HBA1 courses",
+      "Laptops and phones must be left out of the classroom (except for accessibility accommodations)"
+    ]
   }
 ];

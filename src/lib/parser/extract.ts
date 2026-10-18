@@ -36,22 +36,46 @@ export async function extractContent(
   return { kind: "text", text };
 }
 
+// pdf-parse v2 exports a `PDFParse` *class* (not a callable). The old
+// `pdfParse(buf)` call signature from v1 throws "pdfParse is not a function",
+// which previously got swallowed and silently routed EVERY upload to the
+// expensive Claude vision path. Type the class locally so we don't depend on the
+// stale v1 `@types/pdf-parse` stub, which still declares the function form.
+type PdfParseModule = {
+  PDFParse: new (opts: { data: Buffer }) => {
+    getText(params?: { first?: number }): Promise<{ text: string }>;
+    destroy(): Promise<void>;
+  };
+};
+
 async function extractPdf(data: Buffer): Promise<ExtractedContent> {
   try {
-    // pdf-parse is CommonJS — use require() to avoid ESM .default issues
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pdfParse = require("pdf-parse") as (buf: Buffer, opts?: { max?: number }) => Promise<{ text: string }>;
-    const result = await pdfParse(data, { max: MAX_PDF_PAGES });
-    const text = result.text || "";
+    const { PDFParse } = require("pdf-parse") as PdfParseModule;
+    const parser = new PDFParse({ data });
+    let text = "";
+    try {
+      // `first` caps work to the first N pages — a course outline's grades and
+      // schedule are always up front, and it bounds cost on huge PDFs.
+      const result = await parser.getText({ first: MAX_PDF_PAGES });
+      text = result.text || "";
+    } finally {
+      await parser.destroy();
+    }
 
-    // If there's meaningful text (>200 chars), use text path (cheaper)
+    // If there's meaningful text (>200 chars), use text path (cheaper + faster)
     if (text.trim().length > 200) {
       const { cleanText } = await import("./clean");
       const cleaned = cleanText(text).slice(0, MAX_TEXT_CHARS);
       return { kind: "text", text: cleaned };
     }
-  } catch {
-    // pdf-parse failed — fall through to vision path
+  } catch (err) {
+    // Genuinely-scanned PDF, or a real extraction regression — fall back to
+    // Claude's native PDF vision. Warn (don't swallow) so a regression here is
+    // visible instead of quietly making every parse slow and expensive.
+    console.warn(
+      `[parser] PDF text extraction failed, using vision path: ${err instanceof Error ? err.message : err}`
+    );
   }
 
   // Scanned PDF: send raw bytes to Claude's native PDF reader

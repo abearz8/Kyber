@@ -51,13 +51,16 @@ export function anchorToAcademicYear(iso: string, ref: Date = new Date()): strin
 /**
  * True if `iso` falls within [ref − pastDays, ref + futureMonths]. Used to keep
  * only the deadlines a student actually cares about: the recent past of a
- * semester already underway through roughly the next 8 months.
+ * semester already underway through roughly the next year. The window spans a
+ * full academic year (12 months) because anchoring already collapses every date
+ * into the current academic year — a tighter cap wrongly dropped off-cycle
+ * (summer/winter-start) courses whose deadlines land 8–11 months out.
  */
 export function withinWindow(
   iso: string,
   ref: Date = new Date(),
   pastDays = 60,
-  futureMonths = 8,
+  futureMonths = 12,
 ): boolean {
   const t = parseISO(iso).getTime();
   const start = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() - pastDays).getTime();

@@ -33,7 +33,8 @@ export interface CourseEvent {
   component?: string; // GradeComponent.id
   courseId: string;
   recurringPattern?: { dayOfWeek: number; endDate: string };
-  estimated?: boolean;
+  estimated?: boolean; // date inferred (week number, or start of a stated exam period) — not exact
+  dateNote?: string; // human-readable note when the date is tentative, e.g. "Registrar-scheduled; exam period Dec 10–22"
 }
 
 export interface Policy {

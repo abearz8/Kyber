@@ -16,7 +16,16 @@ const TEXT_MODEL = process.env.KYBER_PARSER_MODEL || "claude-haiku-4-5";
 const VISION_MODEL =
   process.env.KYBER_PARSER_VISION_MODEL || "claude-sonnet-4-6";
 
-const SYSTEM_PROMPT = `You are a university course syllabus parser. Extract structured course information from the provided syllabus. Be thorough and accurate. For dates, always use ISO format YYYY-MM-DD. For grade weights, use percentages (0-100).`;
+const SYSTEM_PROMPT = `You are a university course syllabus parser. Extract structured course information from the provided syllabus. Be thorough and accurate.
+
+DATES
+- Always use ISO format YYYY-MM-DD, using the year printed in the syllabus (do not shift years yourself).
+- Extract EVERY dated deadline, exam, quiz, lab, and reading you can find, including ones in weekly schedule tables.
+- Exams are often NOT given an exact date (e.g. "the final is scheduled by the registrar within the Dec 10–22 exam period"). Do NOT leave these out. Instead, set the event's \`date\` to the START of the stated period (e.g. 2024-12-10), set \`dateConfirmed\` to false, and put the exact wording in \`dateNote\` (e.g. "Registrar-scheduled; exam period Dec 10–22"). Only leave \`date\` empty when the syllabus gives no date AND no period/range at all.
+- For a date you read exactly as written, set \`dateConfirmed\` to true and leave \`dateNote\` empty.
+
+GRADES
+- Capture every graded component with its weight as a percentage (0–100). Weights should sum to about 100.`;
 
 const EXTRACT_TOOL: Anthropic.Tool = {
   name: "extract_syllabus",

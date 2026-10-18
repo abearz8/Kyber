@@ -6,14 +6,14 @@ export const dsS2: Course[] = [
     "id": "calc1501b",
     "code": "CALC 1501B",
     "title": "Calculus II for Mathematical and Physical Sciences",
-    "term": "Winter 2027",
-    "instructor": "M. Pinsonnault (LEC 001), R. Shafikov (LEC 002)",
+    "term": "Winter 2022-2023",
+    "instructor": "M. Pinsonnault and R. Shafikov",
     "color": "#e8784a",
     "targetGrade": 85,
     "currentTopic": "Review of integration and continuity",
     "studyMethod": {
-      "name": "Spaced Practice with Proof Writing",
-      "why": "With 79% of the grade on closed-book exams requiring both computation and proof, regular spaced repetition of theorems and deliberate proof-writing practice is the most effective preparation strategy."
+      "name": "Regular problem practice with emphasis on proofs and theoretical understanding",
+      "why": "CALC 1501B heavily weights exams (79%) that test both computational and proof-based skills; weekly assignments and WebWork reinforce concept mastery needed for these high-stakes assessments."
     },
     "gradeComponents": [
       {
@@ -81,173 +81,325 @@ export const dsS2: Course[] = [
     ],
     "events": [
       {
+        "id": "calc1501b-r9",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-01-12",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
+        "id": "calc1501b-r10",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-01-19",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
         "id": "calc1501b-e0",
         "type": "assignment",
-        "title": "1st Assignment Released",
-        "date": "2026-08-30",
-        "weight": 0,
+        "title": "1st Assignment",
+        "date": "2027-01-26",
+        "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-r11",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-01-26",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
+        "id": "calc1501b-r12",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-02-02",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e1",
         "type": "assignment",
         "title": "1st Assignment Due",
-        "date": "2026-09-13",
+        "date": "2027-02-09",
         "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-r13",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-02-09",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e2",
         "type": "exam",
         "title": "Midterm 1",
-        "date": "2026-09-20",
+        "date": "2027-02-16",
         "weight": 23,
         "courseId": "calc1501b",
-        "component": "midterm1"
+        "component": "midterm1",
+        "estimated": true,
+        "dateNote": "Tentatively scheduled for February 16th, 7pm - 9pm"
+      },
+      {
+        "id": "calc1501b-r14",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-02-16",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e3",
         "type": "assignment",
-        "title": "2nd Assignment Released",
-        "date": "2026-09-21",
-        "weight": 0,
+        "title": "2nd Assignment",
+        "date": "2027-02-17",
+        "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-r15",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-02-23",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
+        "id": "calc1501b-r16",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-03-02",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
+        "id": "calc1501b-r17",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-03-09",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e4",
         "type": "assignment",
         "title": "2nd Assignment Due",
-        "date": "2026-10-12",
+        "date": "2027-03-10",
         "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-r18",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-03-16",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e5",
         "type": "exam",
         "title": "Midterm 2",
-        "date": "2026-10-19",
+        "date": "2027-03-17",
         "weight": 23,
         "courseId": "calc1501b",
-        "component": "midterm2"
+        "component": "midterm2",
+        "estimated": true,
+        "dateNote": "Tentatively scheduled for March 17th, 7pm - 9pm"
       },
       {
         "id": "calc1501b-e6",
         "type": "assignment",
-        "title": "3rd Assignment Released",
-        "date": "2026-10-19",
-        "weight": 0,
+        "title": "3rd Assignment",
+        "date": "2027-03-17",
+        "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-r19",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-03-23",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
+      },
+      {
+        "id": "calc1501b-r20",
+        "type": "quiz",
+        "title": "WebWork Quiz",
+        "date": "2027-03-30",
+        "weight": 3,
+        "courseId": "calc1501b",
+        "recurringPattern": {
+          "dayOfWeek": 4,
+          "endDate": "2023-03-30"
+        },
+        "component": "webworkquizzes"
       },
       {
         "id": "calc1501b-e7",
         "type": "assignment",
         "title": "3rd Assignment Due",
-        "date": "2026-11-02",
+        "date": "2027-03-31",
         "weight": 6,
         "courseId": "calc1501b",
         "component": "assignments"
+      },
+      {
+        "id": "calc1501b-e8",
+        "type": "exam",
+        "title": "Final Exam",
+        "date": "2027-04-01",
+        "weight": 33,
+        "courseId": "calc1501b",
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Scheduled by the Registrar Office; typical exam period April 1-21"
       }
     ],
     "policies": [
       {
         "label": "Late Assignment Penalty",
-        "value": "10% deducted per day late; no assignments accepted more than 3 days after the due date."
+        "value": "10% deducted per day late; no assignments accepted more than 3 days after due date"
       },
       {
         "label": "Missed Assignment",
-        "value": "With approved academic consideration, the missed assignment weight is redistributed to other evaluation components."
+        "value": "Students granted academic consideration will have other evaluation components reweighted"
       },
       {
         "label": "Missed Midterm",
-        "value": "A make-up exam is offered if academic consideration is granted within 5 days of the midterm. If completion is not possible within 7 days, the weight is redistributed."
+        "value": "Students granted academic consideration within 5 days can take makeup exam; if not completed within 7 days of scheduled date, evaluation components will be reweighted"
       },
       {
-        "label": "Missed Final Exam",
-        "value": "Contact the Academic Counselling office of your Faculty of Registration to apply for a Special Examination."
+        "label": "Midterm Format",
+        "value": "120 minutes; mixture of short answer and multiple-choice questions; closed book"
       },
       {
-        "label": "Calculator / Electronics Policy",
-        "value": "Calculators and all other electronic devices are prohibited during term tests and the final exam."
+        "label": "Final Exam Format",
+        "value": "180 minutes; cumulative; mixture of short answer and multiple-choice questions; closed book"
       },
       {
-        "label": "Exam Format",
-        "value": "Midterms: 120 minutes, closed book, mixture of short answer and multiple choice. Final: 180 minutes, cumulative, closed book, mixture of short answer and multiple choice."
+        "label": "Calculator Policy",
+        "value": "Calculators and other electronic devices prohibited during term tests and final exam"
       },
       {
-        "label": "Email Policy",
-        "value": "Must use UWO email; include 'CALC 1501B' in subject line, full name and student number in the body. Do not reply to OWL announcement emails."
-      },
-      {
-        "label": "WebWork Quiz Deadlines",
-        "value": "Strictly enforced; no extensions."
-      },
-      {
-        "label": "Gradescope Submission",
-        "value": "Assignments must be submitted as PDF in the correct format; incorrect format may result in a grade of zero with no regrade option."
-      },
-      {
-        "label": "Academic Consideration Contact",
-        "value": "Students must contact their instructor within 24 hours of the end of the absence period."
-      },
-      {
-        "label": "Religious Accommodation",
-        "value": "Request accommodation in writing at least two weeks prior to the religious holiday."
-      },
-      {
-        "label": "Scholastic Offences",
-        "value": "Multiple-choice exams may be subject to similarity review software to detect cheating patterns."
+        "label": "Academic Integrity",
+        "value": "Computer-marked multiple-choice tests may be subject to similarity review by software checking for unusual answer patterns; scholastic offences are taken seriously"
       }
     ],
     "subjects": [
       "Review of integration and continuity",
-      "Intermediate Value Theorem, Extreme Value Theorem, Mean Value Theorem and their consequences",
+      "The Intermediate Value Theorem, Extreme Value Theorem, Mean Value Theorem and consequences",
       "Mathematical induction",
       "Techniques of integration (substitution, integration by parts, trigonometric integrals, trigonometric substitutions, partial fractions)",
       "Constructing new functions using integration",
       "Improper integrals and the Gamma function",
-      "Sequences, convergence, and the Monotone Convergence Theorem",
+      "Sequences and convergence",
+      "Monotone Convergence Theorem",
       "Series and Taylor series with applications",
       "Parametric curves with applications",
       "Polar coordinates",
       "First order linear and separable differential equations with applications"
     ],
     "tips": [
-      "Exams (midterms + final) account for 79% of your grade — prioritize mastering exam-style problems above all else.",
-      "Both midterms and the final are closed-book with no calculators; practice recalling formulas and theorems from memory.",
-      "Assignments (18% total) are designed specifically to prepare you for exams — treat them as serious study tools, not just busywork.",
-      "Complete weekly WebWork quizzes on time — deadlines are strictly enforced with no exceptions.",
-      "Submit assignments as PDF on Gradescope in the correct format; incorrect formats may result in a zero with no regrade option.",
-      "Late assignments lose 10% per day and are not accepted after 3 days — plan ahead.",
-      "This course requires writing proofs (definitions, theorems, logical assembly); practice mathematical writing, not just computation.",
-      "Use the Math Help Centre and office hours regularly — instructors do not provide detailed calculus feedback via email."
+      "Exams (midterms and final) are closed-book with a mix of short-answer and multiple-choice questions—focus on understanding concepts and practicing problems rather than memorizing",
+      "Assignments (18% combined weight) are designed to prepare you for exams; start early and use them as learning tools",
+      "WebWork quizzes (3%) are weekly and strict deadline enforcement applies; keep up with them regularly starting week 2",
+      "Total exam weight is 79% (both midterms plus final), so prioritize understanding rigorous definitions, theorems, and proofs—CALC 1501B emphasizes mathematical reasoning more than CALC 1301B",
+      "Make-up midterms occur roughly one week after scheduled midterms; if you miss an exam, contact your instructor within 24 hours",
+      "No calculators allowed on any test or exam; practice solving problems by hand"
     ],
     "classMeetings": {
       "days": [
         1,
+        2,
         3,
+        4,
         5
       ],
-      "startTime": "11:30 AM",
-      "room": "MC 108"
+      "startTime": "8:30 AM / 12:30 PM",
+      "room": "3M-3250 (LEC 001) / SH-3345 (LEC 002)"
     }
   },
   {
     "id": "cs1027b",
     "code": "CS 1027B",
     "title": "Computer Science Fundamentals II",
-    "term": "Winter 2027",
-    "instructor": "Bryan Sarlo (Course Coordinator), Gad Gad, Iqra Batool",
+    "term": "Winter 2025",
+    "instructor": "Bryan Sarlo",
     "color": "#5aa6e6",
     "targetGrade": 85,
     "currentTopic": "Object-Oriented Programming Principles",
     "studyMethod": {
-      "name": "Spaced Practice with Incremental Coding Projects",
-      "why": "With 4 heavily weighted Java assignments and two written exams testing algorithm design, regularly writing and testing code from scratch builds both the implementation fluency and hand-written problem-solving skills the course demands."
+      "name": "Frequent Assessment & Active Participation",
+      "why": "The course emphasizes regular labs (10 total), four assignments worth 28%, and heavy reliance on exams (55% combined), requiring consistent engagement and early preparation."
     },
     "gradeComponents": [
       {
@@ -316,118 +468,136 @@ export const dsS2: Course[] = [
     ],
     "events": [
       {
-        "id": "cs1027b-e0",
-        "type": "lab",
-        "title": "Lab 1",
-        "date": "2026-08-17",
-        "weight": 1,
-        "courseId": "cs1027b",
-        "component": "labs"
-      },
-      {
-        "id": "cs1027b-e1",
-        "type": "lab",
-        "title": "Lab 2",
-        "date": "2026-08-24",
-        "weight": 1,
-        "courseId": "cs1027b",
-        "component": "labs"
-      },
-      {
-        "id": "cs1027b-e2",
-        "type": "lab",
-        "title": "Lab 3",
-        "date": "2026-08-31",
-        "weight": 1,
-        "courseId": "cs1027b",
-        "component": "labs"
-      },
-      {
         "id": "cs1027b-e4",
         "type": "lab",
-        "title": "Lab 4",
-        "date": "2026-09-07",
+        "title": "Lab 1",
+        "date": "2027-01-13",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
-      },
-      {
-        "id": "cs1027b-e3",
-        "type": "assignment",
-        "title": "Assignment 1",
-        "date": "2026-09-08",
-        "weight": 7,
-        "courseId": "cs1027b",
-        "component": "assignments"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Jan 13–17"
       },
       {
         "id": "cs1027b-e5",
         "type": "lab",
-        "title": "Lab 5",
-        "date": "2026-09-14",
+        "title": "Lab 2",
+        "date": "2027-01-20",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Jan 20–24"
       },
       {
         "id": "cs1027b-e6",
+        "type": "lab",
+        "title": "Lab 3",
+        "date": "2027-01-27",
+        "weight": 1,
+        "courseId": "cs1027b",
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Jan 27–31"
+      },
+      {
+        "id": "cs1027b-e7",
+        "type": "lab",
+        "title": "Lab 4",
+        "date": "2027-02-03",
+        "weight": 1,
+        "courseId": "cs1027b",
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Feb 3–7"
+      },
+      {
+        "id": "cs1027b-e0",
         "type": "assignment",
-        "title": "Assignment 2",
-        "date": "2026-09-28",
+        "title": "Assignment 1",
+        "date": "2027-02-04",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
       },
       {
-        "id": "cs1027b-e7",
+        "id": "cs1027b-e8",
         "type": "lab",
-        "title": "Lab 6",
-        "date": "2026-09-28",
+        "title": "Lab 5",
+        "date": "2027-02-10",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Feb 10–14"
+      },
+      {
+        "id": "cs1027b-e1",
+        "type": "assignment",
+        "title": "Assignment 2",
+        "date": "2027-02-24",
+        "weight": 7,
+        "courseId": "cs1027b",
+        "component": "assignments"
       },
       {
         "id": "cs1027b-e9",
+        "type": "lab",
+        "title": "Lab 6",
+        "date": "2027-02-24",
+        "weight": 1,
+        "courseId": "cs1027b",
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Feb 24–28"
+      },
+      {
+        "id": "cs1027b-e14",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2026-10-03",
+        "date": "2027-03-01",
         "weight": 20,
         "courseId": "cs1027b",
         "component": "midtermtest"
       },
       {
-        "id": "cs1027b-e8",
-        "type": "lab",
-        "title": "Lab 7",
-        "date": "2026-10-05",
-        "weight": 1,
-        "courseId": "cs1027b",
-        "component": "labs"
-      },
-      {
         "id": "cs1027b-e10",
         "type": "lab",
-        "title": "Lab 8",
-        "date": "2026-10-12",
+        "title": "Lab 7",
+        "date": "2027-03-03",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Mar 3–7"
       },
       {
         "id": "cs1027b-e11",
         "type": "lab",
-        "title": "Lab 9",
-        "date": "2026-10-19",
+        "title": "Lab 8",
+        "date": "2027-03-10",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Mar 10–14"
       },
       {
         "id": "cs1027b-e12",
+        "type": "lab",
+        "title": "Lab 9",
+        "date": "2027-03-17",
+        "weight": 1,
+        "courseId": "cs1027b",
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Mar 17–21"
+      },
+      {
+        "id": "cs1027b-e2",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2026-10-21",
+        "date": "2027-03-19",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -436,16 +606,18 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e13",
         "type": "lab",
         "title": "Lab 10",
-        "date": "2026-10-26",
+        "date": "2027-03-24",
         "weight": 1,
         "courseId": "cs1027b",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Mar 24–28"
       },
       {
-        "id": "cs1027b-e14",
+        "id": "cs1027b-e3",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2026-11-06",
+        "date": "2027-04-04",
         "weight": 7,
         "courseId": "cs1027b",
         "component": "assignments"
@@ -454,60 +626,62 @@ export const dsS2: Course[] = [
         "id": "cs1027b-e15",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2026-11-09",
+        "date": "2027-04-07",
         "weight": 35,
         "courseId": "cs1027b",
-        "component": "finalexam"
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Registrar-scheduled; exam period Apr 7–30"
       }
     ],
     "policies": [
       {
-        "label": "Late Penalty",
-        "value": "10% deduction per day late; maximum 3 days late. 4 late coupons provided per semester (max 3 per assignment) to submit late without penalty."
+        "label": "Late Assignment Submission",
+        "value": "Assignments submitted late are subject to a 10% per day late penalty and cannot be submitted more than 3 days late. Students receive 4 late coupons to use throughout the term; each coupon covers one day late without penalty. Late coupons are applied automatically. After all coupons are exhausted, 10% daily penalties apply."
       },
       {
         "label": "Lab Attendance",
-        "value": "Must attend your registered lab section only. Work must be completed during the session (not beforehand) and files submitted to OWL within 24 hours. Violation results in a 0."
+        "value": "Students must attend their registered lab section and cannot attend a different section; doing so results in 0%. Students must work on the lab during the scheduled session (not beforehand) and submit completed files on OWL within 24 hours. Labs are generally pass/fail with possible partial marks at TA discretion. Lowest 2 labs are dropped; additional absences require academic consideration."
       },
       {
         "label": "iClicker Participation",
-        "value": "Must attend in-person and answer at least 50% of iClicker questions per lecture. Full marks awarded for passing at least 9 lectures out of 11–22 total."
+        "value": "Participation grade based on attendance and active participation in class via iClicker. To pass a lecture, students must attend in person with a functioning device and answer at least 50% of iClicker questions (correctness does not matter). Full participation grade requires passing at least 9 lectures. Circumventing the system is an academic offense."
       },
       {
         "label": "Midterm Format",
-        "value": "2 hours; paper-based. Combination of Multiple Choice, Written/Drawn Answers, and Algorithm Design. No electronic devices allowed."
+        "value": "2-hour exam on Saturday, March 1, 6-8pm. Combination of Multiple Choice, Written/Drawn Answers, and Algorithm Design, written on paper (no computers). No electronic devices allowed. Make-up midterm not provided; absence requires academic consideration with documentation from home faculty."
       },
       {
         "label": "Final Exam Format",
-        "value": "3 hours; paper-based. Combination of Multiple Choice, Written/Drawn Answers, and Algorithm Design. No electronic devices allowed."
+        "value": "3-hour exam scheduled by the University within April 7–30 exam period. Combination of Multiple Choice, Written/Drawn Answers, and Algorithm Design, written on paper (no computers). No electronic devices allowed."
       },
       {
-        "label": "Missed Midterm",
-        "value": "No make-up midterm. With documented academic consideration, midterm weight (20%) shifts to the final exam (making it worth 55%). Without consideration, grade is 0."
+        "label": "Grade Requirements to Pass",
+        "value": "To receive 50% or higher, must achieve at least 45% weighted average on midterm and final exams AND at least 45% average on four assignments. If either condition fails, final mark is capped at 45% or calculated grade, whichever is lower."
       },
       {
-        "label": "Grade Requirements to Pass (50%+)",
-        "value": "Must achieve at least 45% weighted average on midterm+final AND at least 45% average on assignments. Failure caps final grade at 45% or calculated grade, whichever is lower."
+        "label": "Grade Requirements for CS Module Eligibility",
+        "value": "To receive 65% or higher (eligible for CS module), must achieve at least 50% weighted average on midterm and final exams AND at least 50% average on four assignments. If either condition fails, final mark is capped at 60% or calculated grade, whichever is lower."
       },
       {
-        "label": "Grade Requirements for CS Module Eligibility (65%+)",
-        "value": "Must achieve at least 50% weighted average on midterm+final AND at least 50% average on assignments. Failure caps final grade at 60% or calculated grade, whichever is lower."
-      },
-      {
-        "label": "Academic Integrity",
-        "value": "Assignments must be done individually. No code sharing, copying, posting online, or AI-generated code. Similarity-checking software is used."
-      },
-      {
-        "label": "Academic Consideration Deadline",
-        "value": "All requests must be submitted within 48 hours of the assessment date or deadline, with supporting documentation."
-      },
-      {
-        "label": "Email Policy",
-        "value": "Use Western (@uwo.ca) email; include CS1027 in the subject line. Responses not guaranteed on evenings and weekends."
+        "label": "Academic Dishonesty in Assignments",
+        "value": "Inappropriate collaboration includes showing code to others, sending code, uploading to Github/online repos, writing code for someone else, looking at others' code, using online code, or using AI systems (ChatGPT, Replit Ghostwriter) to generate any part of assignments. Code is checked via similarity-detection software. Violations result in academic consequences."
       },
       {
         "label": "Assignment Submission",
-        "value": "Submitted via Gradescope at 11:55pm on due date. Not accepted via email or OWL."
+        "value": "All assignments submitted via Gradescope (not OWL) by 11:55pm on due date. Multiple re-submissions allowed; only the active submission is graded. Re-submissions after deadline are subject to late penalties and coupon deductions. Auto-graded tests plus marks for style, formatting, and comments."
+      },
+      {
+        "label": "Exam Conflict/Academic Consideration",
+        "value": "Missing assessments requires academic consideration submitted within 48 hours. Built-in flexibility reduces undocumented absence requests: late coupons for assignments, dropped labs, only 9 iClicker classes needed. Midterm and final exam absences MUST have supporting documentation."
+      },
+      {
+        "label": "Religious Accommodation",
+        "value": "Students must request religious accommodation in writing to instructor and/or Faculty Academic Advising office as early as possible, but not later than two weeks prior to the exam/test date (one week for tests)."
+      },
+      {
+        "label": "Communication",
+        "value": "Students must use Western @uwo.ca email addresses and include course code CS1027 in subject line. General questions should be posted in OWL forums (not showing code). Email/forum responses not guaranteed on evenings/weekends."
       }
     ],
     "subjects": [
@@ -523,42 +697,31 @@ export const dsS2: Course[] = [
       "Sorting"
     ],
     "tips": [
-      "The final exam is worth 35% — the single heaviest component; prioritize exam prep above all else.",
-      "Assignments are auto-graded on Gradescope; always verify your code passes tests on Gradescope, not just locally.",
-      "Use your 4 late coupons wisely — spread them across all 4 assignments rather than burning them early.",
-      "You only need to pass 9 iClicker lectures for full participation marks, so a few absences won't hurt.",
-      "The lowest 2 labs are dropped automatically — use those drops strategically if you have a busy week.",
-      "Midterm (20%) is written on paper with no electronics; practice hand-writing code and algorithm design.",
-      "To remain eligible for a CS module (65%+), you must score at least 50% on both exams and assignments — don't neglect either.",
-      "Read lab instructions before attending — coming in with work already done is prohibited and results in a 0.",
-      "Never share or post your code anywhere; similarity-checking software is used on all assignments."
-    ],
-    "classMeetings": {
-      "days": [
-        2,
-        4
-      ],
-      "startTime": "2:30 PM",
-      "room": "WSS 55"
-    }
+      "Attend lectures in person to earn iClicker participation points—you need at least 9 passing lectures for full credit",
+      "Use the 4 late coupons strategically; each covers one day late per assignment, and you can submit up to 3 days late maximum",
+      "The final exam is weighted heavily at 35%, and you must score at least 45% on the midterm/final weighted average to pass",
+      "Come to lab sessions prepared with pre-work done; working on assignments during lab time or attending the wrong section results in 0%",
+      "Assignments are auto-graded, so ensure your code passes tests on Gradescope—it won't count if it only works on your computer",
+      "Do NOT use AI (ChatGPT, Replit Ghostwriter) or share code; similarity detection software will catch plagiarism and result in academic consequences"
+    ]
   },
   {
     "id": "ds1000",
     "code": "DS1000",
     "title": "Data Science Concepts",
-    "term": "Summer 2027",
+    "term": "Summer 2023",
     "instructor": "Ashley McAlpine",
     "color": "#3faf76",
     "targetGrade": 85,
-    "currentTopic": "Categorical variables (pie charts, bar plots)",
+    "currentTopic": "Categorical and quantitative variables",
     "studyMethod": {
-      "name": "Exam-Focused Spaced Practice with Cheat Sheet Building",
-      "why": "With 80% of the grade tied to two closed-book exams, repeatedly working through practice problems by topic and progressively condensing notes onto a cheat sheet reinforces retention and directly prepares you for the exam format."
+      "name": "Active Problem-Solving with Regular Practice",
+      "why": "With 4 assignments (best 3 counted at 6.67% each), a midterm (30%), and cumulative final exam (50%), consistent weekly practice and lab work are essential to master both conceptual and computational skills."
     },
     "gradeComponents": [
       {
-        "id": "assignmentsbest3of4",
-        "name": "Assignments (best 3 of 4)",
+        "id": "assignments",
+        "name": "Assignments",
         "weight": 20,
         "type": "assignment",
         "count": 4,
@@ -595,145 +758,126 @@ export const dsS2: Course[] = [
       {
         "id": "ds1000-e0",
         "type": "assignment",
-        "title": "Assignment 1 (Chapters 1, 2, 3)",
-        "date": "2027-01-05",
+        "title": "Assignment 1",
+        "date": "2027-06-03",
         "weight": 6.67,
         "courseId": "ds1000",
-        "component": "assignmentsbest3of4"
+        "component": "assignments"
       },
       {
         "id": "ds1000-e1",
         "type": "assignment",
-        "title": "Assignment 2 (Chapters 3, 4, 5)",
-        "date": "2027-01-19",
+        "title": "Assignment 2",
+        "date": "2027-06-17",
         "weight": 6.67,
         "courseId": "ds1000",
-        "component": "assignmentsbest3of4"
+        "component": "assignments"
       },
       {
-        "id": "ds1000-e2",
+        "id": "ds1000-e4",
         "type": "exam",
-        "title": "Midterm Exam (Chapters 1–6, 2 hrs)",
-        "date": "2027-01-24",
+        "title": "Midterm Exam",
+        "date": "2027-06-22",
         "weight": 30,
         "courseId": "ds1000",
         "component": "midtermexam"
       },
       {
-        "id": "ds1000-e3",
+        "id": "ds1000-e2",
         "type": "assignment",
-        "title": "Assignment 3 (Chapters 6, 8, 9)",
-        "date": "2027-02-09",
+        "title": "Assignment 3",
+        "date": "2027-07-08",
         "weight": 6.67,
         "courseId": "ds1000",
-        "component": "assignmentsbest3of4"
+        "component": "assignments"
       },
       {
-        "id": "ds1000-e4",
+        "id": "ds1000-e3",
         "type": "assignment",
-        "title": "Assignment 4 (Chapters 12, 13, 15)",
-        "date": "2027-03-02",
+        "title": "Assignment 4",
+        "date": "2027-07-29",
         "weight": 6.67,
         "courseId": "ds1000",
-        "component": "assignmentsbest3of4"
+        "component": "assignments"
+      },
+      {
+        "id": "ds1000-e5",
+        "type": "exam",
+        "title": "Final Exam",
+        "date": "2027-07-31",
+        "weight": 50,
+        "courseId": "ds1000",
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Registrar-scheduled; exact date TBD"
       }
     ],
     "policies": [
       {
-        "label": "Late Penalty (0–24 hrs)",
-        "value": "15% deduction from assignment grade"
+        "label": "Late Submission Policy",
+        "value": "Up to 24 hours late: 15% deduction. Between 24-48 hours late: 30% deduction. No credit beyond 48 hours."
       },
       {
-        "label": "Late Penalty (24–48 hrs)",
-        "value": "30% deduction from assignment grade"
-      },
-      {
-        "label": "Late Penalty (>48 hrs)",
-        "value": "No credit awarded"
-      },
-      {
-        "label": "Assignment Drop Policy",
-        "value": "Only the best 3 of 4 assignments count toward the final grade (6.67% each); lowest 1 is effectively dropped"
-      },
-      {
-        "label": "Final Exam Eligibility",
-        "value": "Students must submit at least 2 of the 4 assignments to be eligible to write the final exam"
-      },
-      {
-        "label": "Midterm Absence",
-        "value": "With valid medical documentation submitted to Academic Counselling, midterm weight (30%) is redistributed to the final exam; no make-up midterm offered"
-      },
-      {
-        "label": "Final Exam Absence",
-        "value": "Contact Academic Counselling to apply for a Special Examination (make-up final)"
+        "label": "Assignment Requirement",
+        "value": "Students must submit at least 2 of 4 assignments to write the final exam. Only best 3 assignments count toward final grade."
       },
       {
         "label": "Exam Format",
-        "value": "Online, closed-book; combination of multiple-choice and short answer; remotely proctored"
+        "value": "Online, closed-book, combination of multiple-choice and short answer. Handwritten cheat sheet allowed (one-sided for midterm, double-sided for final). Non-programmable calculator permitted."
       },
       {
-        "label": "Cheat Sheet",
-        "value": "One letter-sized handwritten cheat sheet allowed: one-sided for midterm, double-sided for final exam"
+        "label": "Remote Proctoring",
+        "value": "Midterm and final exam conducted using remote proctoring service. Students must have reliable internet connection and device meeting technical requirements. Session will be recorded."
       },
       {
-        "label": "Calculators",
-        "value": "Any non-programmable calculator permitted"
+        "label": "Grading and Rounding",
+        "value": "Final grades rounded to nearest integer (e.g., 74.4 becomes 74, 74.5 becomes 75). No grade bumping; a 79 will not be bumped to 80."
       },
       {
         "label": "Regrade Requests",
-        "value": "Must be submitted via Gradescope within 7 days of receiving the assignment grade"
+        "value": "Students have seven days after receiving assignment grade to submit regrade request via Gradescope. Requests after seven days will NOT be accepted."
       },
       {
-        "label": "Mark Rounding",
-        "value": "Final grades rounded to nearest integer; no mark bumping to next grade boundary"
+        "label": "Communication",
+        "value": "All course-related questions must be asked in OWL forum. Email reserved for private/confidential matters only. Students must use Western @uwo.ca email and include course number (DS1000) in subject line."
       },
       {
-        "label": "Course Questions",
-        "value": "All course-content questions must be posted to the OWL forum; email is reserved for private/confidential matters only"
+        "label": "OWL Forum Conduct",
+        "value": "Derogatory, discriminatory, or inappropriate language/topics will be removed and dealt with at instructor's discretion."
       },
       {
-        "label": "Email Policy",
-        "value": "Use Western (@uwo.ca) email; include DS1000 in the subject line; course questions will not be answered by email"
+        "label": "Missed Midterm",
+        "value": "Must provide valid medical or supporting documentation to Academic Counselling Office. Weight redistributed to final exam; no make-up exam."
       },
       {
-        "label": "Lab Tools",
-        "value": "Python and Jupyter Notebook (via Anaconda) required for all lab work"
+        "label": "Missed Final Exam",
+        "value": "Contact Academic Counselling Office immediately. May be eligible for Special Examination or if in Multiple Exam Situation."
+      },
+      {
+        "label": "Religious Accommodation",
+        "value": "Request accommodation in writing at least two weeks prior to religious holiday to instructor and/or Academic Counselling office."
       }
     ],
     "subjects": [
-      "Categorical variables (pie charts, bar plots)",
-      "Quantitative variables (histograms, stem plots, time plots)",
-      "Measures of center and variability (mean, median, quartiles, IQR, standard deviation, boxplots)",
-      "Normal distribution and the 68-95-99.7 rule",
-      "Scatterplots, linear correlation, and explanatory/response variables",
-      "Least-squares regression lines and cautions about correlation",
-      "Two-way contingency tables, relative risk, odds ratio, Simpson's Paradox",
-      "Sampling methods",
-      "Observational studies versus random experiments",
-      "Introduction to probability",
-      "Rules of probability, addition, independence, conditional probability, Venn and tree diagrams",
-      "Sampling distributions, central limit theorem, statistical significance",
+      "Categorical and quantitative variables",
+      "Summary statistics and distributions",
+      "Normal distribution",
+      "Relationships and correlation",
+      "Least-squares regression",
+      "Contingency tables and risk measures",
+      "Sampling and observational studies",
+      "Probability",
+      "Sampling distributions and central limit theorem",
       "Confidence intervals and bootstrap methods"
     ],
     "tips": [
-      "The final exam is worth 50% of your grade — prioritize it above all else.",
-      "Only the best 3 of 4 assignments count (6.67% each), so use the 4th as a buffer but don't skip more than one.",
-      "You must submit at least 2 assignments to be eligible to write the final exam.",
-      "Prepare a handwritten cheat sheet: one-sided for the midterm, double-sided for the final.",
-      "Exams are online and remotely proctored — test your tech setup well in advance.",
-      "Ask all course questions on the OWL forum, not by email; TAs monitor it regularly.",
-      "Regrade requests must be submitted within 7 days of receiving your assignment grade.",
-      "TA office hours (Mon/Wed/Fri 7–8:30 pm Zoom) are offered specifically before each assignment deadline and each exam — attend them.",
-      "No mark bumping is done; the grade you earn is the grade you receive."
-    ],
-    "classMeetings": {
-      "days": [
-        1,
-        3,
-        5
-      ],
-      "startTime": "9:30 AM",
-      "room": "PAB 150"
-    }
+      "Only the best 3 out of 4 assignments count (6.67% each); missing more than 1 assignment means you cannot take the final exam",
+      "No late submissions accepted beyond 48 hours; plan accordingly",
+      "Final exam is cumulative and worth 50% of grade",
+      "Exams are online with remote proctoring; have reliable internet and device ready",
+      "Handwritten cheat sheet allowed (one-sided for midterm, double-sided for final)",
+      "All course questions must go to OWL forum, not email",
+      "Marks are rounded to nearest integer with no bumping"
+    ]
   }
 ];

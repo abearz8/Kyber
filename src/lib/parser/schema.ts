@@ -66,7 +66,19 @@ export const EXTRACT_SCHEMA = {
         properties: {
           type: { type: "string", enum: [...EVENT_TYPES] },
           title: { type: "string" },
-          date: { type: "string", description: "ISO date YYYY-MM-DD. Empty string if no date." },
+          date: {
+            type: "string",
+            description:
+              "ISO date YYYY-MM-DD. If no exact date but a period/range is given (e.g. an exam scheduled within an exam period), use the START of that period. Empty string only if there is no date or period at all.",
+          },
+          dateConfirmed: {
+            type: "boolean",
+            description: "true if the date is stated exactly; false if inferred from a period/range or week number.",
+          },
+          dateNote: {
+            type: "string",
+            description: "When the date is not exact, the human-readable period, e.g. 'Registrar-scheduled; exam period Dec 10–22'. Empty otherwise.",
+          },
           weight: { type: "number", description: "Percent of grade; 0 for readings." },
           component: { type: "string", description: "The gradeComponents name this belongs to, or empty string." },
         },
@@ -163,6 +175,8 @@ export interface RawExtraction {
     type?: string;
     title?: string;
     date?: string;
+    dateConfirmed?: boolean;
+    dateNote?: string;
     weight?: number;
     component?: string;
   }>;
@@ -252,6 +266,11 @@ export function normalize(
     if (compName && nameToId.has(compName)) {
       ev.component = nameToId.get(compName);
     }
+    // Tentative date (inferred from an exam period, not stated exactly): flag it
+    // so the UI can mark it, and carry the period wording for display.
+    if (e.dateConfirmed === false) ev.estimated = true;
+    const dateNote = (e.dateNote || "").trim();
+    if (dateNote) ev.dateNote = dateNote;
     events.push(ev);
   }
   // Expand recurring assignments into individual dated events
@@ -336,11 +355,16 @@ export function normalize(
     .filter((p) => (p.label || "").trim() && (p.value || "").trim())
     .map((p) => ({ label: p.label!.trim(), value: p.value!.trim() }));
 
+  // Guard against the model literally returning "unknown"/"<UNKNOWN>" for a
+  // missing term, which would otherwise show through to the UI.
+  const rawTerm = (raw.term || "").trim();
+  const term = rawTerm && !/^<?\s*unknown\s*>?$/i.test(rawTerm) ? rawTerm : "This term";
+
   const course: Course = {
     id: cid,
     code,
     title,
-    term: (raw.term || "").trim() || "This term",
+    term,
     instructor: (raw.instructor || "").trim() || "Instructor",
     color,
     targetGrade: Math.round(target),

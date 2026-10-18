@@ -4,9 +4,9 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import { extractContent } from "./extract";
+import { extractContent, type ExtractedContent } from "./extract";
 import { extractWithClaude } from "./llm";
-import { normalize, PALETTE } from "./schema";
+import { normalize, PALETTE, type RawExtraction } from "./schema";
 import type { Course } from "../types";
 
 let _client: Anthropic | null = null;
@@ -26,10 +26,36 @@ export async function parseBytes(
   filename: string,
   color?: string
 ): Promise<Course> {
+  const { course } = await parseBytesDebug(data, filename, color);
+  return course;
+}
+
+/**
+ * Every intermediate artifact the pipeline produces, kept for inspection.
+ * `parseBytes` throws all of these away except `course`; the debug harness
+ * (scripts/debug-parse.ts) uses them to see where a date was born vs. mangled.
+ */
+export interface ParseDebug {
+  filename: string;
+  /** What the LLM actually saw. For text PDFs this is the cleaned text. */
+  content: ExtractedContent;
+  /** Raw LLM extraction — dates BEFORE academic-year anchoring/filtering. */
+  raw: RawExtraction;
+  /** Final normalized course — dates AFTER anchoring + window filtering. */
+  course: Course;
+}
+
+/** Same pipeline as parseBytes, but returns the intermediate stages too. */
+export async function parseBytesDebug(
+  data: Buffer,
+  filename: string,
+  color?: string
+): Promise<ParseDebug> {
   const client = getClient();
   const content = await extractContent(data, filename);
   const raw = await extractWithClaude(content, client);
-  return normalize(raw, color ?? PALETTE[0]);
+  const course = normalize(raw, color ?? PALETTE[0]);
+  return { filename, content, raw, course };
 }
 
 /**

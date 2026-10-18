@@ -174,6 +174,75 @@ so dates are computed relative to "today" on every run — suggested but not don
 
 ---
 
+## Parser debugging harness
+
+The syllabus parser (`src/lib/parser/`) runs three stages —
+`extractContent` (PDF→text) → `extractWithClaude` (LLM structured extraction) →
+`normalize` (validate + anchor dates). In production `parseBytes` keeps only the
+final `Course` and **throws away the cleaned text and the raw LLM output**, so
+when a date is wrong you can't tell whether the **LLM misread** the syllabus or
+the **anchoring** rewrote a correct date. The harness makes every stage visible.
+
+### Run it
+```
+npx tsx scripts/debug-parse.ts --all                 # every sample syllabus
+npx tsx scripts/debug-parse.ts --all --check         # + accuracy vs ground truth
+npx tsx scripts/debug-parse.ts --group ds-s1         # one fixture group
+npx tsx scripts/debug-parse.ts "BUS3303"             # filename substring
+```
+Needs `ANTHROPIC_API_KEY` in `.env.local`. Parses concurrently (same as the
+fixture generator).
+
+> **401 `invalid x-api-key`?** An exported shell `ANTHROPIC_API_KEY` (e.g. one
+> injected by the Claude Code runtime) **shadows** `.env.local` — Next's
+> `loadEnvConfig` won't override an already-set `process.env` var. If the shell
+> key is stale, every parse 401s. Run with the shell var stripped so the file's
+> key is used: `env -u ANTHROPIC_API_KEY npx tsx scripts/debug-parse.ts …`
+> (same caveat applies to `scripts/generate-fixtures.ts`).
+
+### What it produces
+- **Artifacts** under `debug/parser/<name>/` (gitignored via `/debug/`):
+  - `cleaned.txt` — the exact text the LLM saw (or a note for scanned/vision PDFs)
+  - `raw.json` — raw LLM extraction, **dates BEFORE anchoring**
+  - `course.json` — final normalized course, **dates AFTER anchoring + filter**
+- **Console per syllabus:** code/title/term, component count + **weight sum**
+  (flagged if ≠100), `events: N extracted → M in course`, and a **date-trace
+  table** — one row per raw event: `raw(LLM) → anchored → in-window? → verdict`.
+  Verdicts (from `src/lib/parser/trace.ts`, which reuses the real anchoring
+  helpers so it matches behavior): `kept` ✅, `resurrected` ♻️ (out of window but
+  kept by the never-empty fallback), `no-iso-date`/`out-of-window` 🗑️ (dropped).
+- **With `--check`:** diffs against `scripts/ground-truth.ts` (hand-verified
+  dates read from the PDFs, keyed by filename) and scores each syllabus —
+  ✅ matched / ❌ missing / 🗓️ wrong-date / ⚠️ extra — plus an overall tally.
+  Date comparison is **month/day only** (the year is intentionally anchored
+  away). Add more syllabi by filling in entries in `ground-truth.ts`; those
+  without an entry are skipped in scoring. Seeded so far: BUS3303, CS1026A.
+
+### Fixed 2026-10-18 (found via this harness)
+- **Dead text path** — `extract.ts` called pdf-parse v1-style (`pdfParse(buf)`),
+  but v2.4.5 exports a `PDFParse` *class*; the call threw, got swallowed, and
+  **every** upload silently fell to the expensive Sonnet vision path. Now uses
+  `new PDFParse({data}).getText({first: MAX_PDF_PAGES})` and **warns** on failure
+  instead of swallowing. All 16 samples now take `path: text` (Haiku).
+- **Dateless exams dropped** — finals "scheduled by the registrar" came back with
+  no date and vanished (`schema.ts`). The prompt (`llm.ts`) now tells the model to
+  use the **start of a stated exam period** as the date, set `dateConfirmed:false`,
+  and put the wording in `dateNote`; `normalize` maps that to `estimated:true` +
+  `dateNote` on the event, surfaced in `PlanItemSheet`. Finals now appear across
+  CALC/CS/Film/MATH/DS.
+- **Off-cycle terms gutted** — the ±8-month window dropped summer/winter deadlines
+  anchored 8–11 months out. Window widened to **12 months** (`academicCalendar.ts`);
+  anchoring already collapses everything into the current academic year, so a full
+  year is the right span.
+- **Genuinely-empty HBA outlines** (3300/3301/3302/3304/3316/3322) extract 0 events
+  **by design** — Ivey distributes the schedule separately; the PDFs contain no
+  deadlines (confirmed: 30k chars of policy prose, no date tokens). Not a bug.
+
+Still open / optional: investigate the `recurring-assignment` expansion counts
+(MATH 14→27, CALC 9→21) for whether weekly items are desired in Plan.
+
+---
+
 ## Status & open items
 - **Verified:** `tsc --noEmit` clean; `npm run build` clean. Work is on
   `origin/main` (commits `0c34ea0` analytics, `661ac03` dates).

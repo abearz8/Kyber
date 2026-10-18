@@ -5,15 +5,15 @@ export const dsS1: Course[] = [
   {
     "id": "math1600a",
     "code": "MATH 1600A",
-    "title": "Linear Algebra I",
-    "term": "Fall 2026",
-    "instructor": "Instructor",
+    "title": "Mathematics 1600A (LINEAR ALGEBRA I)",
+    "term": "Fall 2024",
+    "instructor": "<UNKNOWN>",
     "color": "#e8784a",
     "targetGrade": 85,
-    "currentTopic": "Complex numbers and modular arithmetic",
+    "currentTopic": "Complex numbers",
     "studyMethod": {
-      "name": "Spaced Practice with Exam-Style Problem Sets",
-      "why": "With 85% of the grade coming from two high-stakes written exams, repeatedly solving problems under timed, no-calculator conditions — spread across the semester — builds the procedural fluency and proof-writing skills needed to perform well."
+      "name": "Mastery-based with flexibility",
+      "why": "The course drops lowest 2 assignments, allows 48-hour late submission without penalty, and replaces low assignment grades with final exam grade, rewarding exam performance and reducing pressure from individual assignments."
     },
     "gradeComponents": [
       {
@@ -63,177 +63,356 @@ export const dsS1: Course[] = [
         "id": "math1600a-e0",
         "type": "assignment",
         "title": "Assignment 1",
-        "date": "2026-09-02",
-        "weight": 0,
+        "date": "2026-09-13",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r14",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-09-13",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e1",
         "type": "assignment",
         "title": "Assignment 2",
-        "date": "2026-09-09",
-        "weight": 0,
+        "date": "2026-09-20",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r15",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-09-20",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e2",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2026-09-16",
-        "weight": 0,
+        "date": "2026-09-27",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r16",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-09-27",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e3",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2026-09-23",
-        "weight": 0,
+        "date": "2026-10-04",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r17",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-10-04",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e4",
         "type": "assignment",
         "title": "Assignment 5",
-        "date": "2026-09-30",
-        "weight": 0,
+        "date": "2026-10-11",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r18",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-10-11",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r19",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-10-18",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e5",
         "type": "assignment",
-        "title": "Assignment 6 (Fall Break — skipped)",
-        "date": "2026-10-14",
-        "weight": 0,
+        "title": "Assignment 6",
+        "date": "2026-10-25",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r20",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-10-25",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e6",
         "type": "assignment",
         "title": "Assignment 7",
-        "date": "2026-10-21",
-        "weight": 0,
+        "date": "2026-11-01",
+        "weight": 1.36,
         "courseId": "math1600a",
         "component": "assignments"
       },
       {
-        "id": "math1600a-e7",
-        "type": "exam",
-        "title": "Midterm Test",
-        "date": "2026-10-30",
-        "weight": 35,
-        "courseId": "math1600a",
-        "component": "midtermtest"
-      },
-      {
-        "id": "math1600a-e9",
+        "id": "math1600a-r21",
         "type": "assignment",
-        "title": "Assignment 8 (week before midterm — skipped)",
-        "date": "2026-11-04",
-        "weight": 0,
+        "title": "Weekly Assignment",
+        "date": "2026-11-01",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
-        "id": "math1600a-e8",
-        "type": "exam",
-        "title": "Makeup Midterm Test",
-        "date": "2026-11-06",
-        "weight": 35,
-        "courseId": "math1600a",
-        "component": "midtermtest"
-      },
-      {
-        "id": "math1600a-e10",
+        "id": "math1600a-r22",
         "type": "assignment",
-        "title": "Assignment 9",
-        "date": "2026-11-11",
-        "weight": 0,
+        "title": "Weekly Assignment",
+        "date": "2026-11-08",
+        "weight": 1.36,
         "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e11",
+        "type": "exam",
+        "title": "Midterm Test",
+        "date": "2026-11-10",
+        "weight": 35,
+        "courseId": "math1600a",
+        "component": "midtermtest",
+        "estimated": true,
+        "dateNote": "Tentative date: Sunday, November 10, 2:00-4:00pm; to be finalized by Exam Central"
+      },
+      {
+        "id": "math1600a-e7",
         "type": "assignment",
-        "title": "Assignment 10",
-        "date": "2026-11-18",
-        "weight": 0,
+        "title": "Assignment 8",
+        "date": "2026-11-15",
+        "weight": 1.36,
         "courseId": "math1600a",
         "component": "assignments"
       },
       {
-        "id": "math1600a-e12",
+        "id": "math1600a-r23",
         "type": "assignment",
-        "title": "Assignment 11",
-        "date": "2026-11-25",
+        "title": "Weekly Assignment",
+        "date": "2026-11-15",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-e12",
+        "type": "exam",
+        "title": "Makeup Midterm Test",
+        "date": "2026-11-17",
         "weight": 0,
         "courseId": "math1600a",
+        "component": "midtermtest",
+        "estimated": true,
+        "dateNote": "Tentative date: Sunday, November 17, 2:00-4:00pm; for students with granted Academic Considerations"
+      },
+      {
+        "id": "math1600a-e8",
+        "type": "assignment",
+        "title": "Assignment 9",
+        "date": "2026-11-22",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r24",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-11-22",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-e9",
+        "type": "assignment",
+        "title": "Assignment 10",
+        "date": "2026-11-29",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r25",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-11-29",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-e10",
+        "type": "assignment",
+        "title": "Assignment 11",
+        "date": "2026-12-06",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "component": "assignments"
+      },
+      {
+        "id": "math1600a-r26",
+        "type": "assignment",
+        "title": "Weekly Assignment",
+        "date": "2026-12-06",
+        "weight": 1.36,
+        "courseId": "math1600a",
+        "recurringPattern": {
+          "dayOfWeek": 5,
+          "endDate": "2024-12-06"
+        },
         "component": "assignments"
       },
       {
         "id": "math1600a-e13",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2026-11-28",
+        "date": "2026-12-09",
         "weight": 50,
         "courseId": "math1600a",
-        "component": "finalexam"
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Registrar-scheduled; exam period December 9-22, 2024"
       }
     ],
     "policies": [
       {
-        "label": "Assignment Deadline",
-        "value": "Due each Friday at 11:55 pm EDT; 48-hour no-late-penalty window allowed without any request needed. After that, the assignment is considered missed."
-      },
-      {
-        "label": "Missed Assignments",
-        "value": "Lowest 2 of 11 dropped automatically. Any remaining assignment grade below the final exam grade is replaced by the final exam grade. No Academic Consideration needed."
-      },
-      {
-        "label": "Missed Midterm",
-        "value": "Must provide Academic Consideration (formal documentation always required). A makeup midterm is offered the following Sunday. If both are missed with valid documentation, midterm weight transfers to the final exam."
-      },
-      {
-        "label": "Missed Final Exam",
-        "value": "Contact Academic Counselling office immediately. Formal documentation required. A Special Examination may be granted. Repeated deferral pushes exam to next offering of the course."
-      },
-      {
-        "label": "Exam Format",
-        "value": "No calculators or any electronic devices or other aids allowed on tests and exams."
-      },
-      {
-        "label": "Academic Integrity — Exams",
-        "value": "Any scholastic offence involving the midterm or final results in a failing grade for the entire course."
-      },
-      {
-        "label": "Academic Integrity — Assignments",
-        "value": "Scholastic offence on an assignment results in 0 on that assignment plus a −5% penalty on the overall course grade."
-      },
-      {
         "label": "Email Policy",
-        "value": "Must use Western (@uwo.ca) email, include 'Math 1600' in subject line, and address the correct section professor. Emails not meeting these conditions may be deleted unread."
+        "value": "Use Western (@uwo.ca) email only; subject line must include 'Math 1600'; limit email to urgent matters; use forums or office hours for course material questions"
       },
       {
         "label": "Recording Policy",
-        "value": "Recording lectures without explicit consent of the Professor or TA is grounds for academic discipline."
+        "value": "Recording lectures without explicit consent of professor or TA is grounds for academic discipline"
       },
       {
-        "label": "Academic Consideration — Documentation",
-        "value": "All requests must be made within 48 hours of the assessment date. One request without documentation is allowed per term, but it cannot be used for the midterm or final exam."
+        "label": "Intellectual Property",
+        "value": "Course content created by faculty is intellectual property and should not be distributed, shared publicly, or sold without prior written consent"
       },
       {
-        "label": "Religious Accommodation",
-        "value": "Written request required no later than two weeks before an exam or one week before a test."
+        "label": "Professionalism",
+        "value": "All interactions with peers and communication with TAs/professors must be professional and respectful; failure to do so will result in academic discipline"
+      },
+      {
+        "label": "No Calculators",
+        "value": "NO calculators or other electronic devices or any other aids are allowed on tests and exams"
+      },
+      {
+        "label": "Academic Offences - Exams",
+        "value": "Penalty for academic offence on midterm or final is a failing grade in the course"
+      },
+      {
+        "label": "Academic Offences - Homework",
+        "value": "Penalty for academic offence on homework is a grade of 0 on that homework set plus a penalty of -5% on overall course grade"
+      },
+      {
+        "label": "Academic Offence Examples",
+        "value": "Copying solutions from other students, online sources, textbooks; showing work to other students; uploading questions/solutions to websites; accessing websites with solutions"
+      },
+      {
+        "label": "Late Submission - Assignments",
+        "value": "Assignments can be submitted up to 48 hours past the deadline without penalty; after this period, assignments will not be accepted and are considered missed"
+      },
+      {
+        "label": "Missed Assignments Policy",
+        "value": "Lowest 2 assignment grades are automatically dropped; any assignment grade below final exam grade is replaced by final exam grade; no Academic Consideration request needed"
+      },
+      {
+        "label": "Missed Midterm Policy",
+        "value": "Must provide academic consideration to be eligible for makeup midterm; if both midterm and makeup are missed with documentation, midterm weight transfers to final exam"
+      },
+      {
+        "label": "Missed Final Exam Policy",
+        "value": "Contact Academic Counselling office; if Academic Consideration granted, may write Special Examination; if both missed with documentation, next Special Exam normally scheduled for when course is next offered"
       }
     ],
     "subjects": [
-      "Complex numbers and modular arithmetic",
+      "Complex numbers",
       "Vectors, lines and planes",
       "Solving linear systems",
       "Spanning sets and linear independence",
@@ -247,14 +426,13 @@ export const dsS1: Course[] = [
       "Markov chains and applications"
     ],
     "tips": [
-      "The final exam is worth 50% — it is the single most important assessment; prioritize exam prep above all else.",
-      "Assignments with grades lower than your final exam score are automatically replaced by the final exam grade, so a strong final exam performance can significantly boost your overall mark.",
-      "The lowest 2 of 11 assignments are dropped, giving you built-in safety net — don't waste it early in the term.",
-      "You have a 48-hour no-late-penalty window on every assignment, so use it when needed instead of missing entirely.",
-      "No calculators or any electronic devices are allowed on tests and exams — practice all computations by hand.",
-      "The midterm covers only the first 7 weeks of material and is worth 35%; treat it as a major assessment requiring full documentation if missed.",
-      "Written assignments are submitted via Gradescope — scan neatly and submit well before the deadline to avoid technical issues.",
-      "Academic dishonesty on the midterm or final results in a failing grade for the entire course; on assignments it costs −5% overall plus a 0 on the set."
+      "11 assignments total; lowest 2 are dropped automatically",
+      "Any assignment grade below your final exam grade will be replaced by the final exam grade",
+      "You can submit assignments up to 48 hours late without penalty",
+      "No calculators or electronic devices allowed on tests and exams",
+      "Midterm covers first 7 weeks of material; final exam covers all material with more focus on later topics",
+      "Written assignments (3-4 total) must be uploaded to Gradescope; most weeks are WeBWorK online assignments",
+      "Academic offence on midterm/final results in course failure; on homework results in 0 on that set plus -5% on overall grade"
     ],
     "classMeetings": {
       "days": [
@@ -262,22 +440,22 @@ export const dsS1: Course[] = [
         3,
         5
       ],
-      "startTime": "10:30 AM",
-      "room": "TC 141"
+      "startTime": "<UNKNOWN>",
+      "room": "<UNKNOWN>"
     }
   },
   {
     "id": "cs1026a",
     "code": "CS 1026A",
     "title": "Computer Science Fundamentals I",
-    "term": "Fall 2026",
+    "term": "Fall 2022",
     "instructor": "Hanan Lutfiyya, Bryan Sarlo, Saad Ahmed",
     "color": "#5aa6e6",
     "targetGrade": 85,
     "currentTopic": "Introduction to Computers and Python",
     "studyMethod": {
-      "name": "Active Recall with Spaced Repetition on MCQ Banks",
-      "why": "Both the midterm and final exam are 100% multiple choice, so repeatedly self-testing with practice questions is the most efficient way to build the recognition and elimination skills needed to score well."
+      "name": "Incremental completion with weekly labs and frequent assignments",
+      "why": "The course uses continuous assessment (10 weekly labs, 4 assignments across the term) alongside exams, requiring consistent practice rather than last-minute cramming."
     },
     "gradeComponents": [
       {
@@ -339,34 +517,40 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e0",
         "type": "lab",
         "title": "Lab 1",
-        "date": "2026-09-08",
+        "date": "2026-09-19",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Sept 19–23"
       },
       {
         "id": "cs1026a-e1",
         "type": "lab",
         "title": "Lab 2",
-        "date": "2026-09-15",
+        "date": "2026-09-26",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Sept 26–30"
       },
       {
         "id": "cs1026a-e2",
         "type": "lab",
         "title": "Lab 3",
-        "date": "2026-09-22",
+        "date": "2026-10-03",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Oct 3–7"
       },
       {
-        "id": "cs1026a-e6",
+        "id": "cs1026a-e10",
         "type": "assignment",
         "title": "Assignment 1",
-        "date": "2026-09-24",
+        "date": "2026-10-05",
         "weight": 5,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -375,16 +559,18 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e3",
         "type": "lab",
         "title": "Lab 4",
-        "date": "2026-09-29",
+        "date": "2026-10-10",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Oct 10–14; Oct 10 is Thanksgiving (university closed); Monday labs from home"
       },
       {
-        "id": "cs1026a-e7",
+        "id": "cs1026a-e14",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2026-10-03",
+        "date": "2026-10-14",
         "weight": 20,
         "courseId": "cs1026a",
         "component": "midtermtest"
@@ -393,79 +579,91 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e4",
         "type": "lab",
         "title": "Lab 5",
-        "date": "2026-10-06",
+        "date": "2026-10-17",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Oct 17–21"
       },
       {
         "id": "cs1026a-e5",
         "type": "lab",
         "title": "Lab 6",
-        "date": "2026-10-13",
+        "date": "2026-10-24",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Oct 24–28"
       },
       {
-        "id": "cs1026a-e8",
+        "id": "cs1026a-e11",
         "type": "assignment",
         "title": "Assignment 2",
-        "date": "2026-10-15",
+        "date": "2026-10-26",
         "weight": 8,
         "courseId": "cs1026a",
         "component": "assignments"
       },
       {
-        "id": "cs1026a-e9",
+        "id": "cs1026a-e6",
         "type": "lab",
         "title": "Lab 7",
-        "date": "2026-10-27",
+        "date": "2026-11-07",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Nov 7–11"
       },
       {
-        "id": "cs1026a-e11",
+        "id": "cs1026a-e7",
         "type": "lab",
         "title": "Lab 8",
-        "date": "2026-11-03",
+        "date": "2026-11-14",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Nov 14–18"
       },
       {
-        "id": "cs1026a-e10",
+        "id": "cs1026a-e12",
         "type": "assignment",
         "title": "Assignment 3",
-        "date": "2026-11-05",
+        "date": "2026-11-16",
         "weight": 12,
         "courseId": "cs1026a",
         "component": "assignments"
       },
       {
-        "id": "cs1026a-e12",
+        "id": "cs1026a-e8",
         "type": "lab",
         "title": "Lab 9",
-        "date": "2026-11-10",
+        "date": "2026-11-21",
         "weight": 1,
         "courseId": "cs1026a",
-        "component": "labs"
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Nov 21–25"
+      },
+      {
+        "id": "cs1026a-e9",
+        "type": "lab",
+        "title": "Lab 10",
+        "date": "2026-11-28",
+        "weight": 1,
+        "courseId": "cs1026a",
+        "component": "labs",
+        "estimated": true,
+        "dateNote": "Week of Nov 28–Dec 2"
       },
       {
         "id": "cs1026a-e13",
-        "type": "lab",
-        "title": "Lab 10",
-        "date": "2026-11-17",
-        "weight": 1,
-        "courseId": "cs1026a",
-        "component": "labs"
-      },
-      {
-        "id": "cs1026a-e14",
         "type": "assignment",
         "title": "Assignment 4",
-        "date": "2026-11-26",
+        "date": "2026-12-07",
         "weight": 12,
         "courseId": "cs1026a",
         "component": "assignments"
@@ -474,52 +672,54 @@ export const dsS1: Course[] = [
         "id": "cs1026a-e15",
         "type": "exam",
         "title": "Final Exam",
-        "date": "2026-11-29",
+        "date": "2026-12-10",
         "weight": 35,
         "courseId": "cs1026a",
-        "component": "finalexam"
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Registrar-scheduled; exam period Dec 10–22"
       }
     ],
     "policies": [
       {
-        "label": "Late Policy",
-        "value": "Each student receives 4 late coupons; each coupon waives the late penalty for 1 day and multiple can be stacked on one assignment. After coupons are exhausted, penalty is 10% per day. Maximum submission window is 3 days late regardless of coupons; after 3 days the assignment receives 0."
-      },
-      {
-        "label": "Midterm Format",
-        "value": "2 hours, 100% multiple choice. No make-up midterm. If missed with valid accommodation, midterm weight (20%) shifts to the final exam (making it worth 55%)."
-      },
-      {
-        "label": "Final Exam Format",
-        "value": "3 hours, 100% multiple choice, cumulative. Scheduled Dec 10–22, 2022. No electronic devices permitted."
+        "label": "Late Submission Policy (Assignments)",
+        "value": "Each student receives 4 late coupons, each waiving one day of late penalty. Multiple coupons can be used on the same assignment. After coupons are exhausted, 10% per day penalty applies. Maximum 3 days late; assignments not submitted within 3 days receive 0."
       },
       {
         "label": "Lab Attendance",
-        "value": "Must attend registered lab section only. Work must be completed during lab time and shown to TA — coming with pre-completed work results in a 0. Lowest 2 labs are dropped."
+        "value": "Must attend registered lab section; cannot switch sections even with valid reason. Arriving with work pre-completed results in mark of 0. Must show completed work to TA and sign attendance sheet during scheduled lab time."
       },
       {
-        "label": "Grade Floor to Pass (50%+)",
-        "value": "Must score at least 40% on the final exam AND at least 40% weighted average on assignments; otherwise final mark is capped at 45% or calculated grade, whichever is lower."
+        "label": "Midterm Format",
+        "value": "Multiple choice, 2 hours, Friday October 14, 7pm–9pm. No make-up midterm offered. Valid absences (conflict with other assessment, medical, religious) require academic counsellor approval; weight shifts to final exam (55%)."
       },
       {
-        "label": "Grade Floor for 60%+",
-        "value": "Must score at least 50% on the final exam AND at least 50% weighted average on assignments; otherwise final mark is capped at 58% or calculated grade, whichever is lower."
+        "label": "Final Exam Format",
+        "value": "Multiple choice, 3 hours, cumulative. Exact date/time to be announced in November (within Dec 10–22 exam period). Post-midterm topics emphasized but pre-midterm content testable."
+      },
+      {
+        "label": "Grade Requirements to Pass",
+        "value": "Minimum 40% on final exam AND 40% weighted average on four assignments required to pass (≥50%). If not met, final mark capped at 45% or calculated grade, whichever is lower. For 60%+: need ≥50% on final exam and ≥50% on assignments; otherwise capped at 58%."
+      },
+      {
+        "label": "No Electronic Devices",
+        "value": "No phones, calculators, or electronic devices permitted on midterm or final exam."
       },
       {
         "label": "Academic Integrity",
-        "value": "Assignments must be done individually. Code is run through similarity-checking software (MOSS). Do not copy or share code in any way."
+        "value": "Code checked via MOSS and similarity-checking software. Computer-marked exams checked for unusual answer patterns. Scholastic offences taken seriously; students directed to official policy."
       },
       {
-        "label": "Electronic Devices",
-        "value": "No electronic devices (phones, calculators, etc.) permitted during the midterm or final exam."
+        "label": "Assignment Submission",
+        "value": "Submit via Gradescope by 11:55pm on due date. No email submissions accepted. Re-submissions after deadline treated as late regardless of initial submission time."
       },
       {
-        "label": "Submission Platform",
-        "value": "Assignments must be submitted via Gradescope (not OWL or email). Python files (.py) cannot be emailed — ZIP them if needed."
+        "label": "Missing Assessments",
+        "value": "Labs <10%: can miss up to 2 without penalty (auto-dropped). Assignments <10%: have 4 late coupons for leniency. Major assessments (≥10%): require medical documentation to Academic Counselling. Missing final exam requires special exam approval from Academic Counselling."
       },
       {
-        "label": "Religious Accommodation",
-        "value": "Request must be made in writing at least two weeks prior to the conflicting holiday to the instructor and/or Academic Counselling office."
+        "label": "Code Similarity",
+        "value": "All assignments checked for plagiarism. Do not copy or share code. Python files cannot be emailed; use ZIP files instead."
       }
     ],
     "subjects": [
@@ -534,38 +734,36 @@ export const dsS1: Course[] = [
       "Object-Oriented Programming and Inheritance"
     ],
     "tips": [
-      "The final exam and midterm are both 100% multiple choice — practice with MCQ-style questions and elimination strategies.",
-      "The final exam is worth 35% (or 55% if midterm is missed with accommodation), making it the single biggest grade lever — prioritize cumulative review.",
-      "Assignments are worth 37% combined and have strict grade-floor requirements (40% avg to pass, 50% avg for 60+) — do not neglect them.",
-      "Use your 4 late coupons strategically across the 4 assignments; once exhausted, late penalty is 10% per day with a hard 3-day cap.",
-      "Labs are pass/fail and the lowest 2 are dropped, so you can safely miss 2 without penalty — don't stress over occasional lab absences.",
-      "Test your code on Gradescope before the deadline — passing tests locally in PyCharm does not guarantee marks if they fail on Gradescope.",
-      "Write your own hidden test cases for assignments; the auto-grader includes tests not shown to you.",
-      "No electronic devices (phones, calculators, etc.) are allowed on the midterm or final exam — practice working without them.",
-      "Post-midterm topics are more heavily tested on the final, but all pre-midterm material is still fair game.",
-      "Get the ZyBooks digital textbook — it is strongly recommended by instructors for doing well in the course."
+      "Complete assignments individually—code is checked for similarity",
+      "Use all 4 late coupons strategically; assignments cannot be submitted >3 days late",
+      "Labs are pass/fail; attend your registered section (cannot switch); lowest 2 are dropped",
+      "Midterm and final are multiple choice; no electronic devices allowed",
+      "Must score ≥40% on final exam and ≥40% weighted average on assignments to pass",
+      "Labs must be completed during scheduled time; arriving with work pre-done results in 0",
+      "ZyBooks textbook is recommended but not required",
+      "Final exam is cumulative; post-midterm topics more prevalent but pre-midterm is testable"
     ],
     "classMeetings": {
       "days": [
         2,
         4
       ],
-      "startTime": "2:30 PM",
-      "room": "WSS 55"
+      "startTime": "9:30 AM",
+      "room": "Multiple locations (section 001: AHB-1R40; section 002: NSC-1; section 003: MC-110)"
     }
   },
   {
     "id": "film1020e",
     "code": "FILM 1020E",
     "title": "Introduction to Film Studies",
-    "term": "2026-2027",
+    "term": "Fall 2013",
     "instructor": "Professor Benjamin Wright",
     "color": "#3faf76",
     "targetGrade": 85,
     "currentTopic": "Film as Art",
     "studyMethod": {
-      "name": "Iterative Close-Viewing with Annotated Reading Notes",
-      "why": "Because exams and essays all draw from screenings, readings, and lectures together, regularly re-watching key film clips while annotating theoretical readings builds the integrated analytical fluency needed for both written essays and timed tests."
+      "name": "Active Engagement with Screenings and Close Textual Analysis",
+      "why": "The course combines viewing multiple films weekly with reading theory and writing detailed analytical essays, requiring both critical viewing skills and written communication."
     },
     "gradeComponents": [
       {
@@ -579,9 +777,29 @@ export const dsS1: Course[] = [
         ]
       },
       {
+        "id": "attendanceandtutorialparticipationwinter",
+        "name": "Attendance and Tutorial Participation (Winter)",
+        "weight": 5,
+        "type": "assignment",
+        "count": 1,
+        "scores": [
+          null
+        ]
+      },
+      {
         "id": "midtermtest1",
         "name": "Midterm Test #1",
         "weight": 5,
+        "type": "exam",
+        "count": 1,
+        "scores": [
+          null
+        ]
+      },
+      {
+        "id": "midtermtest2",
+        "name": "Midterm Test #2",
+        "weight": 10,
         "type": "exam",
         "count": 1,
         "scores": [
@@ -603,26 +821,6 @@ export const dsS1: Course[] = [
         "name": "Essay #2: Sequence Analysis",
         "weight": 15,
         "type": "assignment",
-        "count": 1,
-        "scores": [
-          null
-        ]
-      },
-      {
-        "id": "attendanceandtutorialparticipationwinter",
-        "name": "Attendance and Tutorial Participation (Winter)",
-        "weight": 5,
-        "type": "assignment",
-        "count": 1,
-        "scores": [
-          null
-        ]
-      },
-      {
-        "id": "midtermtest2",
-        "name": "Midterm Test #2",
-        "weight": 10,
-        "type": "exam",
         "count": 1,
         "scores": [
           null
@@ -651,291 +849,352 @@ export const dsS1: Course[] = [
     ],
     "events": [
       {
-        "id": "film1020e-e5",
+        "id": "film1020e-e0",
         "type": "reading",
-        "title": "BT pp. 2-46 — Film as Art Introduction",
-        "date": "2026-08-30",
+        "title": "Bordwell & Thompson: Film Art pp. 2-46",
+        "date": "2026-09-10",
         "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
-        "id": "film1020e-e6",
-        "type": "reading",
-        "title": "BT pp. 72-110 — Narrative and Narration",
-        "date": "2026-09-06",
-        "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 1 (September 10-12)"
       },
       {
         "id": "film1020e-e7",
         "type": "reading",
-        "title": "BT pp. 112-158 — Mise-en-Scène",
-        "date": "2026-09-13",
+        "title": "Bordwell & Thompson: Film Art pp. 72-110",
+        "date": "2026-09-17",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 2 (September 17-19)"
       },
       {
         "id": "film1020e-e8",
         "type": "reading",
-        "title": "BT pp. 160-217 — Cinematography",
-        "date": "2026-09-20",
+        "title": "Bordwell & Thompson: Film Art pp. 112-158",
+        "date": "2026-09-24",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 3 (September 24-26)"
       },
       {
         "id": "film1020e-e9",
         "type": "reading",
-        "title": "BT pp. 218-254 — Editing I",
-        "date": "2026-09-27",
+        "title": "Bordwell & Thompson: Film Art pp. 160-217",
+        "date": "2026-10-01",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 4 (October 1-3)"
       },
       {
         "id": "film1020e-e10",
         "type": "reading",
-        "title": "BT pp. 242-265 — Editing II",
-        "date": "2026-10-04",
+        "title": "Bordwell & Thompson: Film Art pp. 218-254",
+        "date": "2026-10-08",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 5 (October 8-10)"
       },
       {
-        "id": "film1020e-e0",
+        "id": "film1020e-e11",
+        "type": "reading",
+        "title": "Bordwell & Thompson: Film Art pp. 242-265",
+        "date": "2026-10-15",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 6 (October 15-17)"
+      },
+      {
+        "id": "film1020e-e1",
         "type": "exam",
         "title": "Midterm Test #1",
-        "date": "2026-10-11",
+        "date": "2026-10-22",
         "weight": 5,
         "courseId": "film1020e",
         "component": "midtermtest1"
       },
       {
-        "id": "film1020e-e11",
-        "type": "reading",
-        "title": "BT pp. 266-307 — Sound",
-        "date": "2026-10-11",
-        "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
         "id": "film1020e-e12",
         "type": "reading",
-        "title": "CP: Kalinak 'The Classical Film Score'",
-        "date": "2026-10-18",
+        "title": "Bordwell & Thompson: Film Art pp. 266-307",
+        "date": "2026-10-22",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 7 (October 22-24)"
       },
       {
         "id": "film1020e-e13",
         "type": "reading",
-        "title": "CP: Selections by André Bazin (Realism)",
-        "date": "2026-10-25",
+        "title": "Course Package: Kalinak 'The Classical Film Score'",
+        "date": "2026-10-29",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 8 (October 29-31)"
       },
       {
-        "id": "film1020e-e1",
+        "id": "film1020e-e14",
+        "type": "reading",
+        "title": "Course Package: André Bazin selections",
+        "date": "2026-11-05",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 9 (November 5-7)"
+      },
+      {
+        "id": "film1020e-e2",
         "type": "assignment",
         "title": "Essay #1: Mise-en-Scène Analysis (1000 words)",
-        "date": "2026-10-26",
+        "date": "2026-11-06",
         "weight": 10,
         "courseId": "film1020e",
         "component": "essay1miseenscneanalysis"
       },
       {
-        "id": "film1020e-e14",
-        "type": "reading",
-        "title": "CP: Eisenstein 'The Cinematographic Principle and the Ideogram' & 'A Dialectical Approach to Film Form'; Metz 'Some Points in the Semiotics of Cinema'",
-        "date": "2026-11-01",
-        "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
         "id": "film1020e-e15",
         "type": "reading",
-        "title": "BT pp. 350-369, 433-439; CP: Bill Nichols 'Introduction' (Documentary)",
-        "date": "2026-11-08",
+        "title": "Course Package: Sergei Eisenstein essays and Christian Metz",
+        "date": "2026-11-12",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 10 (November 12-14)"
       },
       {
         "id": "film1020e-e16",
         "type": "reading",
-        "title": "BT pp. 369-387 — Experimental & Avant Garde",
-        "date": "2026-11-15",
+        "title": "Bordwell & Thompson: Film Art pp. 350-369, 433-439; Course Package: Bill Nichols 'Introduction'",
+        "date": "2026-11-19",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 11 (November 19-21)"
       },
       {
-        "id": "film1020e-e2",
+        "id": "film1020e-e17",
+        "type": "reading",
+        "title": "Bordwell & Thompson: Film Art pp. 369-387",
+        "date": "2026-11-26",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 12 (November 26-28)"
+      },
+      {
+        "id": "film1020e-e3",
         "type": "assignment",
-        "title": "Essay #2: Sequence Analysis (1500 words + Shot Breakdown)",
-        "date": "2026-11-16",
+        "title": "Essay #2: Sequence Analysis (1500 words plus Shot Breakdown)",
+        "date": "2026-11-27",
         "weight": 15,
         "courseId": "film1020e",
         "component": "essay2sequenceanalysis"
       },
       {
-        "id": "film1020e-e17",
-        "type": "reading",
-        "title": "BT pp. 387-398; CP: Thompson 'Implications of the Cell Animation Technique'",
-        "date": "2026-11-22",
-        "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
         "id": "film1020e-e18",
         "type": "reading",
-        "title": "BT pp. 462-466; CP: Tom Gunning 'An Aesthetic of Astonishment' (Early Cinema)",
-        "date": "2026-12-27",
+        "title": "Bordwell & Thompson: Film Art pp. 387-398; Course Package: Thompson 'Implications of the Cell Animation Technique'",
+        "date": "2026-12-03",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 13 (December 3-5)"
       },
       {
         "id": "film1020e-e19",
         "type": "reading",
-        "title": "CP: Bordwell 'An excessively obvious cinema' & 'The formulation of the classical narrative'",
-        "date": "2027-01-03",
+        "title": "Bordwell & Thompson: Film Art pp. 462-466; Course Package: Tom Gunning 'An Aesthetic of Astonishment'",
+        "date": "2027-01-07",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 14 (January 7-9)"
       },
       {
         "id": "film1020e-e20",
         "type": "reading",
-        "title": "CP: John Hill 'Film and Postmodernism'",
-        "date": "2027-01-10",
+        "title": "Course Package: David Bordwell essays on classical cinema",
+        "date": "2027-01-14",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 15 (January 14-16)"
       },
       {
         "id": "film1020e-e21",
         "type": "reading",
-        "title": "CP: Bordwell 'Art Cinema Narration'",
-        "date": "2027-01-17",
+        "title": "Course Package: John Hill 'Film and Postmodernism'",
+        "date": "2027-01-21",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 16 (January 21-23)"
       },
       {
-        "id": "film1020e-e3",
+        "id": "film1020e-e22",
+        "type": "reading",
+        "title": "Course Package: Bordwell 'Art Cinema Narration'",
+        "date": "2027-01-28",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 17 (January 28-30)"
+      },
+      {
+        "id": "film1020e-e4",
         "type": "exam",
         "title": "Midterm Test #2",
-        "date": "2027-01-24",
+        "date": "2027-02-04",
         "weight": 10,
         "courseId": "film1020e",
         "component": "midtermtest2"
       },
       {
-        "id": "film1020e-e22",
-        "type": "reading",
-        "title": "CP: Comolli & Narboni 'Cinema/Ideology/Criticism'",
-        "date": "2027-01-24",
-        "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
         "id": "film1020e-e23",
         "type": "reading",
-        "title": "CP: Schatz 'Film Genre'; Clover 'Her Body, Himself: Gender in the Slasher Film'",
-        "date": "2027-01-31",
+        "title": "Course Package: Comolli and Narboni 'Cinema/Ideology/Criticism'",
+        "date": "2027-02-04",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 18 (February 4-6)"
       },
       {
         "id": "film1020e-e24",
         "type": "reading",
-        "title": "CP: Warshow 'The Gangster as Tragic Hero'",
-        "date": "2027-02-14",
+        "title": "Course Package: Thomas Schatz 'Film Genre'; Carol Clover 'Her Body, Himself'",
+        "date": "2027-02-11",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 19 (February 11-13)"
       },
       {
         "id": "film1020e-e25",
         "type": "reading",
-        "title": "CP: Sarris 'Notes on the Auteur Theory in 1962'; Sterritt 'Introduction' to Hitchcock's Films",
-        "date": "2027-02-21",
+        "title": "Course Package: Robert Warshow 'The Gangster as Tragic Hero'",
+        "date": "2027-02-25",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 20 (February 25-27)"
       },
       {
         "id": "film1020e-e26",
         "type": "reading",
-        "title": "CP: Will Straw 'Canadian Cinema'",
-        "date": "2027-02-28",
+        "title": "Course Package: Andrew Sarris 'Notes on the Auteur Theory in 1962'; David Sterritt 'Introduction' to Hitchcock's Films",
+        "date": "2027-03-04",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 21 (March 4-6)"
       },
       {
         "id": "film1020e-e27",
         "type": "reading",
-        "title": "CP: Laura Mulvey 'Visual Pleasure and Narrative Cinema'",
-        "date": "2027-03-07",
+        "title": "Course Package: Will Straw 'Canadian Cinema'",
+        "date": "2027-03-11",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 22 (March 11-13)"
       },
       {
-        "id": "film1020e-e4",
+        "id": "film1020e-e28",
+        "type": "reading",
+        "title": "Course Package: Laura Mulvey 'Visual Pleasure and Narrative Cinema'",
+        "date": "2027-03-18",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 23 (March 18-20)"
+      },
+      {
+        "id": "film1020e-e5",
         "type": "assignment",
         "title": "Essay #3: Research Essay (1500 words)",
-        "date": "2027-03-08",
+        "date": "2027-03-19",
         "weight": 20,
         "courseId": "film1020e",
         "component": "essay3researchessay"
       },
       {
-        "id": "film1020e-e28",
-        "type": "reading",
-        "title": "CP: Solanas & Gettino 'Towards a Third Cinema'",
-        "date": "2027-03-14",
-        "weight": 0,
-        "courseId": "film1020e"
-      },
-      {
         "id": "film1020e-e29",
         "type": "reading",
-        "title": "CP: Dogme 95 Manifesto",
-        "date": "2027-03-21",
+        "title": "Course Package: Fernando Solanas and Octavio Gettino 'Towards a Third Cinema'",
+        "date": "2027-03-25",
         "weight": 0,
-        "courseId": "film1020e"
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 24 (March 25-27)"
+      },
+      {
+        "id": "film1020e-e6",
+        "type": "exam",
+        "title": "Final Examination",
+        "date": "2027-04-01",
+        "weight": 30,
+        "courseId": "film1020e",
+        "component": "finalexamination",
+        "estimated": true,
+        "dateNote": "Scheduled by registrar; exam period typically in April"
+      },
+      {
+        "id": "film1020e-e30",
+        "type": "reading",
+        "title": "Course Package: Dogme 95 Manifesto",
+        "date": "2027-04-01",
+        "weight": 0,
+        "courseId": "film1020e",
+        "estimated": true,
+        "dateNote": "Week 25 (April 1-3)"
       }
     ],
     "policies": [
       {
-        "label": "Late Penalty",
-        "value": "Deduction of a full letter grade for every week a paper is overdue. Exceptions only for documented medical or family emergencies."
+        "label": "Late Submission",
+        "value": "Late papers receive a deduction of a full letter grade for every week they are overdue. Exceptions made only for documented medical or family emergencies."
       },
       {
         "label": "Submission Method",
-        "value": "Papers must be submitted in Tutorial on the due date. Papers submitted by email or to the Department office will NOT be accepted."
+        "value": "All papers must be submitted at the end of the tutorial section on their specified due dates. Papers will not be accepted if emailed or turned in to the Department office."
+      },
+      {
+        "label": "Exam Accommodations",
+        "value": "For missed exams, must inform professor before the exam and present verifiable evidence to schedule a make-up. Students seeking incomplete must present documentation to Dr. Wright."
+      },
+      {
+        "label": "Citation Requirements",
+        "value": "All research must be accompanied by bibliography and citations using MLA, APA, or Chicago format. Failure to cite may result in failing grade for assignment and plagiarism investigation. Wikipedia and user-generated websites are not acceptable sources."
       },
       {
         "label": "Paper Format",
-        "value": "Typed, double-spaced, 12-point Times Roman font, 1-inch margins."
-      },
-      {
-        "label": "Citations",
-        "value": "All essays must include a bibliography and citations in MLA, APA, or Chicago format. Failure may result in a failing grade and plagiarism investigation."
-      },
-      {
-        "label": "Prohibited Sources",
-        "value": "Wikipedia and other user-generated websites are not permitted under any circumstance."
-      },
-      {
-        "label": "Missed Exam Policy",
-        "value": "Must inform the professor before the exam and present verifiable evidence to schedule a makeup. Medical accommodation must go through the Academic Counseling Office."
+        "value": "All essays must be typed, double-spaced, using 12-point Times Roman font and 1-inch margins."
       },
       {
         "label": "Cell Phones",
-        "value": "Must be turned off during class. Students who text or receive calls will be asked to leave and must receive permission to re-enter."
+        "value": "Cell phones must be turned off during class. Those who text or receive calls will be asked to leave and need permission to re-enter."
       },
       {
-        "label": "Laptop Policy",
-        "value": "Laptops are for lecture and tutorial notes only. Unauthorized use (email, browsing, etc.) results in laptop privileges being revoked for the entire academic year."
+        "label": "Laptop Use",
+        "value": "Laptops are for taking lecture and tutorial notes only. Unauthorized use (email, browsing, etc.) results in privilege revocation for the duration of the academic year."
+      },
+      {
+        "label": "Email Response",
+        "value": "TAs and instructor will attempt timely responses but cannot guarantee response within a set timeframe. Time-dependent matters should be discussed during office hours."
       },
       {
         "label": "Plagiarism",
-        "value": "Plagiarism is a major academic offence and may result in a grade of 0 reported to the Department. Papers may be submitted to Turnitin.com for plagiarism detection."
+        "value": "Plagiarism is a major academic offense. All required papers may be subject to submission for textual similarity review to Turnitin.com under license to the University."
       },
       {
-        "label": "Attendance",
-        "value": "Tutorial attendance and participation counts for 5% per term (10% total). Fall Break week (Oct 29-31) tutorials are cancelled."
+        "label": "Medical Accommodation",
+        "value": "Students seeking academic accommodation on medical grounds must apply to their Academic Counseling Office and provide documentation. Accommodation cannot be granted by instructor or department."
       }
     ],
     "subjects": [
@@ -943,65 +1202,52 @@ export const dsS1: Course[] = [
       "Narrative and Narration",
       "Mise-en-Scène",
       "Cinematography",
-      "Editing I",
-      "Editing II",
-      "Sound",
-      "Music",
+      "Editing",
+      "Sound and Music",
       "Realism",
       "Formalism and Semiotics",
       "Documentary",
-      "Experimental and Avant Garde",
+      "Experimental and Avant Garde Film",
       "Animation",
       "Early Cinema",
       "Classical Cinema",
       "Postmodern Cinema",
       "Art Cinema",
       "Radical Cinema",
-      "Genre I: The Horror Film",
-      "Genre II: The Gangster Film",
+      "Genre: Horror Film",
+      "Genre: Gangster Film",
       "Auteurism",
-      "National Cinema: Canada",
+      "National Cinema",
       "Feminist Criticism and Psychoanalysis",
       "Global Cinema",
       "Digital Cinema"
     ],
     "tips": [
-      "The Final Exam is worth 30% — the single largest component; prioritize comprehensive review of lectures, readings, and screenings.",
-      "Essays collectively account for 45% of your grade; invest heavily in clear thesis development and proper citations (MLA, APA, or Chicago).",
-      "Attend every tutorial — participation makes up 10% of your total grade (5% per term) and cannot easily be made up.",
-      "Late papers lose a full letter grade per week; submit on time or secure documented medical/family emergency proof in advance.",
-      "Exams draw from lectures, readings, handouts, AND screenings — actively watch all screened films, not just the readings.",
-      "For essays, never use Wikipedia or user-generated websites; consult Dr. Wright if unsure about source validity.",
-      "Laptop use is restricted to note-taking; misuse results in losing laptop privileges for the entire year.",
-      "Midterm 2 (10%) is heavier than Midterm 1 (5%) — allocate study time accordingly.",
-      "Start Essay #3 (Research Essay, 20%) early — it is the highest-weighted single written assignment."
-    ],
-    "classMeetings": {
-      "days": [
-        1,
-        3
-      ],
-      "startTime": "11:30 AM",
-      "room": "UC 1400"
-    }
+      "Late papers receive a full letter grade deduction per week overdue; submit at end of tutorial section, not by email",
+      "Midterm tests and final exam cover lectures, readings, assignments, handouts, and screenings",
+      "Must present documentation to schedule make-up exams",
+      "All essays require proper citations using MLA, APA, or Chicago format; Wikipedia and user-generated sites are not acceptable",
+      "Laptops may be revoked for the year if used for anything other than taking notes",
+      "Cell phones must be off during class"
+    ]
   },
   {
     "id": "calc1000a",
     "code": "CALC 1000A",
     "title": "Calculus I",
-    "term": "Fall/Winter 2026-27",
-    "instructor": "Instructor",
+    "term": "FW 2024-25",
+    "instructor": "<UNKNOWN>",
     "color": "#987be8",
     "targetGrade": 85,
-    "currentTopic": "Introduction and Review",
+    "currentTopic": "Review of limits and derivatives of exponential, logarithmic, and rational functions",
     "studyMethod": {
-      "name": "Spaced Practice with Weekly Problem Sets",
-      "why": "With high-stakes closed-book exams (70% combined) and weekly quizzes, regularly working through OpenStax problems and redoing quiz questions from memory builds the fluency needed to compute derivatives and integrals without aids."
+      "name": "Balanced Preparation with Continuous Assessment",
+      "why": "The course emphasizes weekly participation (iClicker) and formative quizzes alongside major summative exams, requiring consistent study throughout the term rather than cramming."
     },
     "gradeComponents": [
       {
-        "id": "submittedhomework",
-        "name": "Submitted Homework",
+        "id": "homework",
+        "name": "Homework",
         "weight": 16,
         "type": "assignment",
         "count": 4,
@@ -1034,7 +1280,7 @@ export const dsS1: Course[] = [
         "id": "iclickerlecturequestions",
         "name": "iClicker Lecture Questions",
         "weight": 4,
-        "type": "assignment",
+        "type": "quiz",
         "count": 1,
         "scores": [
           null
@@ -1063,223 +1309,281 @@ export const dsS1: Course[] = [
     ],
     "events": [
       {
-        "id": "calc1000a-e4",
-        "type": "quiz",
-        "title": "Quiz 1 (WebAssign)",
-        "date": "2026-09-09",
-        "weight": 0,
-        "courseId": "calc1000a",
-        "component": "quizzes"
-      },
-      {
-        "id": "calc1000a-e5",
-        "type": "quiz",
-        "title": "Quiz 2 (WebAssign)",
-        "date": "2026-09-16",
-        "weight": 0,
-        "courseId": "calc1000a",
-        "component": "quizzes"
-      },
-      {
         "id": "calc1000a-e0",
-        "type": "assignment",
-        "title": "Homework Assignment 1",
-        "date": "2026-09-23",
-        "weight": 4,
-        "courseId": "calc1000a",
-        "component": "submittedhomework"
-      },
-      {
-        "id": "calc1000a-e6",
-        "type": "quiz",
-        "title": "Quiz 3 (WebAssign)",
-        "date": "2026-09-23",
+        "type": "reading",
+        "title": "Introduction and Review (OpenStax 1.1, 1.2)",
+        "date": "2026-09-05",
         "weight": 0,
-        "courseId": "calc1000a",
-        "component": "quizzes"
-      },
-      {
-        "id": "calc1000a-e7",
-        "type": "quiz",
-        "title": "Quiz 4 (WebAssign)",
-        "date": "2026-09-30",
-        "weight": 0,
-        "courseId": "calc1000a",
-        "component": "quizzes"
+        "courseId": "calc1000a"
       },
       {
         "id": "calc1000a-e1",
+        "type": "reading",
+        "title": "Exponential, Trigonometric, and Inverse functions (OpenStax 1.3, 1.4, 1.5)",
+        "date": "2026-09-09",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Sept 9–15"
+      },
+      {
+        "id": "calc1000a-e2",
+        "type": "reading",
+        "title": "Limits and Continuity (OpenStax 2.2, 2.3, 2.4)",
+        "date": "2026-09-16",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Sept 16–22"
+      },
+      {
+        "id": "calc1000a-e3",
+        "type": "quiz",
+        "title": "Quiz 1",
+        "date": "2026-09-16",
+        "weight": 1.25,
+        "courseId": "calc1000a",
+        "component": "quizzes",
+        "estimated": true,
+        "dateNote": "First quiz opens during the week of Sept 16th"
+      },
+      {
+        "id": "calc1000a-e4",
+        "type": "reading",
+        "title": "Limits at Infinity/The Derivative (OpenStax 4.6, 3.1, 3.2)",
+        "date": "2026-09-23",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Sept 23–29"
+      },
+      {
+        "id": "calc1000a-e5",
+        "type": "reading",
+        "title": "Derivative as a Function/Differentiation Rules (OpenStax 3.2, 3.3, 3.5, 3.7)",
+        "date": "2026-09-30",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Sept 30–Oct 6"
+      },
+      {
+        "id": "calc1000a-e6",
         "type": "assignment",
-        "title": "Homework Assignment 2",
-        "date": "2026-10-14",
+        "title": "Homework Assignment 1",
+        "date": "2026-10-04",
         "weight": 4,
         "courseId": "calc1000a",
-        "component": "submittedhomework"
+        "component": "homework"
+      },
+      {
+        "id": "calc1000a-e7",
+        "type": "reading",
+        "title": "The Chain Rule/Implicit Differentiation (OpenStax 3.6, 3.8)",
+        "date": "2026-10-07",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Oct 7–11"
       },
       {
         "id": "calc1000a-e8",
-        "type": "quiz",
-        "title": "Quiz 5 (WebAssign)",
-        "date": "2026-10-14",
+        "type": "reading",
+        "title": "Reading Week",
+        "date": "2026-10-12",
         "weight": 0,
         "courseId": "calc1000a",
-        "component": "quizzes"
+        "estimated": true,
+        "dateNote": "Week of Oct 12–20"
       },
       {
         "id": "calc1000a-e9",
-        "type": "quiz",
-        "title": "Quiz 6 (WebAssign)",
+        "type": "reading",
+        "title": "Derivatives of Logarithmic Functions/Related Rates (OpenStax 3.9, 4.1)",
         "date": "2026-10-21",
         "weight": 0,
         "courseId": "calc1000a",
-        "component": "quizzes"
+        "estimated": true,
+        "dateNote": "Week of Oct 21–27"
+      },
+      {
+        "id": "calc1000a-e10",
+        "type": "assignment",
+        "title": "Homework Assignment 2",
+        "date": "2026-10-25",
+        "weight": 4,
+        "courseId": "calc1000a",
+        "component": "homework"
       },
       {
         "id": "calc1000a-e12",
+        "type": "reading",
+        "title": "Maximum and Minimum Values/Relationship Between Derivatives and the Shape of the Graph (OpenStax 4.3, 4.5)",
+        "date": "2026-10-28",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Oct 28–Nov 3"
+      },
+      {
+        "id": "calc1000a-e11",
         "type": "exam",
         "title": "Midterm Test",
-        "date": "2026-10-21",
+        "date": "2026-11-01",
         "weight": 30,
         "courseId": "calc1000a",
         "component": "midtermtest"
       },
       {
         "id": "calc1000a-e13",
-        "type": "exam",
-        "title": "Make-Up Midterm Test",
-        "date": "2026-10-28",
-        "weight": 30,
-        "courseId": "calc1000a",
-        "component": "midtermtest"
-      },
-      {
-        "id": "calc1000a-e2",
-        "type": "assignment",
-        "title": "Homework Assignment 3",
-        "date": "2026-11-04",
-        "weight": 4,
-        "courseId": "calc1000a",
-        "component": "submittedhomework"
-      },
-      {
-        "id": "calc1000a-e10",
-        "type": "quiz",
-        "title": "Quiz 7 (WebAssign)",
+        "type": "reading",
+        "title": "Optimization Problems/L'Hôpital's Rules and Indeterminate Forms (OpenStax 4.7, 4.8)",
         "date": "2026-11-04",
         "weight": 0,
         "courseId": "calc1000a",
-        "component": "quizzes"
+        "estimated": true,
+        "dateNote": "Week of Nov 4–10"
       },
       {
-        "id": "calc1000a-e11",
-        "type": "quiz",
-        "title": "Quiz 8 (WebAssign)",
+        "id": "calc1000a-e14",
+        "type": "reading",
+        "title": "Antiderivatives/Sigma Notation (OpenStax 4.10, 5.1)",
         "date": "2026-11-11",
         "weight": 0,
         "courseId": "calc1000a",
-        "component": "quizzes"
+        "estimated": true,
+        "dateNote": "Week of Nov 11–17"
       },
       {
-        "id": "calc1000a-e3",
+        "id": "calc1000a-e15",
         "type": "assignment",
-        "title": "Homework Assignment 4",
-        "date": "2026-11-18",
+        "title": "Homework Assignment 3",
+        "date": "2026-11-15",
         "weight": 4,
         "courseId": "calc1000a",
-        "component": "submittedhomework"
+        "component": "homework"
+      },
+      {
+        "id": "calc1000a-e16",
+        "type": "reading",
+        "title": "The Definite Integral/Fundamental Theorem of Calculus (OpenStax 5.2, 5.3)",
+        "date": "2026-11-18",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Nov 18–24"
+      },
+      {
+        "id": "calc1000a-e18",
+        "type": "reading",
+        "title": "Simple Substitution/Areas Between Curves (OpenStax 5.4, 5.5, 5.6, 6.1)",
+        "date": "2026-11-25",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Nov 25–Dec 1"
+      },
+      {
+        "id": "calc1000a-e17",
+        "type": "assignment",
+        "title": "Homework Assignment 4",
+        "date": "2026-11-29",
+        "weight": 4,
+        "courseId": "calc1000a",
+        "component": "homework"
+      },
+      {
+        "id": "calc1000a-e19",
+        "type": "reading",
+        "title": "Volumes/Review (OpenStax 6.2)",
+        "date": "2026-12-02",
+        "weight": 0,
+        "courseId": "calc1000a",
+        "estimated": true,
+        "dateNote": "Week of Dec 2–6"
+      },
+      {
+        "id": "calc1000a-e20",
+        "type": "exam",
+        "title": "Final Exam",
+        "date": "2026-12-09",
+        "weight": 40,
+        "courseId": "calc1000a",
+        "component": "finalexam",
+        "estimated": true,
+        "dateNote": "Registrar-scheduled; exam period Dec 9–22, 2024; 180 minutes duration"
       }
     ],
     "policies": [
       {
-        "label": "Exam Format – Midterm",
-        "value": "120 minutes, in-person, closed-book; mix of short answer and multiple-choice; covers weeks 1–8. No calculators or electronic devices permitted."
+        "label": "Attendance",
+        "value": "Students are expected to attend all classes. iClicker lecture question credit is only awarded for attendance at your registered lecture section."
       },
       {
-        "label": "Exam Format – Final",
-        "value": "180 minutes, in-person, cumulative, closed-book; mix of short answer and multiple-choice. No calculators or electronic devices permitted."
+        "label": "Late Work",
+        "value": "Assignments may be submitted up to 48 hours past the deadline without penalty. After 48 hours, a 20% per day penalty applies. Assignments submitted more than 96 hours past the deadline will not be accepted."
       },
       {
-        "label": "Late Penalty – Assignments",
-        "value": "48-hour grace period with no penalty. After 48 hours: 20% per day deducted. Submissions more than 96 hours past deadline are not accepted."
+        "label": "Missed Quizzes",
+        "value": "The best 6 of 8 quizzes count toward the final grade. Students can miss up to 2 quizzes without requiring Academic Consideration. Academic Consideration may be granted for missing more than 2 quizzes, with additional missed quizzes reweighted to the final exam."
       },
       {
-        "label": "Quiz Drop Policy",
-        "value": "Best 6 of 8 quizzes count; 2 lowest are dropped automatically. Academic Consideration denied for first 2 missed quizzes."
+        "label": "Midterm Test",
+        "value": "120 minutes, in-person, closed-book, no calculators or electronic aids. Consists of short answer and multiple-choice questions covering weeks 1–8. Makeup test tentatively scheduled for Friday November 8th, 7–9pm."
       },
       {
-        "label": "iClicker – Attendance Policy",
-        "value": "Must attend your registered lecture section; questions answered in another section do not count. Graded on participation (% answered), not correctness. Long-term absences (3+ consecutive) adjusted with academic consideration."
+        "label": "Final Exam",
+        "value": "180 minutes, in-person, cumulative, closed-book, no calculators or electronic aids. Mix of short answer and multiple-choice questions. Date TBA by Registrar (exam period Dec 9–22)."
       },
       {
-        "label": "iClicker Grading Scale",
-        "value": "≥80% answered = 4/4; 70–79% = 3.2/4; 60–69% = 2.4/4; 50–59% = 2/4; 40–49% = 1.6/4; <40% = 0/4."
+        "label": "Email Communication",
+        "value": "Students must use their Western (@uwo.ca) email address and include 'CALC 1000A' in the subject line. Instructors will attempt to reply within five business days."
       },
       {
-        "label": "Academic Consideration – Deadline",
-        "value": "Requests must be submitted within 48 hours of the assessment date or submission deadline."
-      },
-      {
-        "label": "Academic Consideration – Documentation",
-        "value": "One request without supporting documentation allowed per course, but NOT for the Midterm or Final Exam — those always require formal documentation."
-      },
-      {
-        "label": "Missed Midterm",
-        "value": "Make-up midterm tentatively scheduled for Friday November 8, 7–9 pm. If both midterm and make-up are missed with approved consideration, weight shifts to final exam."
-      },
-      {
-        "label": "Missed Final Exam",
-        "value": "Students granted Academic Consideration may write the university's Special Examination."
-      },
-      {
-        "label": "Email Policy",
-        "value": "Must use @uwo.ca email; include 'CALC 1000A' in subject line. Instructors aim to reply within 5 business days."
-      },
-      {
-        "label": "Electronic Devices",
-        "value": "No electronic devices of any kind permitted during midterm or final exam."
-      },
-      {
-        "label": "Submission Platform",
-        "value": "Written assignments submitted via Gradescope (PDF or PNG). WebAssign used for quizzes (paid license required, purchase by Dec 8, 2024)."
+        "label": "Academic Consideration Policy",
+        "value": "All requests must be made within 48 hours after the assessment date or submission deadline. Formal supporting documentation is required for the Final Exam and Midterm; one Academic Consideration request per course may be submitted without documentation for other assessments."
       },
       {
         "label": "Religious Accommodation",
-        "value": "Written request required no later than 2 weeks before an exam or 1 week before a test."
+        "value": "Requests for accommodation due to religious holidays must be made in writing to the course instructor and/or Academic Advising as early as possible, but no later than two weeks before the examination or test (or one week for tests)."
+      },
+      {
+        "label": "Scholastic Offences",
+        "value": "Scholastic offences are taken seriously. Students are directed to read the policy definition at the Registrar Services website."
+      },
+      {
+        "label": "iClicker Scoring",
+        "value": "Marked on participation (% of questions answered, not % correct). Scoring: ≥80% = 4/4; 70–79% = 3.2/4; 60–69% = 2.4/4; 50–59% = 2/4; 40–49% = 1.6/4; <40% = 0. Free iClicker account required using Western email address."
       }
     ],
     "subjects": [
-      "Introduction and Review",
-      "Exponential, Trigonometric, and Inverse Functions",
-      "Limits and Continuity",
-      "Limits at Infinity / The Derivative",
-      "Derivative as a Function / Differentiation Rules",
-      "The Chain Rule / Implicit Differentiation",
-      "Derivatives of Logarithmic Functions / Related Rates",
-      "Maximum and Minimum Values / Relationship Between Derivatives and the Shape of the Graph",
-      "Optimization Problems / L'Hôpital's Rules and Indeterminate Forms",
-      "Antiderivatives / Sigma Notation",
-      "The Definite Integral / Fundamental Theorem of Calculus",
-      "Simple Substitution / Areas Between Curves",
-      "Volumes of Solids of Revolution / Review"
+      "Review of limits and derivatives of exponential, logarithmic, and rational functions",
+      "Trigonometric functions and their inverses",
+      "Derivatives of trigonometric functions and their inverses",
+      "L'Hôpital's rules",
+      "The definite integral",
+      "Fundamental Theorem of Calculus",
+      "Simple substitution",
+      "Applications of integration: areas of regions and volumes of solids of revolution"
     ],
     "tips": [
-      "The final exam is worth 40% — it's the single biggest grade item; prioritize cumulative review starting week 11.",
-      "The midterm (30%) covers weeks 1–8 only; master limits, derivatives, and differentiation rules before Nov 1.",
-      "Quizzes drop the 2 lowest of 8 — you can miss up to 2 with zero penalty, so don't panic over one bad week.",
-      "Assignments have a free 48-hour grace period before a 20%/day late penalty kicks in; never miss the 96-hour hard cutoff.",
-      "Both the midterm and final are closed-book with NO calculators — practice mental/algebraic computation from day one.",
-      "iClicker is graded on participation (not correctness) and only counts in your registered section — just show up and answer.",
-      "Use the free Math-Physics Accelerator help centre (PAB 48/49) starting Sept 16 — no appointment needed.",
-      "The OpenStax textbook is free online; follow the listed sections each week to stay on track."
+      "Attend all lectures to receive iClicker participation credit—questions answered in another section don't count",
+      "Midterm and Final Exam are closed-book, no calculators or electronic aids permitted",
+      "Best 6 of 8 quizzes count, so you can miss up to 2 without Academic Consideration request",
+      "Assignments have a 48-hour no-late-penalty grace period; after that, 20% per day penalty applies (max 96 hours)",
+      "Midterm covers weeks 1-8; Final Exam is cumulative",
+      "Both exams mix short-answer and multiple-choice questions"
     ],
     "classMeetings": {
       "days": [
         1,
+        2,
         3,
+        4,
         5
       ],
-      "startTime": "9:30 AM",
-      "room": "PAB 106"
+      "startTime": "<UNKNOWN>",
+      "room": "<UNKNOWN>"
     }
   }
 ];
