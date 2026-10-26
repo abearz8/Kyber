@@ -1,18 +1,21 @@
 "use client";
 
-import type { Course } from "@/lib/types";
-import { daysUntil, fmtShort, addDays, isoToday } from "@/lib/dates";
+import type { Course, CourseEvent } from "@/lib/types";
+import { daysUntil, fmtShort } from "@/lib/dates";
 import { submittedProgress } from "@/lib/grades";
 import { track } from "@/lib/analytics";
+import { Label, Pill, PrimaryButton, ChevronRight } from "@/components/shared/ui";
+import NoDeadlinesPanel from "./NoDeadlinesPanel";
 
 interface Props {
   course: Course;
   open: boolean;
   onToggle: () => void;
   onOpenDetail: () => void;
+  onAddDeadline: () => void;
 }
 
-function nextUp(course: Course) {
+function nextUp(course: Course): CourseEvent | null {
   return (
     course.events
       .filter((e) => daysUntil(e.date) >= 0)
@@ -27,24 +30,20 @@ function courseWeek(course: Course): number {
   return Math.max(1, Math.floor(elapsed / 7) + 1);
 }
 
-export default function CourseAccordionCard({ course, open, onToggle, onOpenDetail }: Props) {
+/** Tint of the "Up next" box: exams/quizzes are amber, deliverables are blue. */
+function tone(e: CourseEvent) {
+  if (e.type === "exam" || e.type === "quiz") {
+    return { bg: "var(--soft)", label: "var(--amber-ink)", pill: "var(--soft-end)" };
+  }
+  return { bg: "var(--blue-bg)", label: "var(--blue-text)", pill: "var(--blue-chip)" };
+}
+
+export default function CourseAccordionCard({ course, open, onToggle, onOpenDetail, onAddDeadline }: Props) {
   const up = nextUp(course);
   const progress = submittedProgress(course);
   const week = courseWeek(course);
   const c = course.color;
-
-  // Placeholder when no upcoming event — always show same-size card
-  const placeholderDate = addDays(isoToday(), 90);
-  const displayEvent = up ?? {
-    id: "placeholder",
-    title: "Independent study",
-    date: placeholderDate,
-    type: "assignment" as const,
-    weight: 0,
-    courseId: course.id,
-  };
-  const displayDays = Math.max(0, daysUntil(displayEvent.date));
-  const isPlaceholder = !up;
+  const noDeadlines = course.events.length === 0;
 
   const deadlines = course.events.filter((e) => daysUntil(e.date) >= 0 && e.type !== "exam" && e.weight > 0).length;
   const exams = course.events.filter((e) => e.type === "exam" && daysUntil(e.date) >= 0).length;
@@ -53,157 +52,129 @@ export default function CourseAccordionCard({ course, open, onToggle, onOpenDeta
   return (
     <div
       style={{
+        position: "relative",
         background: "var(--surface)",
-        border: open ? `1.5px solid ${c}` : "1px solid var(--line)",
+        border: open ? `1.5px solid ${c}` : "1px solid var(--card-border)",
         borderRadius: "var(--radius-card)",
         boxShadow: "var(--shadow-card)",
         overflow: "hidden",
         transition: "border-color .2s",
       }}
     >
+      {/* Course colour bar */}
+      <span aria-hidden style={{ position: "absolute", left: 14, top: 18, bottom: 18, width: 4, borderRadius: 4, background: c }} />
+
       {/* ── Tappable header (toggle accordion) ── */}
       <div
         onClick={() => { if (!open) track.courseOpened(course.code); onToggle(); }}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === "Enter" && onToggle()}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", padding: "16px 16px 0 30px" }}
       >
-        {/* Title row */}
-        <div className="flex gap-3" style={{ padding: "16px 16px 0" }}>
-          <span style={{ width: 4, alignSelf: "stretch", borderRadius: 4, background: c, flexShrink: 0, minHeight: 44 }} />
-          <div className="flex-1" style={{ minWidth: 0 }}>
-            <div className="flex items-start justify-between gap-2">
-              <span className="eyebrow">{course.code}</span>
-              <span
-                style={{
-                  fontSize: 12, fontWeight: 700, color: c,
-                  background: `${c}1f`, borderRadius: 999, padding: "3px 10px", flexShrink: 0,
-                }}
-              >
-                Week {week}
-              </span>
-            </div>
-            <div className="flex items-center gap-2" style={{ marginTop: 2 }}>
-              <span
-                style={{
-                  fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.01em",
-                  color: "var(--ink)", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                }}
-              >
-                {course.title}
-              </span>
-              <svg
-                width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.4"
-                style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .2s", flexShrink: 0 }}
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </div>
-          </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+          <Label>{course.code}</Label>
+          <Pill text={`Week ${week}`} />
         </div>
-
-        {/* Up Next — always present */}
-        <div style={{ padding: "12px 16px 0" }}>
-          <div
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+          <span
             style={{
-              background: `${c}14`, borderRadius: 14, padding: "12px 14px",
-              display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+              fontWeight: 700, fontSize: 22, letterSpacing: "-0.3px", color: "var(--ink)", lineHeight: 1.2,
+              flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
             }}
           >
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isPlaceholder ? "var(--text-3)" : c }}>
-                {isPlaceholder ? "Study ahead" : "Up next"}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 17,
-                  color: isPlaceholder ? "var(--text-2)" : "var(--ink)",
-                  margin: "3px 0 2px", lineHeight: 1.2,
-                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                }}
-              >
-                {displayEvent.title}
-              </div>
-              <div style={{ fontSize: 13, color: "var(--text-2)" }}>
-                {isPlaceholder ? "No deadlines — get ahead" : fmtShort(displayEvent.date)}
+            {course.title}
+          </span>
+          <ChevronRight size={18} color="var(--text-2)" style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform .2s" }} />
+        </div>
+
+        {/* Up next / No deadlines */}
+        <div style={{ marginTop: 12 }}>
+          {noDeadlines ? (
+            <NoDeadlinesPanel course={course} onAdd={onAddDeadline} compact />
+          ) : up ? (
+            (() => {
+              const t = tone(up);
+              const days = Math.max(0, daysUntil(up.date));
+              return (
+                <div style={{ background: t.bg, borderRadius: 14, padding: "12px 14px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <Label color={t.label}>Up next</Label>
+                    <div style={{ fontWeight: 700, fontSize: 20, color: "var(--ink)", margin: "3px 0 2px", lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {up.title}
+                    </div>
+                    <div style={{ fontSize: 16, fontWeight: 500, color: "var(--text-2)" }}>
+                      {fmtShort(up.date)}{up.weight > 0 ? ` · ${up.weight}% of your grade` : ""}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "center", flexShrink: 0, background: t.pill, borderRadius: 14, padding: "8px 12px", minWidth: 72 }}>
+                    <div style={{ fontWeight: 800, fontSize: 28, color: "var(--ink)", lineHeight: 1 }}>{days}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", color: "var(--ink)", marginTop: 2 }}>{days === 1 ? "DAY" : "DAYS"}</div>
+                  </div>
+                </div>
+              );
+            })()
+          ) : (
+            <div style={{ background: "var(--cream-deep)", borderRadius: 14, padding: "12px 14px" }}>
+              <Label color="var(--text-3)">Nothing upcoming</Label>
+              <div style={{ fontSize: 16, fontWeight: 500, color: "var(--text-2)", marginTop: 3 }}>
+                Every date in this syllabus has passed.
               </div>
             </div>
-            <div style={{ textAlign: "center", flexShrink: 0, opacity: isPlaceholder ? 0.4 : 1 }}>
-              <div style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 32, color: c, lineHeight: 1 }}>
-                {isPlaceholder ? "—" : displayDays}
-              </div>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", color: c }}>{isPlaceholder ? "" : "DAYS"}</div>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Semester progress */}
-        <div style={{ padding: "14px 16px 16px" }}>
-          <div className="flex items-center justify-between" style={{ marginBottom: 7 }}>
-            <span style={{ fontSize: 14, color: "var(--text-2)" }}>Semester progress</span>
-            <span style={{ fontSize: 14, fontWeight: 700, color: c }}>{progress}%</span>
+        <div style={{ padding: "14px 0 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+            <span style={{ fontSize: 15, color: "var(--text-2)", fontWeight: 500 }}>Semester progress</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--ink)" }}>{progress}%</span>
           </div>
-          <div style={{ height: 7, borderRadius: 7, background: "#ece2d1", overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${progress}%`, background: c, borderRadius: 7, transition: "width .3s" }} />
+          <div style={{ height: 6, borderRadius: 6, background: "var(--track)", overflow: "hidden" }}>
+            <div style={{ height: "100%", width: `${progress}%`, background: c, borderRadius: 6, transition: "width .3s" }} />
           </div>
         </div>
       </div>
 
       {/* ── Expanded body ── */}
       {open && (
-        <div style={{ padding: "0 16px 18px" }}>
-          <div style={{ height: 1, background: "var(--line)", margin: "0 0 16px" }} />
+        <div style={{ padding: "0 16px 18px 30px" }}>
+          <div style={{ height: 1, background: "var(--track)", margin: "0 0 16px" }} />
 
-          {/* Instructor */}
-          <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="8" r="4" /><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
             </svg>
-            <span style={{ fontSize: 14, color: "var(--text-2)" }}>{course.instructor}</span>
+            <span style={{ fontSize: 15, color: "var(--text-2)", fontWeight: 500 }}>{course.instructor}</span>
           </div>
 
-          {/* Current focus */}
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: c, marginBottom: 4 }}>
-            Current focus
-          </div>
-          <p style={{ fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 16, color: "var(--ink)", margin: "0 0 14px", lineHeight: 1.3 }}>
+          <Label>Current focus</Label>
+          <p style={{ fontWeight: 700, fontSize: 17, color: "var(--ink)", margin: "4px 0 14px", lineHeight: 1.3 }}>
             {course.currentTopic}
           </p>
 
-          {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 16 }}>
-            <StatBox value={deadlines} label="Deadlines" color={c} />
-            <StatBox value={exams} label="Exams" color={c} />
-            <StatBox value={gradeParts} label="Components" color={c} />
+            <StatBox value={deadlines} label="Deadlines" />
+            <StatBox value={exams} label="Exams" />
+            <StatBox value={gradeParts} label="Components" />
           </div>
 
-          {/* Open full course */}
-          <button
-            onClick={(e) => { e.stopPropagation(); track.courseSectionViewed(course.code, "full_course"); onOpenDetail(); }}
-            className="w-full flex items-center justify-between"
-            style={{
-              background: c, color: "#fff", border: "none", borderRadius: 14,
-              padding: "15px 18px", cursor: "pointer",
-              fontFamily: "var(--ios-font)", fontWeight: 700, fontSize: 16,
-            }}
-          >
-            Open full course
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+          <PrimaryButton
+            label={<span style={{ display: "flex", alignItems: "center", gap: 8 }}>Open full course <ChevronRight size={18} /></span>}
+            onClick={() => { track.courseSectionViewed(course.code, "full_course"); onOpenDetail(); }}
+            height={50}
+          />
         </div>
       )}
     </div>
   );
 }
 
-function StatBox({ value, label, color }: { value: number; label: string; color: string }) {
+function StatBox({ value, label }: { value: number; label: string }) {
   return (
-    <div style={{ background: "var(--cream-deep)", borderRadius: 12, padding: "12px 6px", textAlign: "center" }}>
-      <div style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 22, color, lineHeight: 1 }}>{value}</div>
-      <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 4 }}>{label}</div>
+    <div style={{ background: "var(--soft)", borderRadius: 12, padding: "12px 6px", textAlign: "center" }}>
+      <div style={{ fontWeight: 700, fontSize: 22, color: "var(--ink)", lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4, fontWeight: 500 }}>{label}</div>
     </div>
   );
 }

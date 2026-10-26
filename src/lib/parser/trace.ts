@@ -17,10 +17,10 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 export type TraceReason =
   | "kept" //            valid ISO date, inside the window
-  | "no-iso-date" //     dropped at schema.ts:237 — LLM gave no parseable date
+  | "no-iso-date" //     dropped at schema.ts (normalize) — LLM gave no parseable date
   | "out-of-window" //   anchored date fell outside [-60d, +8mo] and was dropped
   | "resurrected"; //    out of window, but kept because the filter would have
-//                       emptied the course (academicCalendar.ts:81 fallback)
+//                       emptied the course (academicCalendar.ts anchorAndFilterDates fallback)
 
 export interface DateTraceRow {
   title: string;

@@ -1,220 +1,182 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useStore } from "@/hooks/useStore";
 import { track } from "@/lib/analytics";
-import type { Tab, PlanView } from "@/lib/types";
+import type { Tab, PlanView, WeekLayout, Course } from "@/lib/types";
+import ColorPaletteModal from "./ColorPaletteModal";
+import { BottomSheet, Card, Label, MiniSegmented, Toggle, OutlineButton, ChevronRight, Toast } from "./ui";
 
 interface Props {
   onClose: () => void;
   onAdd: () => void;
   onReset: () => void;
+  courses?: Course[];
 }
 
-function Row({ label, children, divider = true }: { label: string; children: React.ReactNode; divider?: boolean }) {
+function Row({ label, sub, children, last, onClick }: { label: string; sub?: string; children?: ReactNode; last?: boolean; onClick?: () => void }) {
   return (
     <div
-      className="flex items-center justify-between"
-      style={{ padding: "11px 16px", borderBottom: divider ? "1px solid var(--line)" : "none", gap: 12 }}
+      onClick={onClick}
+      role={onClick ? "button" : undefined}
+      style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+        padding: "13px 16px", borderBottom: last ? "none" : "1px solid var(--track)", cursor: onClick ? "pointer" : undefined,
+      }}
     >
-      <span style={{ fontSize: 15, color: "var(--ink)" }}>{label}</span>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ fontSize: 17.5, fontWeight: 600, color: "var(--ink)", lineHeight: 1.25 }}>{label}</div>
+        {sub && <div style={{ fontSize: 15.5, fontWeight: 500, color: "var(--text-2)", marginTop: 2 }}>{sub}</div>}
+      </div>
       {children}
     </div>
   );
 }
 
-function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <button
-      onClick={() => onChange(!value)}
-      style={{
-        width: 48, height: 28, borderRadius: 999,
-        background: value ? "var(--orange-cta)" : "var(--line)",
-        border: "none", cursor: "pointer", position: "relative", transition: "background .2s",
-        flexShrink: 0,
-      }}
-    >
-      <span style={{
-        position: "absolute", top: 3, left: value ? 23 : 3,
-        width: 22, height: 22, borderRadius: "50%", background: "#fff",
-        transition: "left .2s", boxShadow: "0 1px 4px rgba(0,0,0,.18)",
-      }} />
-    </button>
+    <section style={{ marginTop: 18 }}>
+      <Label style={{ display: "block", marginBottom: 8 }}>{title}</Label>
+      <Card pad={0} style={{ borderRadius: 16 }}>{children}</Card>
+    </section>
   );
 }
 
-function SegmentPicker<T extends string | number>({
-  value, options, onChange,
-}: { value: T; options: { label: string; value: T }[]; onChange: (v: T) => void }) {
-  return (
-    <div style={{ display: "flex", gap: 2, background: "var(--cream-deep)", borderRadius: 999, padding: 3 }}>
-      {options.map((o) => (
-        <button
-          key={o.value}
-          onClick={() => onChange(o.value)}
-          style={{
-            background: value === o.value ? "var(--surface)" : "transparent",
-            color: value === o.value ? "var(--ink)" : "var(--text-2)",
-            boxShadow: value === o.value ? "var(--shadow-card)" : "none",
-            border: "none", borderRadius: 999, padding: "5px 10px",
-            fontWeight: 600, fontSize: 13, cursor: "pointer", whiteSpace: "nowrap",
-          }}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-export default function SettingsModal({ onClose, onAdd, onReset }: Props) {
+export default function SettingsModal({ onClose, onAdd, onReset, courses = [] }: Props) {
   const { state, dispatch } = useStore();
   const settings = state.settings;
   const [confirmReset, setConfirmReset] = useState(false);
+  const [showPalette, setShowPalette] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   function update<K extends keyof typeof settings>(key: K, value: typeof settings[K]) {
     dispatch({ type: "UPDATE_SETTINGS", settings: { [key]: value } });
     track.appearanceCustomized("settings");
   }
 
+  function soon() {
+    setToast("Coming soon");
+    setTimeout(() => setToast(null), 1800);
+  }
+
+  const paletteName =
+    state.userProfile?.themeMode === "school" && state.userProfile.university
+      ? state.userProfile.university
+      : state.userProfile?.themeMode === "own"
+        ? "My own colours"
+        : "Kyber theme";
+
   return (
     <>
-      {/* Backdrop */}
-      <div
-        onClick={onClose}
-        style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 50 }}
-      />
+      <BottomSheet onClose={onClose} title="Settings" maxHeight="90%">
+        <Section title="Preferences">
+          <Row label="Open on">
+            <MiniSegmented<Tab>
+              label="Open on"
+              value={settings.defaultTab}
+              options={[{ label: "Courses", value: "courses" }, { label: "Now", value: "now" }, { label: "Plan", value: "plan" }]}
+              onChange={(v) => update("defaultTab", v)}
+            />
+          </Row>
+          <Row label="Default plan view">
+            <MiniSegmented<PlanView>
+              label="Default plan view"
+              value={settings.defaultPlanView}
+              options={[{ label: "Week", value: "week" }, { label: "Month", value: "month" }]}
+              onChange={(v) => update("defaultPlanView", v)}
+            />
+          </Row>
+          <Row label="Week layout">
+            <MiniSegmented<WeekLayout>
+              label="Week layout"
+              value={settings.weekLayout}
+              options={[{ label: "Grid", value: "grid" }, { label: "List", value: "list" }]}
+              onChange={(v) => update("weekLayout", v)}
+            />
+          </Row>
+          <Row label="Week starts on">
+            <MiniSegmented<0 | 1>
+              label="Week starts on"
+              value={settings.weekStartsOn}
+              options={[{ label: "Sun", value: 0 }, { label: "Mon", value: 1 }]}
+              onChange={(v) => update("weekStartsOn", v)}
+            />
+          </Row>
+          <Row label="Show completed steps" last>
+            <Toggle label="Show completed steps" value={settings.showCompletedTasks} onChange={(v) => update("showCompletedTasks", v)} />
+          </Row>
+        </Section>
 
-      {/* Sheet */}
-      <div
-        style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 51,
-          background: "var(--bg)", borderRadius: "20px 20px 0 0",
-          padding: "0 0 40px",
-          maxHeight: "82%",
-          display: "flex", flexDirection: "column",
-          boxShadow: "0 -8px 40px rgba(0,0,0,0.18)",
-        }}
-      >
-        {/* Handle */}
-        <div style={{ display: "flex", justifyContent: "center", padding: "12px 0 0" }}>
-          <div style={{ width: 40, height: 4, borderRadius: 2, background: "var(--line)" }} />
-        </div>
+        <Section title="Colours">
+          <Row label="Course colours" sub={paletteName} onClick={() => setShowPalette(true)}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ display: "flex", gap: 4 }}>
+                {courses.slice(0, 3).map((c) => (
+                  <span key={c.id} style={{ width: 18, height: 18, borderRadius: "50%", background: c.color, display: "block" }} />
+                ))}
+              </div>
+              <ChevronRight />
+            </div>
+          </Row>
+          <Row label="Colour by type" sub="Exams, assignments and coursework" last onClick={() => update("colourByType", !settings.colourByType)}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 16.5, fontWeight: 700, color: "var(--ink)" }}>{settings.colourByType ? "On" : "Off"}</span>
+              <ChevronRight />
+            </div>
+          </Row>
+        </Section>
 
-        <div style={{ padding: "16px 20px 0", flexShrink: 0 }}>
-          <div className="flex items-center justify-between">
-            <h2 style={{ fontFamily: "var(--ios-font)", fontWeight: 800, fontSize: 22, color: "var(--ink)", margin: 0 }}>
-              Settings
-            </h2>
-            <button
-              onClick={onClose}
-              style={{ background: "var(--cream-deep)", border: "none", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" strokeWidth="2.5"><path d="M18 6L6 18M6 6l12 12" /></svg>
-            </button>
-          </div>
-        </div>
+        <Section title="Reminders">
+          <Row label="Today's plan" sub="Every morning at 8:00 AM">
+            <Toggle label="Today's plan reminder" value={settings.remindToday} onChange={(v) => update("remindToday", v)} />
+          </Row>
+          <Row label="Deadline heads-up" sub="3 days before" last>
+            <Toggle label="Deadline heads-up reminder" value={settings.remindDeadlines} onChange={(v) => update("remindDeadlines", v)} />
+          </Row>
+        </Section>
 
-        <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: "8px 20px" }}>
-
-          {/* Preferences section */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "12px 0 4px" }}>
-            Preferences
-          </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
-            <Row label="Open app on">
-              <SegmentPicker<Tab>
-                value={settings.defaultTab}
-                options={[
-                  { label: "Courses", value: "courses" },
-                  { label: "Now", value: "now" },
-                  { label: "Plan", value: "plan" },
-                ]}
-                onChange={(v) => update("defaultTab", v)}
-              />
-            </Row>
-            <Row label="Default plan view">
-              <SegmentPicker<PlanView>
-                value={settings.defaultPlanView}
-                options={[
-                  { label: "Week", value: "week" },
-                  { label: "Month", value: "month" },
-                ]}
-                onChange={(v) => update("defaultPlanView", v)}
-              />
-            </Row>
-            <Row label="Week starts on">
-              <SegmentPicker<0 | 1>
-                value={settings.weekStartsOn}
-                options={[
-                  { label: "Sun", value: 0 },
-                  { label: "Mon", value: 1 },
-                ]}
-                onChange={(v) => update("weekStartsOn", v)}
-              />
-            </Row>
-            <Row label="Show completed tasks" divider={false}>
-              <Toggle
-                value={settings.showCompletedTasks}
-                onChange={(v) => update("showCompletedTasks", v)}
-              />
-            </Row>
-          </div>
-
-          {/* Courses section */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "16px 0 4px" }}>
-            Courses
-          </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
-            <Row label="Add syllabi">
-              <button
-                onClick={() => { onClose(); onAdd(); }}
-                style={{ background: "var(--orange-cta)", color: "#fff", border: "none", borderRadius: 999, padding: "7px 16px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
-              >
-                Upload
-              </button>
-            </Row>
-            <Row label="Start over" divider={false}>
-              {confirmReset ? (
-                <div style={{ display: "flex", gap: 6 }}>
-                  <button
-                    onClick={() => { setConfirmReset(false); onClose(); onReset(); }}
-                    style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "7px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-                  >
-                    Yes, clear all
-                  </button>
-                  <button
-                    onClick={() => setConfirmReset(false)}
-                    style={{ background: "var(--cream-deep)", color: "var(--text-2)", border: "none", borderRadius: 999, padding: "7px 12px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
+        <Section title="Courses">
+          <Row label="Add syllabi" sub="PDF or Word, one per course">
+            <OutlineButton label="Upload" onClick={() => { onClose(); onAdd(); }} />
+          </Row>
+          <Row label="Start over" sub="Removes all courses and your plan" last>
+            {confirmReset ? (
+              <div style={{ display: "flex", gap: 6 }}>
                 <button
-                  onClick={() => setConfirmReset(true)}
-                  style={{ background: "#fee2e2", color: "#d1544b", border: "none", borderRadius: 999, padding: "7px 16px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                  onClick={() => { setConfirmReset(false); onClose(); onReset(); }}
+                  style={{ background: "var(--pink)", color: "var(--ink)", border: "none", borderRadius: 12, padding: "8px 12px", fontSize: 15, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}
                 >
-                  Clear all
+                  Yes, clear all
                 </button>
-              )}
-            </Row>
-          </div>
+                <OutlineButton label="Cancel" textSize={15} onClick={() => setConfirmReset(false)} />
+              </div>
+            ) : (
+              <OutlineButton label="Clear all" onClick={() => setConfirmReset(true)} />
+            )}
+          </Row>
+        </Section>
 
-          {/* About */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em", textTransform: "uppercase", margin: "16px 0 4px" }}>
-            About
-          </div>
-          <div style={{ background: "var(--surface)", borderRadius: 16, padding: "0", boxShadow: "var(--shadow-card)" }}>
-            <Row label="App" divider={false}>
-              <span style={{ fontSize: 14, color: "var(--text-2)" }}>Kyber · Beta</span>
-            </Row>
-          </div>
-          <p style={{ fontSize: 13, color: "var(--text-3)", textAlign: "center", margin: "20px 0 0", lineHeight: 1.5 }}>
-            Your academic companion. Upload your syllabus and let Kyber handle the rest.
-          </p>
-        </div>
-      </div>
+        <Section title="Account and plan">
+          <Row label="Your plan" sub="Free during the beta">
+            <OutlineButton label="Manage" onClick={soon} />
+          </Row>
+          <Row label="Signed in as" sub="Beta tester" last>
+            <OutlineButton label="Sign out" onClick={soon} />
+          </Row>
+        </Section>
+
+        <Section title="About">
+          <Row label="App" last>
+            <span style={{ fontSize: 16, color: "var(--text-2)", fontWeight: 500 }}>Kyber · Beta</span>
+          </Row>
+        </Section>
+        <p style={{ fontSize: 15, color: "var(--text-3)", textAlign: "center", margin: "20px 0 0", lineHeight: 1.5, fontWeight: 500 }}>
+          Your academic companion. Upload your syllabus and let Kyber handle the rest.
+        </p>
+      </BottomSheet>
+
+      {showPalette && <ColorPaletteModal courses={courses} onClose={() => setShowPalette(false)} />}
+      {toast && <Toast message={toast} bottom="24px" />}
     </>
   );
 }

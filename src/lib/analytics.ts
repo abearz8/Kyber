@@ -3,7 +3,7 @@
 // Thin typed wrapper around PostHog. All capture calls go through here so
 // we have one place to audit what gets sent and ensure nothing sensitive leaks.
 
-import type { UserProfile } from "@/lib/types";
+import type { UserProfile, RescheduleMode } from "@/lib/types";
 
 let ph: typeof import("posthog-js").default | null = null;
 
@@ -111,7 +111,20 @@ export const track = {
 
   weekMoodSet: (mood: string) => capture("week_mood_set", { mood }),
 
-  replanTapped: () => capture("replan_tapped"),
+  replanOpened: (source: "now" | "plan") => capture("replan_opened", { source }),
+
+  replanTapped: (mode: RescheduleMode) => capture("replan_tapped", { mode }),
+
+  gradeMarkEntered: (courseCode: string) =>
+    capture("grade_mark_entered", { course_code: courseCode }),
+
+  deadlineAddedManually: (courseCode: string, eventType: string) =>
+    capture("deadline_added_manually", { course_code: courseCode, event_type: eventType }),
+
+  unitsViewed: (courseCode: string) =>
+    capture("units_viewed", { course_code: courseCode }),
+
+  planRangeChanged: (days: number) => capture("plan_range_changed", { days }),
 
   appearanceCustomized: (where: "palette" | "settings") =>
     capture("appearance_customized", { where }),

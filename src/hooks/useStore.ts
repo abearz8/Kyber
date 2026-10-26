@@ -12,14 +12,19 @@ import {
 import type { AppState, AppAction, Course, AppSettings } from "@/lib/types";
 import { generateAiTasks } from "@/lib/aiTasks";
 import { isoToday } from "@/lib/dates";
+import { allStudyTasks, rescheduleAdjustments, pruneAdjustments } from "@/lib/studyplan";
 
 const STORAGE_KEY = "kyber-app-state-v1";
 
 const defaultSettings: AppSettings = {
   defaultTab: "courses",
   defaultPlanView: "week",
+  weekLayout: "grid",
   weekStartsOn: 1,
   showCompletedTasks: true,
+  colourByType: false,
+  remindToday: true,
+  remindDeadlines: true,
 };
 
 const defaultState: AppState = {
@@ -38,6 +43,8 @@ const defaultState: AppState = {
   hasOnboarded: false,
   userProfile: null,
   settings: defaultSettings,
+  planAdjustments: {},
+  completedAt: {},
 };
 
 function reducer(state: AppState, action: AppAction): AppState {
@@ -72,9 +79,14 @@ function reducer(state: AppState, action: AppAction): AppState {
 
     case "DELETE_COURSE": {
       const courses = state.courses.filter((c) => c.id !== action.courseId);
+      const planAdjustments: AppState["planAdjustments"] = {};
+      for (const [id, adj] of Object.entries(state.planAdjustments ?? {})) {
+        if (!id.startsWith(`study-${action.courseId}-`)) planAdjustments[id] = adj;
+      }
       return {
         ...state,
         courses,
+        planAdjustments,
         selectedCourseId:
           state.selectedCourseId === action.courseId
             ? null
@@ -122,15 +134,20 @@ function reducer(state: AppState, action: AppAction): AppState {
       return {
         ...state,
         completedTaskIds: [...state.completedTaskIds, action.taskId],
+        completedAt: { ...(state.completedAt ?? {}), [action.taskId]: isoToday() },
       };
 
-    case "UNCOMPLETE_TASK":
+    case "UNCOMPLETE_TASK": {
+      const completedAt = { ...(state.completedAt ?? {}) };
+      delete completedAt[action.taskId];
       return {
         ...state,
         completedTaskIds: state.completedTaskIds.filter(
           (id) => id !== action.taskId
         ),
+        completedAt,
       };
+    }
 
     case "SET_GRADE_SIM":
       return {
@@ -165,6 +182,63 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "SET_USER_PROFILE":
       return { ...state, userProfile: action.profile };
 
+    case "APPLY_RESCHEDULE": {
+      const studyBlock = state.userProfile?.studyBlock;
+      const tasks = allStudyTasks(state.courses, studyBlock, state.planAdjustments);
+      const next = rescheduleAdjustments(
+        tasks,
+        state.planAdjustments ?? {},
+        action.mode,
+        action.fromDate,
+        new Set(state.completedTaskIds),
+        action.windowDays
+      );
+      return { ...state, planAdjustments: pruneAdjustments(next, tasks) };
+    }
+
+    case "CLEAR_ADJUSTMENTS":
+      return { ...state, planAdjustments: {} };
+
+    case "SET_COMPONENT_MARK":
+      return {
+        ...state,
+        courses: state.courses.map((c) =>
+          c.id !== action.courseId
+            ? c
+            : {
+                ...c,
+                gradeComponents: c.gradeComponents.map((gc) =>
+                  gc.id !== action.componentId
+                    ? gc
+                    : { ...gc, scores: gc.scores.length ? [action.mark, ...gc.scores.slice(1)] : [action.mark] }
+                ),
+              }
+        ),
+      };
+
+    case "ADD_COURSE_EVENT": {
+      const courses = state.courses.map((c) => {
+        if (c.id !== action.courseId) return c;
+        if (c.events.some((e) => e.id === action.event.id)) return c;
+        const events = [...c.events, action.event].sort((a, b) => a.date.localeCompare(b.date));
+        const next = { ...c, events };
+        delete next.noDeadlines;
+        return next;
+      });
+      return { ...state, courses, aiTasks: generateAiTasks(courses, isoToday()) };
+    }
+
+    case "DELETE_COURSE_EVENT": {
+      const courses = state.courses.map((c) =>
+        c.id !== action.courseId ? c : { ...c, events: c.events.filter((e) => e.id !== action.eventId) }
+      );
+      const planAdjustments: AppState["planAdjustments"] = {};
+      for (const [id, adj] of Object.entries(state.planAdjustments ?? {})) {
+        if (!id.includes(`-${action.eventId}-`)) planAdjustments[id] = adj;
+      }
+      return { ...state, courses, planAdjustments, aiTasks: generateAiTasks(courses, isoToday()) };
+    }
+
     case "HYDRATE": {
       const hydratedState = { ...defaultState, ...action.state, settings: { ...defaultSettings, ...(action.state.settings ?? {}) } };
       // Always regenerate AI tasks on hydrate so they're fresh for today
@@ -172,6 +246,11 @@ function reducer(state: AppState, action: AppAction): AppState {
       // "day" view no longer exists — reset to "week"
       if ((hydratedState.planView as string) === "day") hydratedState.planView = "week";
       if ((hydratedState.settings.defaultPlanView as string) === "day") hydratedState.settings.defaultPlanView = "week";
+      // Drop reschedule overrides whose study task no longer exists
+      hydratedState.planAdjustments = pruneAdjustments(
+        hydratedState.planAdjustments ?? {},
+        allStudyTasks(hydratedState.courses, hydratedState.userProfile?.studyBlock)
+      );
       return hydratedState;
     }
 

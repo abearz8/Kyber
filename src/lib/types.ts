@@ -35,6 +35,7 @@ export interface CourseEvent {
   recurringPattern?: { dayOfWeek: number; endDate: string };
   estimated?: boolean; // date inferred (week number, or start of a stated exam period) — not exact
   dateNote?: string; // human-readable note when the date is tentative, e.g. "Registrar-scheduled; exam period Dec 10–22"
+  manual?: boolean; // entered by the user (not parsed from the syllabus)
 }
 
 export interface Policy {
@@ -61,6 +62,10 @@ export interface Course {
   tips: string[];
   semester?: Semester;
   classMeetings?: { days: number[]; startTime?: string; room?: string };
+  /** Parser found no dated deadlines in the syllabus (the honest "No deadlines found" state). */
+  noDeadlines?: boolean;
+  /** Human-readable notes from the parser (e.g. "3 items listed without a date were skipped"). */
+  parseNotes?: string[];
 }
 
 export type Tab = "courses" | "now" | "plan";
@@ -115,6 +120,14 @@ export interface UserProfile {
   commitments: CommitmentEntry[];
 }
 
+/** A persisted per-study-task override produced by "Reschedule this week". */
+export interface PlanAdjustment {
+  date?: string; // ISO — pinned date
+  durationMin?: number; // shortened length
+}
+
+export type RescheduleMode = "lighter" | "push";
+
 export interface AppState {
   courses: Course[];
   activeTab: Tab;
@@ -131,13 +144,23 @@ export interface AppState {
   hasOnboarded: boolean;
   userProfile: UserProfile | null;
   settings: AppSettings;
+  planAdjustments: Record<string, PlanAdjustment>;
+  /** ISO date each task was checked off (for "You finished N blocks yesterday"). */
+  completedAt: Record<string, string>;
 }
+
+export type WeekLayout = "grid" | "list";
 
 export interface AppSettings {
   defaultTab: Tab;
   defaultPlanView: PlanView;
+  weekLayout: WeekLayout;
   weekStartsOn: 0 | 1;
   showCompletedTasks: boolean;
+  // Visual placeholders (persisted, nothing acts on them yet)
+  colourByType: boolean;
+  remindToday: boolean;
+  remindDeadlines: boolean;
 }
 
 export type AppAction =
@@ -167,6 +190,11 @@ export type AppAction =
       componentId: string;
       scores: (number | null)[];
     }
+  | { type: "APPLY_RESCHEDULE"; mode: RescheduleMode; fromDate: string; windowDays?: number }
+  | { type: "CLEAR_ADJUSTMENTS" }
+  | { type: "SET_COMPONENT_MARK"; courseId: string; componentId: string; mark: number | null }
+  | { type: "ADD_COURSE_EVENT"; courseId: string; event: CourseEvent }
+  | { type: "DELETE_COURSE_EVENT"; courseId: string; eventId: string }
   | { type: "RESET" };
 
 // AI-generated weekly prep task (simulates output of a weekly AI scheduling script)
@@ -193,6 +221,7 @@ export interface StudyTask {
   minutes: number;
   targetEventId: string; // the exam/deadline this prepares for
   targetTitle: string;
+  targetDate: string; // ISO date of the target event
   date: string; // ISO date this step is scheduled for
 }
 

@@ -1,4 +1,5 @@
 import type { Course, GradeComponent } from "./types";
+import { isoToday } from "./dates";
 
 export function componentAverage(
   component: GradeComponent,
@@ -100,8 +101,36 @@ export function componentWithAssumption(
   component: GradeComponent,
   assumed: number
 ): number | null {
+  // An entered mark is fixed — the assumption only fills components with no mark.
+  if (hasMark(component)) return componentAverage(component);
   const filled = component.scores.map((s) => (s == null ? assumed : s));
   return componentAverage(component, filled);
+}
+
+// ─── Entered marks (single aggregate mark per component, stored in scores[0]) ──
+
+export function enteredMark(c: GradeComponent): number | null {
+  const v = c.scores[0];
+  return v == null ? null : v;
+}
+
+export function hasMark(c: GradeComponent): boolean {
+  return enteredMark(c) !== null;
+}
+
+/** Latest course-event date linked to this component, or null. */
+export function componentDate(course: Course, c: GradeComponent): string | null {
+  const dates = course.events.filter((e) => e.component === c.id).map((e) => e.date).sort();
+  return dates.length ? dates[dates.length - 1] : null;
+}
+
+export type MarkStatus = "entered" | "not_yet" | "enter";
+
+export function markStatus(course: Course, c: GradeComponent, today: string = isoToday()): MarkStatus {
+  if (hasMark(c)) return "entered";
+  const d = componentDate(course, c);
+  if (d && d > today) return "not_yet";
+  return "enter";
 }
 
 export function projectWithAssumptions(

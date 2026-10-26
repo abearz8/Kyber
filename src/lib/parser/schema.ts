@@ -85,6 +85,14 @@ export const EXTRACT_SCHEMA = {
         required: ["type", "title", "date", "weight", "component"],
       },
     },
+    scheduleFound: {
+      type: "boolean",
+      description: "true only if at least one event date was read from the document. false when the syllabus lists no dates at all — then events must be empty.",
+    },
+    scheduleNote: {
+      type: "string",
+      description: "When scheduleFound is false: one sentence on why (e.g. 'Schedule is posted on the LMS'). Empty otherwise.",
+    },
     policies: {
       type: "array",
       description: "Notable policies (late penalty, attendance, exam format).",
@@ -135,6 +143,7 @@ export const EXTRACT_SCHEMA = {
   required: [
     "code", "title", "term", "instructor", "targetGrade",
     "subjects", "tips", "studyMethod", "gradeComponents", "events", "policies",
+    "scheduleFound", "scheduleNote",
   ],
 };
 
@@ -180,6 +189,8 @@ export interface RawExtraction {
     weight?: number;
     component?: string;
   }>;
+  scheduleFound?: boolean;
+  scheduleNote?: string;
   policies?: Array<{ label?: string; value?: string }>;
   classMeetings?: { days?: string[]; startTime?: string; room?: string };
   recurringAssignments?: Array<{
@@ -243,12 +254,14 @@ export function normalize(
 
   const nameToId = new Map(components.map((c) => [c.name.toLowerCase(), c.id]));
 
-  // Events — only keep those with valid ISO dates
+  // Events — only keep those with valid ISO dates (count the ones we drop so
+  // the UI can be honest about it instead of silently losing them)
   const events: CourseEvent[] = [];
+  let droppedNoDate = 0;
   for (let i = 0; i < (raw.events || []).length; i++) {
     const e = raw.events![i];
     const date = (e.date || "").trim();
-    if (!ISO_DATE.test(date)) continue;
+    if (!ISO_DATE.test(date)) { droppedNoDate++; continue; }
 
     const etype = EVENT_TYPES.includes(e.type as typeof EVENT_TYPES[number])
       ? (e.type as CourseEvent["type"])
@@ -318,10 +331,24 @@ export function normalize(
   }
 
   // Anchor every extracted date into the current academic year (fixing stale
-  // or mis-parsed years) and keep only deadlines within the next ~8 months.
+  // or mis-parsed years) and keep only deadlines within the next 12 months.
   const normalizedEvents = anchorAndFilterDates(events, ref).sort((a, b) =>
     a.date.localeCompare(b.date)
   );
+
+  // Honesty notes: what the syllabus did NOT give us.
+  const parseNotes: string[] = [];
+  if (droppedNoDate > 0) {
+    parseNotes.push(
+      `${droppedNoDate} item${droppedNoDate > 1 ? "s" : ""} listed without a date ${droppedNoDate > 1 ? "were" : "was"} skipped`
+    );
+  }
+  const scheduleNote = (raw.scheduleNote || "").trim();
+  if (normalizedEvents.length === 0) {
+    parseNotes.push(scheduleNote || "No dated deadlines found in this syllabus");
+  } else if (raw.scheduleFound === false && scheduleNote) {
+    parseNotes.push(scheduleNote);
+  }
 
   // Class meetings
   const rawMeetings = raw.classMeetings;
@@ -377,5 +404,7 @@ export function normalize(
     tips,
   };
   if (classMeetings) course.classMeetings = classMeetings;
+  if (normalizedEvents.length === 0) course.noDeadlines = true;
+  if (parseNotes.length) course.parseNotes = parseNotes;
   return course;
 }

@@ -6,7 +6,7 @@ import { useStore } from "@/hooks/useStore";
 import { useScreenTime } from "@/hooks/useScreenTime";
 import { track } from "@/lib/analytics";
 import MobileShell from "@/components/shared/MobileShell";
-import OnboardingScreen from "@/components/onboarding/OnboardingScreen";
+import OnboardingScreen, { type LoadSource } from "@/components/onboarding/OnboardingScreen";
 import OnboardingQuestionnaire from "@/components/onboarding/OnboardingQuestionnaire";
 import SemesterReveal from "@/components/onboarding/SemesterReveal";
 import type { Course, UserProfile, PersonalEvent, PersonalEventKind } from "@/lib/types";
@@ -86,6 +86,7 @@ export default function Home() {
   // Hold freshly-loaded courses locally so we can show the reveal before
   // committing them to the store (committing would trigger the /app redirect).
   const [pending, setPending] = useState<Course[] | null>(null);
+  const [pendingSource, setPendingSource] = useState<LoadSource>("upload");
 
   // Re-derive phase once the store hydrates (state.userProfile starts null from SSR default)
   useEffect(() => {
@@ -116,8 +117,9 @@ export default function Home() {
     setPhase("upload");
   }
 
-  function handleLoad(courses: Course[]) {
+  function handleLoad(courses: Course[], source: LoadSource) {
     const profile = state.userProfile;
+    setPendingSource(source);
     let mapped = courses;
 
     if (profile) {
@@ -175,7 +177,7 @@ export default function Home() {
   return (
     <MobileShell>
       {pending ? (
-        <SemesterReveal courses={pending} onEnter={enterApp} />
+        <SemesterReveal courses={pending} onEnter={enterApp} skipReading={pendingSource === "upload"} />
       ) : phase === "questionnaire" ? (
         <OnboardingQuestionnaire onComplete={handleProfileComplete} />
       ) : (

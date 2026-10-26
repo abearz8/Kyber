@@ -1,4 +1,4 @@
-import type { Course } from "./types";
+import type { Course, PlanAdjustment } from "./types";
 import { daysUntil, isoToday } from "./dates";
 import { allStudyTasks } from "./studyplan";
 
@@ -21,7 +21,11 @@ export interface NowAgenda {
 }
 
 /** Build today's agenda: deadlines due today + study blocks scheduled today. */
-export function nowAgenda(courses: Course[], studyBlock?: string): NowAgenda {
+export function nowAgenda(
+  courses: Course[],
+  studyBlock?: string,
+  adjustments?: Record<string, PlanAdjustment>
+): NowAgenda {
   const today = isoToday();
   const items: NowItem[] = [];
 
@@ -43,7 +47,7 @@ export function nowAgenda(courses: Course[], studyBlock?: string): NowAgenda {
   }
 
   // Study blocks scheduled today
-  const study = allStudyTasks(courses, studyBlock).filter((t) => t.date === today);
+  const study = allStudyTasks(courses, studyBlock, adjustments).filter((t) => t.date === today);
   for (const t of study) {
     items.push({
       id: t.id,

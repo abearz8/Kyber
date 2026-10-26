@@ -6,6 +6,71 @@ the date-anchoring system, and open work. Last updated 2026-10-12.
 
 ---
 
+## Visual refresh (2026-10-26)
+
+The UI was restyled to match the Expo reference build
+(`kyber-git-kyber-visual-refresh-learnkyber.vercel.app`). Things to know:
+
+- **Tokens** live in `src/app/globals.css` and were replaced with the
+  reference's exact theme (cream `#FFF9ED`, amber `#E9A319`, ink `#27251F`).
+  Variable *names* were kept (`--surface`, `--line`, `--text-2`, `--orange-cta`
+  …) so inline `var(--…)` usages still resolve. Primary buttons are **amber
+  with dark text**. Font is **Inter** (`next/font/google`, `--font-inter`).
+- **Icons** are the reference's illustrated PNGs in `public/icons/`, rendered
+  by `src/components/shared/Icon.tsx` (`<Icon name="tab-now" />`).
+- **Primitives** in `src/components/shared/ui.tsx`: `ScreenHeader`, `Card`,
+  `HighlightCard` (soft gradient), `PrimaryButton`, `OutlineButton`,
+  `TextLink`, `Segmented`/`MiniSegmented`, `Toggle`, `Checkbox`, `Pill`,
+  `Label`, `BottomSheet` (absolute inside the phone frame), `Toast`,
+  `SCROLL_BOTTOM`. Use these instead of hand-rolled sheets/headers.
+- **Tab bar** is a full-width bar (`TabBar.tsx`), not a floating pill; scroll
+  areas pad with `SCROLL_BOTTOM` (`--tab-height` = 84px).
+- **Colour editing** moved out of the tab headers: Settings → Colours and the
+  course page's "Course colour" button (`ColorPaletteModal` with `focusCourseId`).
+- **Onboarding** screens share `OnboardingFrame` (top bar, progress, step
+  eyebrow, sticky footer). The syllabi step is `OnboardingScreen`; the file
+  picker/parse lifecycle is `src/components/upload/useSyllabusParser.ts`,
+  shared by the in-app `SyllabusUploader`. `ReadingSyllabi` shows real
+  per-file progress for uploads; demo loads keep the short simulated tick in
+  `SemesterReveal` (`skipReading` prop).
+
+### New functional pieces
+- **Week grid** (`plan/WeekView.tsx` + `DayStrip`/`WeekGrid`/`WeekList`): a
+  rolling 7-day strip with **today leftmost**, a "Days" slider (1–5) picking how
+  many consecutive days render, and `settings.weekLayout` (`grid`|`list`).
+  Geometry helpers (`planItemsForRange`, `summarizeRange`, `gridPosition`,
+  `assignLanes`, `splitPinned`) are in `src/lib/plan.ts`. Zero-duration course
+  deadlines render as pinned "due" chips above the 8a line. `weekStartsOn` is
+  intentionally not applied to the strip.
+- **Reschedule this week** (`plan/RescheduleSheet.tsx`, Now + Plan): persists
+  `state.planAdjustments` keyed by study-task id (`{date?, durationMin?}`).
+  Overrides are applied in `studyTasksForCourse` *after* the id is built, so
+  completion ids stay stable. Pure math in `studyplan.ts`
+  (`rescheduleAdjustments`, `pruneAdjustments`, `previewReschedule`);
+  reducer `APPLY_RESCHEDULE` / `CLEAR_ADJUSTMENTS`. AI tasks are excluded
+  (regenerated on hydrate).
+- **Enter mark** (`courses/MarkEntrySheet.tsx`): a single aggregate mark per
+  component stored in `scores[0]` via `SET_COMPONENT_MARK`;
+  `componentWithAssumption` locks entered marks so the projection and the
+  calculator seed use them. `markStatus` → `entered | not_yet | enter`.
+- **Units** (`src/lib/units.ts`, `courses/UnitsList.tsx`): subjects spread
+  evenly across the term window (min/max event dates, or season start + 13
+  weeks when a course has no dates). Hidden when `subjects` is empty.
+- **No deadlines found**: parser prompt (`llm.ts`) has a SCHEDULE HONESTY
+  block; `EXTRACT_SCHEMA` gained `scheduleFound`/`scheduleNote`; `normalize()`
+  sets `course.noDeadlines` + `course.parseNotes`. UI: `NoDeadlinesPanel` on
+  the card and course page → `AddToPlanSheet` preset to a deadline with the
+  course attached → `ADD_COURSE_EVENT` creates a real `CourseEvent`
+  (`manual: true`, id `<courseId>-m-<uuid>`). `DELETE_COURSE_EVENT` removes it.
+- `state.completedAt` records the ISO day each task was checked off (drives
+  the Now tab's Accomplishments line).
+- Settings placeholders (persisted, no effect yet): `colourByType`,
+  `remindToday`, `remindDeadlines`; Account rows show a "Coming soon" toast.
+- New analytics: `replan_opened`, `replan_tapped {mode}`, `grade_mark_entered`,
+  `deadline_added_manually`, `units_viewed`, `plan_range_changed`.
+
+---
+
 ## Project snapshot
 
 - **What it is:** Kyber — a mobile-mockup study/semester planner. Students
@@ -35,9 +100,11 @@ the date-anchoring system, and open work. Last updated 2026-10-12.
     `GradeCalculator`. **`detailCourseId` (open course) is LOCAL state in
     `CourseList`, not the store** — matters for where hooks must live.
   - Now: `NowTab` → `SummarySheet`, `PlanItemSheet`
-  - Plan: `PlanTab` → `WeekView`/`MonthView`, `PlanItemSheet`, `AddToPlanSheet`
-  - Onboarding: `OnboardingQuestionnaire` (6 steps) → `OnboardingScreen`
-    (demo/upload) → `SemesterReveal`. `src/app/page.tsx` holds the `phase`.
+  - Plan: `PlanTab` → `WeekView` (`DayStrip`/`WeekGrid`/`WeekList`) or inline
+    `MonthView`, `PlanItemSheet`, `AddToPlanSheet`, `RescheduleSheet`
+  - Onboarding: `OnboardingQuestionnaire` (opening + 6 steps) →
+    `OnboardingScreen` (syllabi / sample) → `SemesterReveal`.
+    `src/app/page.tsx` holds the `phase`.
 - **Gotcha — stray duplicate files:** three untracked macOS-style duplicates
   (`layout 2.tsx`, `NowTab 2.tsx`, `OnboardingQuestionnaire 2.tsx`) existed and
   broke `tsc` (tsconfig globs `**/*.tsx`). They were deleted. If files like

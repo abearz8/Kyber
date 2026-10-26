@@ -37,7 +37,7 @@ export default function KyberLogo({ size = 40, wordmark = false, wordmarkSize }:
           color: "var(--ink)",
         }}
       >
-        kyber
+        Kyber
       </span>
     </div>
   );

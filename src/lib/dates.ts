@@ -107,3 +107,34 @@ export function fmtMonthYear(year: number, month: number): string {
     year: "numeric",
   });
 }
+
+/** "Mon" */
+export function fmtWeekdayShort(iso: string): string {
+  return parseISO(iso).toLocaleDateString("en-US", { weekday: "short" });
+}
+
+/** 12 */
+export function dayOfMonth(iso: string): number {
+  return parseInt(iso.split("-")[2], 10);
+}
+
+/** "Thu 15" */
+export function fmtDayShort(iso: string): string {
+  return `${fmtWeekdayShort(iso)} ${dayOfMonth(iso)}`;
+}
+
+/** "Oct 12 to 18" (or "Oct 29 to Nov 4" across a month boundary) */
+export function fmtRange(startIso: string, endIso: string): string {
+  const a = parseISO(startIso);
+  const b = parseISO(endIso);
+  const ma = a.toLocaleDateString("en-US", { month: "short" });
+  const mb = b.toLocaleDateString("en-US", { month: "short" });
+  return ma === mb ? `${ma} ${a.getDate()} to ${b.getDate()}` : `${ma} ${a.getDate()} to ${mb} ${b.getDate()}`;
+}
+
+export function maxIso(a: string, b: string): string {
+  return a > b ? a : b;
+}
+export function minIso(a: string, b: string): string {
+  return a < b ? a : b;
+}

@@ -24,6 +24,11 @@ DATES
 - Exams are often NOT given an exact date (e.g. "the final is scheduled by the registrar within the Dec 10–22 exam period"). Do NOT leave these out. Instead, set the event's \`date\` to the START of the stated period (e.g. 2024-12-10), set \`dateConfirmed\` to false, and put the exact wording in \`dateNote\` (e.g. "Registrar-scheduled; exam period Dec 10–22"). Only leave \`date\` empty when the syllabus gives no date AND no period/range at all.
 - For a date you read exactly as written, set \`dateConfirmed\` to true and leave \`dateNote\` empty.
 
+SCHEDULE HONESTY
+- Many syllabi contain NO dates at all (the schedule is distributed separately or posted on the LMS). In that case the correct answer is an EMPTY \`events\` array with \`scheduleFound\` = false. Never invent, guess, or assume a "typical" date. A missing date is far better than a wrong one.
+- Never derive a date from a week number ("Week 5", "Lecture 7") unless the syllabus itself prints the week-to-date mapping. If it does not, leave that event's \`date\` empty.
+- Set \`scheduleFound\` = true only when at least one event has a date read from the document (exact, or the start of a stated period). When it is false, put a one-sentence explanation in \`scheduleNote\` (e.g. "Schedule is posted on the LMS; the outline lists no dates"). Leave \`scheduleNote\` empty otherwise.
+
 GRADES
 - Capture every graded component with its weight as a percentage (0–100). Weights should sum to about 100.`;
 

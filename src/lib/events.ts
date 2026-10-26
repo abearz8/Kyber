@@ -1,6 +1,33 @@
 import type { Course, CourseEvent, EventType } from "./types";
 import { daysUntil } from "./dates";
 
+/** Short "12 quizzes · 2 exams · grade weights" summary per course; honest when empty. */
+export function summarizeCourseEvents(course: Course): string {
+  if (course.events.length === 0) return course.gradeComponents.length > 0 ? "No deadlines found · grade weights" : "No deadlines found";
+  const counts: Record<string, number> = {};
+  for (const e of course.events) counts[e.type] = (counts[e.type] ?? 0) + 1;
+  const plural: Record<string, [string, string]> = {
+    quiz: ["quiz", "quizzes"], exam: ["exam", "exams"], assignment: ["assignment", "assignments"],
+    lab: ["lab", "labs"], reading: ["reading", "readings"],
+  };
+  const parts = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 2)
+    .map(([type, n]) => {
+      const forms = plural[type];
+      return `${n} ${forms ? forms[n === 1 ? 0 : 1] : type}`;
+    });
+  if (course.gradeComponents.length > 0) parts.push("grade weights");
+  return parts.join(" · ");
+}
+
+/** Week number of the semester, counted from the earliest event across all courses. */
+export function semesterWeek(courses: Course[]): number {
+  const dates = courses.flatMap((c) => c.events.map((e) => e.date)).filter(Boolean).sort();
+  if (!dates.length) return 1;
+  return Math.max(1, Math.floor(-daysUntil(dates[0]) / 7) + 1);
+}
+
 export function typeClass(type: EventType): string {
   if (type === "quiz" || type === "assignment") return "assignment";
   if (type === "exam") return "exam";

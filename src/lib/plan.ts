@@ -1,5 +1,6 @@
-import type { Course, PersonalEvent, StudyTask, AiTask } from "./types";
+import type { Course, PersonalEvent, AiTask, PersonalEventKind, PlanAdjustment } from "./types";
 import { allStudyTasks } from "./studyplan";
+import { addDays } from "./dates";
 
 export type PlanItemKind = "course" | "study" | "personal" | "ai";
 
@@ -15,6 +16,7 @@ export interface PlanItem {
   timeLabel: string; // e.g. "4:00 PM", or "Due 11:59 PM"
   subtitle?: string;
   eventType?: string;
+  personalKind?: PersonalEventKind;
   personalId?: string; // set for personal events (deletable)
   studyId?: string; // set for study tasks (checkable)
   aiTaskId?: string; // set for AI-generated tasks
@@ -23,20 +25,20 @@ export interface PlanItem {
   dateNote?: string; // note for a tentative date, e.g. "Registrar-scheduled; exam period Dec 10–22"
 }
 
-const PERSONAL_COLORS: Record<string, string> = {
+export const PERSONAL_COLORS: Record<string, string> = {
   // new kinds
-  class: "#5aa6e6",
-  deadline: "#e8784a",
-  study_block: "#e9a319",
-  fun: "#3faf76",
+  class: "#B48CFF",
+  deadline: "#FF8A7A",
+  study_block: "#E9A319",
+  fun: "#9CC5A1",
   // legacy kinds
-  personal: "#8a8a8a",
-  work: "#8a8a8a",
-  sport: "#3faf76",
-  social: "#987be8",
-  appointment: "#8a8a8a",
-  study: "#e9a319",
-  other: "#8a8a8a",
+  personal: "#8B8475",
+  work: "#8B8475",
+  sport: "#9CC5A1",
+  social: "#B48CFF",
+  appointment: "#8B8475",
+  study: "#E9A319",
+  other: "#8B8475",
 };
 
 function hhmmToMin(hhmm?: string): number {
@@ -45,12 +47,21 @@ function hhmmToMin(hhmm?: string): number {
   return h * 60 + (m || 0);
 }
 
-function fmtTime(min: number): string {
+export function fmtTime(min: number): string {
   const h24 = Math.floor(min / 60);
   const m = min % 60;
   const ampm = h24 >= 12 ? "PM" : "AM";
   const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
   return `${h12}:${String(m).padStart(2, "0")} ${ampm}`;
+}
+
+/** "2h 15m" / "45m" */
+export function fmtDuration(min: number): string {
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  if (h === 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
 }
 
 // Default slot for a course event by type.
@@ -61,9 +72,9 @@ function courseSlot(type: string): { startMin: number; durationMin: number } {
 }
 
 // Study blocks get afternoon slots, staggered by the step's position.
-function studySlot(index: number): { startMin: number; durationMin: number } {
+function studySlot(index: number): { startMin: number } {
   const base = 16 * 60; // 4:00 PM
-  return { startMin: base + (index % 3) * 75, durationMin: 60 };
+  return { startMin: base + (index % 3) * 75 };
 }
 
 const AI_KIND_SLOT: Record<string, { startMin: number; durationMin: number }> = {
@@ -80,7 +91,8 @@ export function planItemsForDate(
   personalEvents: PersonalEvent[],
   date: string,
   aiTasks: AiTask[] = [],
-  studyBlock?: string
+  studyBlock?: string,
+  adjustments?: Record<string, PlanAdjustment>
 ): PlanItem[] {
   const items: PlanItem[] = [];
 
@@ -106,7 +118,7 @@ export function planItemsForDate(
     }
   }
 
-  const studyTasks = allStudyTasks(courses, studyBlock).filter((t) => t.date === date);
+  const studyTasks = allStudyTasks(courses, studyBlock, adjustments).filter((t) => t.date === date);
   studyTasks.forEach((t, i) => {
     const slot = studySlot(i);
     items.push({
@@ -117,7 +129,7 @@ export function planItemsForDate(
       color: t.courseColor,
       date,
       startMin: slot.startMin,
-      durationMin: slot.durationMin,
+      durationMin: t.minutes,
       timeLabel: `${fmtTime(slot.startMin)} · ${t.minutes} min`,
       subtitle: `${t.courseCode} · study block`,
       studyId: t.id,
@@ -132,12 +144,13 @@ export function planItemsForDate(
       id: `pi-${p.id}`,
       kind: "personal",
       title: p.title,
-      color: PERSONAL_COLORS[p.kind] ?? "#8a8a8a",
+      color: PERSONAL_COLORS[p.kind] ?? "#8B8475",
       date,
       startMin,
       durationMin: Math.max(0, endMin - startMin),
       timeLabel: p.start ? fmtTime(startMin) + (p.end ? `–${fmtTime(endMin)}` : "") : "All day",
-      subtitle: p.kind.charAt(0).toUpperCase() + p.kind.slice(1),
+      subtitle: p.kind.charAt(0).toUpperCase() + p.kind.slice(1).replace("_", " "),
+      personalKind: p.kind,
       personalId: p.id,
     });
   }
@@ -165,7 +178,125 @@ export function planItemsForDate(
   return items.sort((a, b) => a.startMin - b.startMin);
 }
 
-export const STUDY_TINT = "#e9a319";
+// ─── Multi-day range (week grid / list) ──────────────────────────────────────
+
+export interface PlanDay {
+  date: string;
+  items: PlanItem[];
+}
+
+/** Consecutive days from `startDate`; each day's items time-ordered. */
+export function planItemsForRange(
+  courses: Course[],
+  personalEvents: PersonalEvent[],
+  startDate: string,
+  dayCount: number,
+  aiTasks: AiTask[] = [],
+  studyBlock?: string,
+  adjustments?: Record<string, PlanAdjustment>
+): PlanDay[] {
+  return Array.from({ length: dayCount }, (_, i) => addDays(startDate, i)).map((date) => ({
+    date,
+    items: planItemsForDate(courses, personalEvents, date, aiTasks, studyBlock, adjustments),
+  }));
+}
+
+export interface RangeSummary {
+  studyBlocks: number;
+  focusMin: number;
+  classes: number;
+  due: number;
+  exams: number;
+}
+
+export function isStudyLike(it: PlanItem): boolean {
+  return it.kind === "study" || it.kind === "ai" || (it.kind === "personal" && (it.personalKind === "study_block" || it.personalKind === "study"));
+}
+
+export function summarizeRange(days: PlanDay[]): RangeSummary {
+  const s: RangeSummary = { studyBlocks: 0, focusMin: 0, classes: 0, due: 0, exams: 0 };
+  for (const d of days) {
+    for (const it of d.items) {
+      if (isStudyLike(it)) { s.studyBlocks++; s.focusMin += it.durationMin; }
+      else if (it.kind === "personal" && it.personalKind === "class") s.classes++;
+      else if (it.kind === "course") {
+        if (it.eventType === "exam") s.exams++;
+        else if (it.durationMin === 0) s.due++;
+      }
+    }
+  }
+  return s;
+}
+
+export function fmtRangeSummary(s: RangeSummary): string {
+  const parts: string[] = [];
+  if (s.studyBlocks) parts.push(`${s.studyBlocks} study block${s.studyBlocks === 1 ? "" : "s"}`);
+  if (s.focusMin) parts.push(`${fmtDuration(s.focusMin)} focus`);
+  if (s.classes) parts.push(`${s.classes} class${s.classes === 1 ? "" : "es"}`);
+  if (s.exams) parts.push(`${s.exams} exam${s.exams === 1 ? "" : "s"}`);
+  if (s.due) parts.push(`${s.due} due`);
+  return parts.length ? parts.join(" · ") : "Nothing planned yet";
+}
+
+// ─── Grid geometry ───────────────────────────────────────────────────────────
+
+export const GRID_START_MIN = 8 * 60; // 8a
+export const GRID_END_MIN = 22 * 60; // 10p
+
+export function gridHourLabels(stepHours = 2): { min: number; label: string }[] {
+  const out: { min: number; label: string }[] = [];
+  for (let h = GRID_START_MIN / 60; h <= GRID_END_MIN / 60; h += stepHours) {
+    const label = h === 12 ? "12p" : h > 12 ? `${h - 12}p` : `${h}a`;
+    out.push({ min: h * 60, label });
+  }
+  return out;
+}
+
+/** Pixel placement for a timed item; null for pinned (zero-duration) items. */
+export function gridPosition(item: PlanItem, pxPerHour: number): { top: number; height: number } | null {
+  if (item.durationMin === 0) return null;
+  const start = Math.max(GRID_START_MIN, Math.min(item.startMin, GRID_END_MIN - 15));
+  const end = Math.min(GRID_END_MIN, Math.max(item.startMin + item.durationMin, start + 15));
+  const top = ((start - GRID_START_MIN) / 60) * pxPerHour;
+  const height = Math.max(22, ((end - start) / 60) * pxPerHour);
+  return { top, height };
+}
+
+export function splitPinned(items: PlanItem[]): { pinned: PlanItem[]; timed: PlanItem[] } {
+  const pinned: PlanItem[] = [];
+  const timed: PlanItem[] = [];
+  for (const it of items) (it.durationMin === 0 ? pinned : timed).push(it);
+  return { pinned, timed };
+}
+
+/** Sweep by start time; overlapping items get separate lanes. */
+export function assignLanes(items: PlanItem[]): Array<{ item: PlanItem; lane: number; laneCount: number }> {
+  const sorted = [...items].sort((a, b) => a.startMin - b.startMin || b.durationMin - a.durationMin);
+  const result: Array<{ item: PlanItem; lane: number; laneCount: number }> = [];
+  let cluster: Array<{ item: PlanItem; lane: number; end: number }> = [];
+  let clusterEnd = -1;
+
+  const flush = () => {
+    const laneCount = cluster.reduce((m, c) => Math.max(m, c.lane + 1), 1);
+    for (const c of cluster) result.push({ item: c.item, lane: c.lane, laneCount });
+    cluster = [];
+  };
+
+  for (const item of sorted) {
+    const end = item.startMin + item.durationMin;
+    if (cluster.length && item.startMin >= clusterEnd) { flush(); clusterEnd = -1; }
+    const laneEnds: number[] = [];
+    for (const c of cluster) laneEnds[c.lane] = Math.max(laneEnds[c.lane] ?? 0, c.end);
+    let lane = 0;
+    while ((laneEnds[lane] ?? 0) > item.startMin) lane++;
+    cluster.push({ item, lane, end });
+    clusterEnd = Math.max(clusterEnd, end);
+  }
+  flush();
+  return result;
+}
+
+export const STUDY_TINT = "#E9A319";
 
 // ─── Google Calendar / .ics export ─────────────────────────────────────────
 

@@ -1,6 +1,8 @@
-import type { Course, CourseEvent, StudyTask } from "./types";
-import { daysUntil, addDays, isoToday } from "./dates";
+import type { Course, CourseEvent, StudyTask, PlanAdjustment, RescheduleMode } from "./types";
+import { daysUntil, addDays, isoToday, maxIso, minIso } from "./dates";
 import { submittedProgress } from "./grades";
+
+export type Adjustments = Record<string, PlanAdjustment>;
 
 // A "major" event worth preparing for: any exam, or a heavy assignment/lab.
 export function isMajor(e: CourseEvent): boolean {
@@ -66,8 +68,15 @@ function pickSteps(isExam: boolean, studyBlock?: string) {
 /**
  * Generate prep steps for a course's next major event, spread evenly from today
  * through the day before the event — so there is always a first step to do now.
+ *
+ * `adjustments` (from "Reschedule this week") are applied AFTER the id is built,
+ * so ids — and therefore completion state — stay stable across reschedules.
  */
-export function studyTasksForCourse(course: Course, studyBlock?: string): StudyTask[] {
+export function studyTasksForCourse(
+  course: Course,
+  studyBlock?: string,
+  adjustments?: Adjustments
+): StudyTask[] {
   const target = nextMajor(course);
   if (!target) return [];
   const steps = pickSteps(target.type === "exam", studyBlock);
@@ -77,23 +86,106 @@ export function studyTasksForCourse(course: Course, studyBlock?: string): StudyT
 
   return steps.map((step, i) => {
     const offset = n === 1 ? 0 : Math.round((i * window) / (n - 1));
+    const id = `study-${course.id}-${target.id}-${i}`;
+    const adj = adjustments?.[id];
     return {
-      id: `study-${course.id}-${target.id}-${i}`,
+      id,
       courseId: course.id,
       courseCode: course.code,
       courseColor: course.color,
       label: step.label,
-      minutes: step.minutes,
+      minutes: adj?.durationMin ?? step.minutes,
       targetEventId: target.id,
       targetTitle: target.title,
-      date: addDays(today, offset),
+      targetDate: target.date,
+      // A pinned date never lands in the past — "nothing's lost".
+      date: adj?.date ? maxIso(adj.date, today) : addDays(today, offset),
     };
   });
 }
 
 /** All study tasks across every course. */
-export function allStudyTasks(courses: Course[], studyBlock?: string): StudyTask[] {
-  return courses.flatMap((c) => studyTasksForCourse(c, studyBlock));
+export function allStudyTasks(
+  courses: Course[],
+  studyBlock?: string,
+  adjustments?: Adjustments
+): StudyTask[] {
+  return courses.flatMap((c) => studyTasksForCourse(c, studyBlock, adjustments));
+}
+
+// ─── Reschedule this week ────────────────────────────────────────────────────
+
+/**
+ * Pure: compute the merged adjustment map for a reschedule.
+ * - "lighter": every remaining study block from `fromDate` on is shortened to
+ *   75% (never below 15 min).
+ * - "push": study blocks inside the window move one day later, capped at the
+ *   window end and the day before their target event (the last day absorbs).
+ */
+export function rescheduleAdjustments(
+  tasks: StudyTask[], // already adjusted (allStudyTasks with current adjustments)
+  existing: Adjustments,
+  mode: RescheduleMode,
+  fromDate: string,
+  completedIds: Set<string>,
+  windowDays = 7
+): Adjustments {
+  const next: Adjustments = { ...existing };
+  const windowEnd = addDays(fromDate, windowDays - 1);
+
+  for (const t of tasks) {
+    if (completedIds.has(t.id)) continue;
+    if (t.date < fromDate) continue;
+
+    if (mode === "lighter") {
+      const durationMin = Math.max(15, Math.round(t.minutes * 0.75));
+      if (durationMin === t.minutes) continue;
+      next[t.id] = { ...(next[t.id] ?? {}), durationMin };
+    } else {
+      if (t.date > windowEnd) continue;
+      const cap = minIso(windowEnd, addDays(t.targetDate, -1));
+      const moved = minIso(addDays(t.date, 1), cap);
+      if (moved <= t.date) continue;
+      next[t.id] = { ...(next[t.id] ?? {}), date: moved };
+    }
+  }
+  return next;
+}
+
+/** Drop overrides whose task no longer exists (target passed, course deleted…). */
+export function pruneAdjustments(adjustments: Adjustments, tasks: StudyTask[]): Adjustments {
+  const ids = new Set(tasks.map((t) => t.id));
+  const out: Adjustments = {};
+  for (const [id, adj] of Object.entries(adjustments)) {
+    if (ids.has(id)) out[id] = adj;
+  }
+  return out;
+}
+
+/** Preview copy for the reschedule sheet. */
+export function previewReschedule(
+  tasks: StudyTask[],
+  existing: Adjustments,
+  mode: RescheduleMode,
+  fromDate: string,
+  completedIds: Set<string>,
+  windowDays = 7
+): { affected: number; minutesSaved: number } {
+  const next = rescheduleAdjustments(tasks, existing, mode, fromDate, completedIds, windowDays);
+  let affected = 0;
+  let minutesSaved = 0;
+  for (const t of tasks) {
+    const before = existing[t.id];
+    const after = next[t.id];
+    if (!after || after === before) continue;
+    if (mode === "lighter" && after.durationMin !== undefined && after.durationMin !== t.minutes) {
+      affected++;
+      minutesSaved += t.minutes - after.durationMin;
+    } else if (mode === "push" && after.date !== undefined && after.date !== t.date) {
+      affected++;
+    }
+  }
+  return { affected, minutesSaved };
 }
 
 /**
